@@ -1,0 +1,164 @@
+---
+title: "Proyecto RLM, Análisis de Regresión Entrega 1"
+author: "Samir Alejandro Centeno Torrado 
+         Yuliany Cifuentes Rondon
+         Daniela Cataño Hernández"
+format: html
+editor: visual
+---
+
+::: {style="text-align:center; padding-top:80px; padding-bottom:120px;"}
+# MODELADO DE LOS INGRESOS MENSUALES DE EMPLEADOS EN COLOMBIA
+
+## Aplicación de un Modelo de Regresión Lineal Múltiple
+
+<br><br>
+
+**Universidad Nacional de Colombia**
+
+**Facultad de Ciencias** <br>
+
+**Asignatura:** Análisis de Regresión
+
+**Docente:** Isabel Cristina Ramirez Guevara
+
+<br><br>
+
+**Presentado por:** Samir Alejandro Centeno Torrado, Yuliany Cifuentes Rondon y Daniela Cataño Hernández
+
+<br><br><br>
+
+**Bello, Antioquia - Colombia**
+
+**2026**
+:::
+
+\newpage
+
+# Introducción
+
+En el presente proyecto se desarrolla un modelo de regresión lineal múltiple para analizar los factores que influyen en el ingreso mensual de profesionales en Colombia. Se consideran variables relacionadas con características laborales, educativas y demográficas, con el propósito de identificar los determinantes más relevantes del salario y cuantificar su impacto sobre los ingresos.
+
+## 1.
+
+# Contextualización del problema
+
+El ingreso laboral constituye uno de los principales indicadores del bienestar económico de las personas y de las condiciones del mercado laboral. En Colombia, los salarios pueden verse influenciados por diversos factores relacionados con la experiencia laboral, el nivel educativo, las características demográficas y el tipo de ocupación desempeñada por cada trabajador.
+
+Comprender la relación entre estos factores y el ingreso laboral resulta fundamental para analizar las desigualdades salariales existentes en el mercado de trabajo y para identificar cuáles características tienen una mayor incidencia sobre los ingresos de los trabajadores. Además, este tipo de análisis aporta evidencia útil para el diseño de políticas públicas orientadas al fortalecimiento del empleo, la educación y la productividad laboral.
+
+En este proyecto se propone desarrollar un modelo de regresión lineal múltiple con el propósito de explicar y predecir el ingreso laboral de los trabajadores en Colombia a partir de variables relacionadas con la intensidad de trabajo, la experiencia laboral, el nivel educativo alcanzado, las características demográficas y la posición ocupacional.
+
+# Objetivo general
+
+Desarrollar un modelo de regresión lineal múltiple que permita explicar el ingreso laboral de los trabajadores en Colombia mediante variables relacionadas con las horas de trabajo, la experiencia laboral reciente, la posición ocupacional, la edad, el nivel educativo, el año de grado alcanzado y el sexo al nacer.
+
+# Descripción de las variables
+
+## Variable de respuesta
+
+**Y: Ingreso laboral mensual**
+
+Corresponde al ingreso mensual percibido por cada trabajador, expresado en pesos colombianos. Esta variable representa el fenómeno que se desea explicar mediante el modelo de regresión.
+
+## Variables explicativas
+
+**X₁: Horas de trabajo por semana**
+
+Número de horas que trabaja una persona durante una semana típica de trabajo. Se espera que una mayor cantidad de horas trabajadas esté asociada con mayores ingresos laborales.
+
+**X₂: Meses trabajados en los últimos 12 meses**
+
+Cantidad de meses durante los cuales la persona estuvo ocupada en el último año. Esta variable permite aproximar la estabilidad y continuidad laboral del individuo.
+
+**X₃: Posición ocupacional**
+
+Variable categórica que identifica la situación laboral del trabajador. Algunas categorías son:
+
+* Empleado de empresa privada.
+* Empleado del gobierno.
+* Trabajador por cuenta propia.
+
+Esta variable permite analizar si existen diferencias salariales asociadas al tipo de empleo desempeñado.
+
+**X₄: Edad**
+
+Edad del trabajador expresada en años cumplidos. La edad suele utilizarse como una aproximación a la experiencia acumulada y al ciclo laboral de las personas.
+
+**X₅: Nivel educativo más alto alcanzado**
+
+Máximo nivel de formación académica obtenido por el trabajador. Generalmente se espera que mayores niveles educativos se traduzcan en mayores oportunidades laborales y mejores ingresos.
+
+**X₆: Año de grado alcanzado**
+
+Año en el que la persona obtuvo su nivel educativo más alto. Esta variable puede reflejar la actualidad de la formación académica y la experiencia acumulada desde la graduación.
+
+**X₇: Sexo al nacer**
+
+Variable categórica que identifica el sexo registrado al nacer. Su inclusión permite analizar posibles diferencias en los ingresos laborales entre grupos poblacionales.
+
+# Modelo matemático propuesto
+
+El modelo de regresión lineal múltiple puede expresarse como:
+
+$$
+Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\beta_3X_{3i}+\beta_4X_{4i}+\beta_5X_{5i}+\beta_6X_{6i}+\beta_7X_{7i}+\varepsilon_i
+$$
+
+donde:
+
+| Símbolo                  | Descripción                                          |
+| ------------------------ | ---------------------------------------------------- |
+| $Y_i$                    | Ingreso laboral mensual del trabajador $i$.          |
+| $X_{1}$                 | Horas de trabajo por semana.                         |
+| $X_{2}$                 | Meses trabajados en los últimos 12 meses.            |
+| $X_{3}$                 | Posición ocupacional.                                |
+| $X_{4}$                 | Edad del trabajador.                                 |
+| $X_{5}$                 | Nivel educativo más alto alcanzado.                  |
+| $X_{6}$                 | Año de grado alcanzado.                              |
+| $X_{7}$                 | Sexo al nacer.                                       |
+| $\beta_0$                | Intercepto del modelo.                               |
+| $\beta_1,\ldots,\beta_7$ | Coeficientes asociados a las variables explicativas. |
+| $\varepsilon_i$          | Error aleatorio del modelo.                          |
+
+# Relevancia del estudio
+
+La identificación de los factores que determinan los ingresos laborales es un tema de gran interés en economía laboral y ciencias sociales. Los resultados obtenidos permitirán establecer qué características tienen una influencia significativa sobre los salarios y cuantificar la magnitud de dichos efectos. Asimismo, el análisis contribuirá a comprender las diferencias salariales asociadas al nivel educativo, la experiencia laboral, la posición ocupacional y otras características individuales.
+
+# Hipótesis de investigación
+
+## Hipótesis 1: Significancia global del modelo
+
+### Hipótesis nula (H₀)
+
+Las variables explicativas incluidas en el modelo no tienen un efecto significativo sobre el ingreso laboral.
+
+$$
+H_0:\beta_1=\beta_2=\beta_3=\beta_4=\beta_5=\beta_6=\beta_7=0
+$$
+
+### Hipótesis alternativa (H₁)
+
+Al menos una de las variables explicativas tiene un efecto significativo sobre el ingreso laboral.
+
+$$
+H_1:\exists , j \in {1,2,3,4,5,6,7} \text{ tal que } \beta_j \neq 0
+$$
+
+## Hipótesis 2: Efecto del nivel educativo
+
+### Hipótesis nula (H₀)
+
+El nivel educativo más alto alcanzado no tiene un efecto significativo sobre el ingreso laboral.
+
+$$
+H_0:\beta_5=0
+$$
+
+### Hipótesis alternativa (H₁)
+
+El nivel educativo más alto alcanzado tiene un efecto significativo sobre el ingreso laboral.
+
+$$
+H_1:\beta_5\neq 0
+$$

@@ -1,0 +1,332 @@
+---
+title: "Proyecto RLM, Análisis de Regresión Entrega 1"
+author: "Samir Alejandro Centeno Torrado 
+         Yuliany Cifuentes Rondon
+         Daniela Cataño Hernández"
+format: 
+ html:
+    embed-resources: True
+editor: visual
+---
+
+::: {style="text-align:center; padding-top:80px; padding-bottom:120px;"}
+# MODELADO DE LOS INGRESOS MENSUALES DE EMPLEADOS EN COLOMBIA
+
+## Aplicación de un Modelo de Regresión Lineal Múltiple
+
+<br><br>
+
+**Universidad Nacional de Colombia**
+
+**Facultad de Ciencias** <br>
+
+**Asignatura:** Análisis de Regresión
+
+**Docente:** Isabel Cristina Ramirez Guevara
+
+<br><br>
+
+**Presentado por:** Samir Alejandro Centeno Torrado, Yuliany Cifuentes Rondon y Daniela Cataño Hernández
+
+<br><br><br>
+
+**Bello, Antioquia - Colombia**
+
+**2026**
+:::
+
+\newpage
+
+# Introducción
+
+En el presente proyecto se desarrolla un modelo de regresión lineal múltiple para analizar los factores que influyen en el ingreso mensual de profesionales en Colombia. Se consideran variables relacionadas con características laborales, educativas y demográficas, con el propósito de identificar los determinantes más relevantes del salario y cuantificar su impacto sobre los ingresos.
+
+## 1.
+
+# Contextualización del problema
+
+El ingreso laboral constituye uno de los principales indicadores del bienestar económico de las personas y de las condiciones del mercado laboral. En Colombia, los salarios pueden verse influenciados por diversos factores relacionados con la experiencia laboral, el nivel educativo, las características demográficas y el tipo de ocupación desempeñada por cada trabajador.
+
+Comprender la relación entre estos factores y el ingreso laboral resulta fundamental para analizar las desigualdades salariales existentes en el mercado de trabajo y para identificar cuáles características tienen una mayor incidencia sobre los ingresos de los trabajadores. Además, este tipo de análisis aporta evidencia útil para el diseño de políticas públicas orientadas al fortalecimiento del empleo, la educación y la productividad laboral.
+
+En este proyecto se propone desarrollar un modelo de regresión lineal múltiple con el propósito de explicar y predecir el ingreso laboral de los trabajadores en Colombia a partir de variables relacionadas con la intensidad de trabajo, la experiencia laboral, el nivel educativo alcanzado, las características demográficas y la posición ocupacional.
+
+# Objetivo general
+
+Desarrollar un modelo de regresión lineal múltiple que permita explicar el ingreso laboral de los trabajadores en Colombia mediante variables relacionadas con las horas de trabajo, la experiencia laboral reciente, la posición ocupacional, la edad, el nivel educativo, el año de grado alcanzado y el sexo al nacer.
+
+# Descripción de las variables
+
+## Variable de respuesta
+
+**Y: Ingreso laboral mensual**
+
+Corresponde al ingreso mensual percibido por cada trabajador, expresado en pesos colombianos. Esta variable representa el fenómeno que se desea explicar mediante el modelo de regresión.
+
+## Variables explicativas
+
+**X₁: Horas de trabajo por semana**
+
+Número de horas que trabaja una persona durante una semana típica de trabajo. Se espera que una mayor cantidad de horas trabajadas esté asociada con mayores ingresos laborales.
+
+**X₂: Meses trabajados en los últimos 12 meses**
+
+Cantidad de meses durante los cuales la persona estuvo ocupada en el último año. Esta variable permite aproximar la estabilidad y continuidad laboral del individuo.
+
+**X₃: Posición ocupacional**
+
+Variable categórica que identifica la situación laboral del trabajador. Algunas categorías son:
+
+- Empleado de empresa privada.
+- Empleado del gobierno.
+- Trabajador por cuenta propia.
+
+Esta variable permite analizar si existen diferencias salariales asociadas al tipo de empleo desempeñado.
+
+**X₄: Edad**
+
+Edad del trabajador expresada en años cumplidos. La edad suele utilizarse como una aproximación a la experiencia acumulada y al ciclo laboral de las personas.
+
+**X₅: Nivel educativo más alto alcanzado**
+
+Máximo nivel de formación académica obtenido por el trabajador. Generalmente se espera que mayores niveles educativos se traduzcan en mayores oportunidades laborales y mejores ingresos.
+
+**X₆: Año de grado alcanzado**
+
+Año en el que la persona obtuvo su nivel educativo más alto. Esta variable puede reflejar la actualidad de la formación académica y la experiencia acumulada desde la graduación.
+
+**X₇: Sexo al nacer**
+
+Variable categórica que identifica el sexo registrado al nacer. Su inclusión permite analizar posibles diferencias en los ingresos laborales entre grupos poblacionales.
+
+# Modelo matemático propuesto
+
+El modelo de regresión lineal múltiple puede expresarse como:
+
+$$Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\beta_3X_{3i}+\beta_4X_{4i}+\beta_5X_{5i}+\beta_6X_{6i}+\beta_7X_{7i}+\varepsilon_i$$
+
+donde:
+
+| Símbolo | Descripción |
+|------------------------|------------------------------------------------|
+| $Y_i$ | Ingreso laboral mensual del trabajador $i$. |
+| $X_{1}$ | Horas de trabajo por semana. |
+| $X_{2}$ | Meses trabajados en los últimos 12 meses. |
+| $X_{3}$ | Posición ocupacional. |
+| $X_{4}$ | Edad del trabajador. |
+| $X_{5}$ | Nivel educativo más alto alcanzado. |
+| $X_{6}$ | Año de grado alcanzado. |
+| $X_{7}$ | Sexo al nacer. |
+| $\beta_0$ | Intercepto del modelo. |
+| $\beta_1,\ldots,\beta_7$ | Coeficientes asociados a las variables explicativas. |
+| $\varepsilon_i$ | Error aleatorio del modelo. |
+
+# Relevancia del estudio
+
+La identificación de los factores que determinan los ingresos laborales es un tema de gran interés en economía laboral y ciencias sociales. Los resultados obtenidos permitirán establecer qué características tienen una influencia significativa sobre los salarios y cuantificar la magnitud de dichos efectos. Asimismo, el análisis contribuirá a comprender las diferencias salariales asociadas al nivel educativo, la experiencia laboral, la posición ocupacional y otras características individuales.
+
+# Hipótesis de investigación
+
+## Hipótesis 1: Significancia global del modelo
+
+### Hipótesis nula (H₀)
+
+Las variables explicativas incluidas en el modelo no tienen un efecto significativo sobre el ingreso laboral.
+
+$$H_0:\beta_1=\beta_2=\beta_3=\beta_4=\beta_5=\beta_6=\beta_7=0$$
+
+### Hipótesis alternativa (H₁)
+
+Al menos una de las variables explicativas tiene un efecto significativo sobre el ingreso laboral.
+
+$$H_1:\exists , j \in {1,2,3,4,5,6,7} \text{ tal que } \beta_j \neq 0$$
+
+## Hipótesis 2: Efecto del nivel educativo
+
+### Hipótesis nula (H₀)
+
+El nivel educativo más alto alcanzado no tiene un efecto significativo sobre el ingreso laboral.
+
+$$H_0:\beta_5=0$$
+
+### Hipótesis alternativa (H₁)
+
+El nivel educativo más alto alcanzado tiene un efecto significativo sobre el ingreso laboral.
+
+$$H_1:\beta_5\neq 0$$
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+```{r}
+
+#| echo: false
+#| message: false
+#| results: hide
+#Es necesario tener la libreria tidyverse
+
+library(tidyverse)
+ocupados=read.csv("Ocupados.CSV", sep = ";", encoding = "latin1")
+
+generales=read.csv("Características generales, seguridad social en salud y educación.CSV", sep = ";", encoding = "latin1")
+```
+
+```{r}
+#| echo: false
+#Unir bases de datos
+df_merge=inner_join(ocupados, generales,
+                       by = c("DIRECTORIO", "ORDEN", "HOGAR"))
+
+df=df_merge %>%
+  select(
+    ingreso = INGLABO,
+    horas = P6800,
+    edad = P6040,
+    educacion = P3042,
+    grado = P3042S1,
+    meses_trab = P6790,
+    posicion = P6430,
+    sexo = P3271
+  ) %>%
+  filter(
+    !is.na(ingreso), ingreso > 0,
+    !is.na(horas),
+    !is.na(edad),
+    !is.na(posicion),
+    posicion %in% c(1, 2, 4)
+  ) %>%
+  mutate(
+    log_ingreso = log(ingreso),
+    posicion = factor(posicion,
+      levels = c(1, 2, 4),
+      labels = c("Empleado_particular", "Empleado_gobierno", "Cuenta_propia")),
+    sexo = factor(sexo,
+      levels = c(1, 2),
+      labels = c("Hombre", "Mujer")))
+
+##Note se hizo una trasnformacion a el salario a logaritmo para estabilizar la cola de los salarios que es muy posible que se presente
+```
+
+```{r}
+#| echo: false
+##semilla y eleccion de los 100 datos
+set.seed(123)
+df_100 <- df %>%
+  group_by(posicion) %>%
+  slice_sample(n = 34) %>%
+  ungroup() %>%
+  slice_sample(n = 100)
+```
+
+```{r}
+#| echo: false
+#| results: hide
+##Analisis Descriptivo, necesita libreria ggplot2
+summary(df_100)
+```
+
+## Analisis Descriptivo
+
+El ingreso laboral mensual presenta una distribucion altamente asimetrica, la media de 2.37M supera ampliamente la mediana de 1.5M, evidenciando la presencia de valores en la cola derecha de esta distribucion, el maximo de 34M aumenta la media hacia arriba. Esto justifica trabajar con el logaritmo de los ingresos como variable de respuesta del modelo
+
+Ademas la edad promedio es de 41 años en un rango de 17-65 años, las horas semanales promedio de trabajo son 44, la mayoria trabajo los 12 meses completos del año (mediana y Q3 en 12)
+
+```{r}
+#| echo: false
+par(mfrow = c(1,2))
+hist(df_100$ingreso, main = "Ingreso laboral", 
+     xlab = "Ingreso", col = "steelblue")
+hist(df_100$log_ingreso, main = "Log(Ingreso laboral)", 
+     xlab = "log(Ingreso)", col = "steelblue")
+```
+
+El ingreso laboral mensual presenta una distribución marcadamente asimétrica hacia la derecha. La media muestral (\~\$2.37 millones) supera ampliamente la mediana (\~\$1.5 millones), evidenciando observaciones extremas en la cola superior, con valores que alcanzan los \$34 millones mensuales. Esta asimetría viola el supuesto de normalidad requerido por el modelo de regresión lineal.
+
+Al aplicar la transformación logarítmica, la distribución resultante se aproxima a una normal, estabilizando la varianza y reduciendo el efecto de los valores atípicos. Esta decisión es coherente con la teoría económica, que reconoce que los salarios siguen distribuciones log-normales. Por lo tanto, se utiliza **log(ingreso)** como variable de respuesta en el modelo.
+
+```{r}
+#| echo: false
+ggplot(df_100, aes(x = posicion, y = log_ingreso, fill = posicion)) +
+  geom_boxplot() +
+  labs(title = "Log(Ingreso) por posicion ocupacional",
+       x = "Posicion", y = "log(Ingreso)") +
+  theme_minimal()
+```
+
+Los boxplots revelan diferencias estructurales significativas entre las tres categorías:
+
+**Empleados del gobierno:** presentan la mayor homogeneidad salarial, reflejada en una caja compacta con menor dispersión. Esto es consistente con los sistemas de escalas salariales estandarizadas del sector público.
+
+**Empleados de empresa particular:** muestran una distribución moderada, pero con presencia de valores atípicos inferiores, indicando que un subgrupo del sector privado percibe ingresos considerablemente bajos respecto al resto.
+
+**Trabajadores por cuenta propia:** exhiben la mayor variabilidad de los tres grupos, con bigotes amplios y alta dispersión intercuartílica, reflejando la coexistencia de profesionales independientes con ingresos elevados y trabajadores informales con ingresos muy reducidos.
+
+**Conclusión:** la posición ocupacional genera diferencias sistemáticas en los niveles salariales y es una variable explicativa relevante para el modelo.
+
+```{r}
+#| echo: false
+ggplot(df_100, aes(x = sexo, y = log_ingreso, fill = sexo)) +
+  geom_boxplot() +
+  labs(title = "Log(Ingreso) por sexo",
+       x = "Sexo", y = "log(Ingreso)") +
+  theme_minimal()
+```
+
+Los resultados evidencian una brecha salarial entre hombres y mujeres. La mediana del logaritmo del ingreso es ligeramente superior en los hombres, equivalente a una diferencia aproximada de **\$1.8 millones** en la escala original.
+
+La distribución del ingreso femenino presenta mayor variabilidad hacia la parte inferior, con tres valores atípicos por debajo del bigote inferior, mientras que la distribución masculina no registra atípicos. Los bigotes del grupo femenino son más amplios hacia abajo, indicando mayor concentración de ingresos bajos en dicho grupo.
+
+**Conclusión:** el sexo tiene potencial explicativo en el modelo, siendo coherente con la literatura sobre desigualdad salarial de género en el mercado laboral colombiano.
+
+```{r}
+#| echo: false
+par(mfrow = c(2,3))
+plot(df_100$edad, df_100$log_ingreso, 
+     main = "Edad vs log(Ingreso)", xlab = "Edad", ylab = "log(Ingreso)", pch = 19)
+plot(df_100$horas, df_100$log_ingreso, 
+     main = "Horas vs log(Ingreso)", xlab = "Horas/semana", ylab = "log(Ingreso)", pch = 19)
+plot(df_100$educacion, df_100$log_ingreso, 
+     main = "Educación vs log(Ingreso)", xlab = "Nivel educativo", ylab = "log(Ingreso)", pch = 19)
+plot(df_100$grado, df_100$log_ingreso, 
+     main = "Grado vs log(Ingreso)", xlab = "Grado aprobado", ylab = "log(Ingreso)", pch = 19)
+plot(df_100$meses_trab, df_100$log_ingreso, 
+     main = "Meses trabajados vs log(Ingreso)", xlab = "Meses", ylab = "log(Ingreso)", pch = 19)
+
+```
+
+Los gráficos de dispersión muestran el siguiente comportamiento:
+
+**Nivel educativo:** relación positiva más clara y consistente. A mayor nivel educativo, mayor es el ingreso observado. Es la variable continua de mayor poder explicativo individual.
+
+**Horas de trabajo por semana:** tendencia positiva moderada. Mayor número de horas se asocia con ingresos más altos, lo cual es esperable económicamente.
+
+**Edad, grado aprobado y meses trabajados:** no muestran patrones lineales evidentes con el log(ingreso), sugiriendo una contribución explicativa limitada de forma individual.
+
+```{r}
+#| echo: false
+cor(df_100[, c("log_ingreso", "horas", "edad", "educacion", "grado", "meses_trab")], 
+    use = "complete.obs")
+```
+
+La matriz de correlaciones confirma los hallazgos gráficos:
+
+**Educación** registra la correlación más alta con el log(ingreso), consolidándose como el principal predictor cuantitativo del modelo.
+
+Se detecta una **correlación de \~0.60 entre educación y grado**, lo que constituye una alerta de multicolinealidad entre estos dos predictores. Esta situación deberá evaluarse con el **Factor de Inflación de la Varianza (VIF)** en la fase de ajuste del modelo.
+
+```{r}
+#| echo: false
+table(df_100$posicion)
+table(df_100$sexo)
+table(df_100$posicion, df_100$sexo)
+```
+
+La tabla de frecuencias confirma que la muestra está balanceada entre las tres posiciones ocupacionales (\~33-34 individuos por grupo), resultado del muestreo estratificado aplicado. La distribución cruzada con sexo muestra que ninguna categoría ocupacional concentra de forma excesiva a un solo grupo, lo que garantiza comparaciones válidas entre grupos y condiciones adecuadas para el ajuste del modelo de regresión lineal múltiple.
+
+## Conclusión General
+
+El nivel educativo es el principal determinante del ingreso laboral en Colombia, seguido de la posición ocupacional y el sexo del trabajador. Las horas semanales muestran una contribución positiva moderada, mientras que la edad, el año de grado y los meses trabajados presentan menor relevancia explicativa en términos descriptivos.
+
+La transformación logarítmica del ingreso se justifica plenamente ante la asimetría observada. La posible multicolinealidad entre educación y grado debe tratarse en etapas posteriores, ya sea eliminando una de las variables, combinándolas, o mediante técnicas de regularización.
+
+En conjunto, los resultados son coherentes con la **teoría del capital humano** y con la evidencia empírica sobre el mercado laboral colombiano, proveyendo una base sólida para la estimación del modelo de regresión lineal múltiple.

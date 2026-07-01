@@ -16,11 +16,13 @@ format:
     include-in-header:
       text: |
         \usepackage{scrlayer-scrpage}
+        \usepackage{float}
         \pagestyle{scrheadings}
         \ihead{\bfseries Proyecto RLM -- Entrega 1}
         \setkomafont{pageheadfoot}{\normalfont\small}
         \KOMAoptions{headsepline=true}
 ---
+
 ```{=latex}
 \begin{titlepage}
 \centering
@@ -56,24 +58,92 @@ format:
 \newpage
 ```
 
+# Enunciado del proyecto
 
+El proyecto consiste en buscar una base de datos con datos colombianos que contenga una variable de respuesta continua (𝑌), al menos cinco covariables continuas (𝑋) y una variable categórica (𝑍) con al menos tres categorías. Los análisis se realizan con máximo 100 registros. El proyecto tiene tres entregas y una exposición final.
+
+1.  Contextualizar el fenómeno a modelar: explicar el significado de la variable de respuesta y las covariables, la relevancia del estudio y su objetivo. Establecer dos hipótesis que se desean probar con el modelo.
+
+2.  Realizar un análisis descriptivo exhaustivo y pertinente para el tipo de modelo que se va a aplicar.
 
 # Introducción
 
 En el presente proyecto se desarrolla un modelo de regresión lineal múltiple para analizar los factores que influyen en el ingreso mensual de profesionales en Colombia. Se consideran variables relacionadas con características laborales, educativas y demográficas, con el propósito de identificar los determinantes más relevantes del salario y cuantificar su impacto sobre los ingresos.
 
+```{=latex}
+\section{Contextualización del problema}
 
-# Contextualización del problema
+El ingreso laboral es una de las variables centrales para el estudio del bienestar
+economico y del funcionamiento del mercado de trabajo. Desde la teoria del capital
+humano, propuesta originalmente por Mincer, se plantea que el salario de un
+individuo puede explicarse en buena medida por su nivel de escolaridad y por su
+experiencia laboral entendida esta ultima como una proxy del entrenamiento
+adquirido en el puesto de trabajo \cite{mincer1974}. Este marco teorico dio origen
+a la conocida \emph{ecuación de Mincer}, que modela el logaritmo del ingreso como
+funcion lineal de la educación y de la experiencia (y su forma cuadratica) y que
+constituye hasta hoy el punto de partida estandar para el analisis empirico de los
+determinantes salariales.
 
-El ingreso laboral constituye uno de los principales indicadores del bienestar económico de las personas y de las condiciones del mercado laboral. En Colombia, los salarios pueden verse influenciados por diversos factores relacionados con la experiencia laboral, el nivel educativo, las características demográficas y el tipo de ocupación desempeñada por cada trabajador.
+En el caso colombiano, esta relacion ha sido documentada de manera consistente.
+Núñez y Sánchez \cite{nunez1998} utilizando informacion de encuestas de hogares
+del DANE encuentran que la escolaridad ha sido el factor con mayor poder
+explicativo sobre los diferenciales de ingreso laboral en el pais, y que su efecto
+se ha mantenido estable a lo largo de distintos periodos. En la misma linea
+Guataquí et al. \cite{guataqui}, con datos de la Gran Encuesta Integrada de
+Hogares (GEIH), muestran que ademas de la educacion, variables como la posicion
+ocupacional y la experiencia potencial explican una parte relevante de la
+heterogeneidad salarial observada, y advierten sobre la importancia de separar
+estos efectos entre asalariados y trabajadores por cuenta propia, dado que ambos
+grupos responden a estructuras de determinacion de ingresos distintas.
 
-Comprender la relación entre estos factores y el ingreso laboral resulta fundamental para analizar las desigualdades salariales existentes en el mercado de trabajo y para identificar cuáles características tienen una mayor incidencia sobre los ingresos de los trabajadores. Además, este tipo de análisis aporta evidencia útil para el diseño de políticas públicas orientadas al fortalecimiento del empleo, la educación y la productividad laboral.
+Estudios mas recientes del banco de la republica \cite{banrep2021} confirman que
+estos patrones persisten e incluso se intensifican en contextos de choques
+economicos: al modelar los determinantes del ingreso laboral para el periodo
+2010-2019, encuentran que la brecha salarial asociada al sexo del trabajador y a
+la posicion ocupacional continua siendo estadisticamente significativa una vez
+controlado por nivel educativo. A nivel de subgrupos poblacionales especificos,
+Panorama Económico \cite{panorama2019} aplica una ecuación minceriana a
+profesionales en economia y encuentra que un año adicional de formacion escolar
+incrementa significativamente la probabilidad de percibir ingresos mas altos,
+evidenciando que el efecto de la educacion sobre el salario no es homogeneo entre
+grupos ocupacionales, sino que varia segun el perfil profesional analizado.
 
-En este proyecto se propone desarrollar un modelo de regresión lineal múltiple con el propósito de explicar y predecir el ingreso laboral de los trabajadores en Colombia a partir de variables relacionadas con la intensidad de trabajo, la experiencia laboral, el nivel educativo alcanzado, las características demográficas y la posición ocupacional.
+En conjunto, esta literatura sugiere que un modelo del ingreso laboral en Colombia
+debe incorporar, como minimo, variables asociadas a la educacion, la experiencia o
+antigüedad laboral, la posición ocupacional y el sexo del trabajador, dado que son
+los determinantes que de manera recurrente resultan significativos en los
+estudios previos. El presente proyecto retoma este marco para proponer un modelo
+de regresión lineal multiple sobre una muestra de trabajadores colombianos
+incluyendo adicionalmente variables como la intensidad de trabajo (horas
+semanales) y el año de graduacion, con el fin de evaluar si estos factores
+adicionales aportan poder explicativo mas alla de lo ya documentado en la
+literatura.
 
-# Objetivo general
+\section{Objetivo general}
 
-Desarrollar un modelo de regresión lineal múltiple que permita explicar el ingreso laboral de los trabajadores en Colombia mediante variables relacionadas con las horas de trabajo, la experiencia laboral reciente, la posición ocupacional, la edad, el nivel educativo, el año de grado alcanzado y el sexo al nacer.
+Desarrollar un modelo de regresión lineal multiple que permita explicar el
+logaritmo del ingreso laboral mensual de los trabajadores en Colombia a partir de
+variables asociadas a la teoria del capital humano y a la literatura empirica
+sobre determinantes salariales en el pais, especificamente las horas de trabajo
+semanales, la experiencia laboral reciente, la posicion ocupacional, la edad, el
+nivel educativo, el año de grado alcanzado y el sexo del trabajador.
+
+\section{Relevancia del estudio}
+
+La identificacion de los factores que determinan los ingresos laborales es un
+tema central en la economia laboral y ha sido ampliamente estudiado en Colombia
+desde la perspectiva del capital humano \cite{mincer1974, nunez1998}. Sin embargo,
+buena parte de esta literatura se ha concentrado en variables de escolaridad y
+experiencia, dejando en un segundo plano el análisis conjunto con variables como
+la intensidad y continuidad laboral (horas trabajadas y meses de ocupación en el
+último año). Este proyecto busca aportar evidencia adicional sobre el peso
+relativo de estos factores frente a los determinantes tradicionales, replicando
+ademas la evidencia existente sobre la brecha salarial asociada al sexo y a la
+posicion ocupacional documentada por el banco de la republica \cite{banrep2021}.
+Los resultados permitiran establecer que características tienen una influencia
+significativa sobre los salarios en la muestra analizada y contrastar estos
+hallazgos con lo reportado en la literatura previa.
+```
 
 # Descripción de las variables
 
@@ -128,7 +198,7 @@ $$Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\beta_3X_{3i}+\beta_4X_{4i}+\beta_5X_{
 donde:
 
 | Símbolo | Descripción |
-|-------------------------|------------------------------------------------|
+|-------------------------|-----------------------------------------------|
 | $Y_i$ | Ingreso laboral mensual del trabajador $i$. |
 | $X_{1}$ | Horas de trabajo por semana. |
 | $X_{2}$ | Meses trabajados en los últimos 12 meses. |
@@ -140,10 +210,6 @@ donde:
 | $\beta_0$ | Intercepto del modelo. |
 | $\beta_1,\ldots,\beta_7$ | Coeficientes asociados a las variables explicativas. |
 | $\varepsilon_i$ | Error aleatorio del modelo. |
-
-# Relevancia del estudio
-
-La identificación de los factores que determinan los ingresos laborales es un tema de gran interés en economía laboral y ciencias sociales. Los resultados obtenidos permitirán establecer qué características tienen una influencia significativa sobre los salarios y cuantificar la magnitud de dichos efectos. Asimismo, el análisis contribuirá a comprender las diferencias salariales asociadas al nivel educativo, la experiencia laboral, la posición ocupacional y otras características individuales.
 
 # Hipótesis de investigación
 
@@ -255,6 +321,8 @@ Ademas la edad promedio es de 41 años en un rango de 17-65 años, las horas sem
 
 ```{r}
 #| echo: false
+#| label: fig-hist-ingreso
+#| fig-cap: "Distribución del ingreso laboral mensual y su transformación logarítmica."
 par(mfrow = c(1,2))
 hist(df_100$ingreso, main = "Ingreso laboral", 
      xlab = "Ingreso", col = "steelblue")
@@ -262,20 +330,22 @@ hist(df_100$log_ingreso, main = "Log(Ingreso laboral)",
      xlab = "log(Ingreso)", col = "steelblue")
 ```
 
-El ingreso laboral mensual presenta una distribución marcadamente asimétrica hacia la derecha. La media muestral (\~\$2.37 millones) supera ampliamente la mediana (\~\$1.5 millones), evidenciando observaciones extremas en la cola superior, con valores que alcanzan los \$34 millones mensuales. Esta asimetría viola el supuesto de normalidad requerido por el modelo de regresión lineal.
+Como se observa en la @fig-hist-ingreso, el ingreso laboral mensual presenta una distribución marcadamente asimétrica hacia la derecha. La media muestral (\~\$2.37 millones) supera ampliamente la mediana (\~\$1.5 millones), evidenciando observaciones extremas en la cola superior, con valores que alcanzan los \$34 millones mensuales. Esta asimetría viola el supuesto de normalidad requerido por el modelo de regresión lineal.
 
 Al aplicar la transformación logarítmica, la distribución resultante se aproxima a una normal, estabilizando la varianza y reduciendo el efecto de los valores atípicos. Esta decisión es coherente con la teoría económica, que reconoce que los salarios siguen distribuciones log-normales. Por lo tanto, se utiliza **log(ingreso)** como variable de respuesta en el modelo.
 
 ```{r}
 #| echo: false
+#| label: fig-box-posicion
+#| fig-cap: "Distribución del logaritmo del ingreso según posición ocupacional."
 ggplot(df_100, aes(x = posicion, y = log_ingreso, fill = posicion)) +
   geom_boxplot() +
   labs(title = "Log(Ingreso) por posicion ocupacional",
        x = "Posicion", y = "log(Ingreso)") +
-  theme_minimal()
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
-Los boxplots revelan diferencias estructurales significativas entre las tres categorías:
+La @fig-box-posicion revela diferencias estructurales entre las tres categorías:
 
 **Empleados del gobierno:** presentan la mayor homogeneidad salarial, reflejada en una caja compacta con menor dispersión. Esto es consistente con los sistemas de escalas salariales estandarizadas del sector público.
 
@@ -287,6 +357,8 @@ Los boxplots revelan diferencias estructurales significativas entre las tres cat
 
 ```{r}
 #| echo: false
+#| label: fig-box-sex
+#| fig-cap: "Distribución del logaritmo del ingreso por sexo."
 ggplot(df_100, aes(x = sexo, y = log_ingreso, fill = sexo)) +
   geom_boxplot() +
   labs(title = "Log(Ingreso) por sexo",
@@ -294,7 +366,7 @@ ggplot(df_100, aes(x = sexo, y = log_ingreso, fill = sexo)) +
   theme_minimal()
 ```
 
-Los resultados evidencian una brecha salarial entre hombres y mujeres. La mediana del logaritmo del ingreso es ligeramente superior en los hombres, equivalente a una diferencia aproximada de **\$1.8 millones** en la escala original.
+Los resultados en la @fig-box-sex evidencian una brecha salarial entre hombres y mujeres. La mediana del logaritmo del ingreso es ligeramente superior en los hombres, equivalente a una diferencia aproximada de **\$1.8 millones** en la escala original.
 
 La distribución del ingreso femenino presenta mayor variabilidad hacia la parte inferior, con tres valores atípicos por debajo del bigote inferior, mientras que la distribución masculina no registra atípicos. Los bigotes del grupo femenino son más amplios hacia abajo, indicando mayor concentración de ingresos bajos en dicho grupo.
 
@@ -302,6 +374,12 @@ La distribución del ingreso femenino presenta mayor variabilidad hacia la parte
 
 ```{r}
 #| echo: false
+#| label: fig-scatter-covariables
+#| fig-cap: "Relación entre log(ingreso) y las covariables continuas: edad, horas semanales, nivel educativo, grado aprobado y meses trabajados."
+#| fig-pos: "H"
+#| fig-width: 7
+#| fig-height: 4.5
+
 par(mfrow = c(2,3))
 plot(df_100$edad, df_100$log_ingreso, 
      main = "Edad vs log(Ingreso)", xlab = "Edad", ylab = "log(Ingreso)", pch = 19)
@@ -316,7 +394,7 @@ plot(df_100$meses_trab, df_100$log_ingreso,
 
 ```
 
-Los gráficos de dispersión muestran el siguiente comportamiento:
+Los gráficos de dispersión observados en la @fig-scatter-covariables muestran el siguiente comportamiento:
 
 **Nivel educativo:** relación positiva más clara y consistente. A mayor nivel educativo, mayor es el ingreso observado. Es la variable continua de mayor poder explicativo individual.
 
@@ -326,11 +404,31 @@ Los gráficos de dispersión muestran el siguiente comportamiento:
 
 ```{r}
 #| echo: false
-cor(df_100[, c("log_ingreso", "horas", "edad", "educacion", "grado", "meses_trab")], 
-    use = "complete.obs")
+#| label: tbl-correlaciones
+#| tbl-cap: "Matriz de correlaciones entre el logaritmo del ingreso y las covariables continuas."
+#| tbl-pos: "H"
+mat_cor <- cor(df_100[, c("log_ingreso", "horas", "edad", "educacion", "grado", "meses_trab")], 
+               use = "complete.obs")
+
+library(gt)
+library(dplyr)
+library(knitr)
+
+as.data.frame(round(mat_cor, 3)) |>
+  tibble::rownames_to_column("Variable") |>
+  gt() |>
+  cols_align(align = "center", columns = -Variable) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = Variable)
+  ) |>
+  tab_options(
+    table.font.size = px(12),
+    data_row.padding = px(4)
+  )
 ```
 
-La matriz de correlaciones confirma los hallazgos gráficos:
+La @tbl-correlaciones confirma los hallazgos gráficos:
 
 **Educación** registra la correlación más alta con el log(ingreso), consolidándose como el principal predictor cuantitativo del modelo.
 
@@ -338,12 +436,21 @@ Se detecta una **correlación de \~0.60 entre educación y grado**, lo que const
 
 ```{r}
 #| echo: false
-table(df_100$posicion)
-table(df_100$sexo)
-table(df_100$posicion, df_100$sexo)
+#| label: tbl-freq-posicion
+#| tbl-cap: "Distribución de la muestra por posición ocupacional."
+tabla_pos <- table(df_100$posicion)
+kable(as.data.frame(tabla_pos), col.names = c("Posición ocupacional", "Frecuencia"))
 ```
 
-La tabla de frecuencias confirma que la muestra está balanceada entre las tres posiciones ocupacionales (\~33-34 individuos por grupo), resultado del muestreo estratificado aplicado. La distribución cruzada con sexo muestra que ninguna categoría ocupacional concentra de forma excesiva a un solo grupo, lo que garantiza comparaciones válidas entre grupos y condiciones adecuadas para el ajuste del modelo de regresión lineal múltiple.
+```{r}
+#| label: tbl-freq-posicion-sexo
+#| tbl-cap: "Distribución cruzada de posición ocupacional y sexo."
+
+tabla_cruzada <- table(df_100$posicion, df_100$sexo)
+kable(as.data.frame.matrix(tabla_cruzada))
+```
+
+La @tbl-freq-posicion muestra que la muestra está balanceada entre las tres posiciones ocupacionales (\~33-34 individuos por grupo). La @tbl-freq-posicion-sexo confirma que ninguna categoría ocupacional concentra de forma excesiva a un solo grupo, lo que garantiza comparaciones válidas entre grupos y condiciones adecuadas para el ajuste del modelo de regresión lineal múltiple.
 
 ## Conclusión General
 
@@ -352,3 +459,33 @@ El nivel educativo es el principal determinante del ingreso laboral en Colombia,
 La transformación logarítmica del ingreso se justifica plenamente ante la asimetría observada. La posible multicolinealidad entre educación y grado debe tratarse en etapas posteriores, ya sea eliminando una de las variables, combinándolas, o mediante técnicas de regularización.
 
 En conjunto, los resultados son coherentes con la **teoría del capital humano** y con la evidencia empírica sobre el mercado laboral colombiano, proveyendo una base sólida para la estimación del modelo de regresión lineal múltiple.
+
+```{=latex}
+\begin{thebibliography}{9}
+
+\bibitem{mincer1974}
+Mincer, J. (1974). \textit{Schooling, Experience, and Earnings}. Columbia
+University Press.
+
+\bibitem{nunez1998}
+Núñez, J. \& Sánchez, F. (1998). Educación y salarios relativos en Colombia,
+1976-1995: Determinantes, evolución e implicaciones para la distribución del
+ingreso. \textit{Archivos de Macroeconomía}, No. 74. Departamento Nacional de
+Planeación, Bogotá.
+
+\bibitem{guataqui}
+Guataquí, J. C., García, A. \& Rodríguez, M. Estimaciones de los determinantes de
+los ingresos laborales en Colombia. Banco de la República.
+
+\bibitem{banrep2021}
+Banco de la República (2021). Desigualdades del ingreso en Colombia: ¿cuáles son
+sus determinantes y cómo se han afectado por la pandemia del Covid-19?
+\textit{Ensayos sobre Política Económica}, No. 101.
+
+\bibitem{panorama2019}
+Determinantes de los ingresos laborales de los economistas en Colombia: un
+análisis de modelación microeconométrica (2019). \textit{Panorama Económico},
+Universidad de Cartagena.
+
+\end{thebibliography}
+```

@@ -7,6 +7,8 @@ editor: visual
 
 ```{r}
 #Es necesario tener la libreria tidyverse
+library(tidyverse)
+library(dplyr)
 ocupados=read.csv("Ocupados.CSV", sep = ";", encoding = "latin1")
 names(ocupados)
 
@@ -62,10 +64,10 @@ df_100 <- df %>%
 ##Analisis Descriptivo, necesita libreria ggplot2
 summary(df_100)
 ```
+
 ##Analisis Descriptivo
 
 El ingreso laboral mensual presenta una distribucion altamente asimetrica, la media de 2.37M supera ampliamente la mediana de 1.5M, evidenciando la presencia de valores en la cola derecha de esta distribucion, el maximo de 34M aumenta la media hacia arriba. Esto justifica trabajar con el logaritmo de los ingresos como variable de respuesta del modelo
-
 
 Ademas la edad promedio es de 41 años en un rango de 17-65 años, las horas semanales promedio de trabajo son 44, la mayoria trabajo los 12 meses completos del año (mediana y Q3 en 12)
 
@@ -76,6 +78,7 @@ hist(df_100$ingreso, main = "Ingreso laboral",
 hist(df_100$log_ingreso, main = "Log(Ingreso laboral)", 
      xlab = "log(Ingreso)", col = "steelblue")
 ```
+
 Note del histograma de ingreso laboral se puede apreciar el sesgo que presentan los datos a la derecha, esta misma viola el supuesto de normalidad, los salarios altos son poco pero disparan la media
 
 Ahora del histograma log(Ingreso laboral) podemos observar como corrige el sesgo notablemente, la distribucion se aproxima a una normal
@@ -89,6 +92,7 @@ ggplot(df_100, aes(x = posicion, y = log_ingreso, fill = posicion)) +
        x = "Posicion", y = "log(Ingreso)") +
   theme_minimal()
 ```
+
 Observe, del empleado del gobierno podemos notar como su caja es mas compacta lo que indica menor dispersion, los salarios del sector publico son mas homogeneos
 
 El empleado particular tiene valores atipicos (varios puntos por debajo del bigote) hay personas con ingresos muy bajos
@@ -102,6 +106,7 @@ ggplot(df_100, aes(x = sexo, y = log_ingreso, fill = sexo)) +
        x = "Sexo", y = "log(Ingreso)") +
   theme_minimal()
 ```
+
 observe como la mediana de los hombres es ligeramente mas alta con respecto al de las mujeres, llevandolo a la escala original serian aproximadamente 1.8M de diferencia, ademas el bigote llega a un valor inferior mas alta que el que llega el de las mujeres
 
 Analice como existen tres valores atipicos inferiores y en la de los hombres no existe ninguno ademas la caja esta ligeramente mas baja con respecto a la de los hombres y los bigotes de las mujeres es mucho mas amplio con respecto a la de los hombres indican su mayor variabilidad hacia abajo
@@ -120,12 +125,14 @@ plot(df_100$meses_trab, df_100$log_ingreso,
      main = "Meses trabajados vs log(Ingreso)", xlab = "Meses", ylab = "log(Ingreso)", pch = 19)
 
 ```
+
 Analizando estos graficos de dispersion, observamos como hay una relacion positiva del nivel educativo y las horas a la semana con respecto al logaritmo del ingreso, las otras no aportan informacion relevante
 
 ```{r}
 cor(df_100[, c("log_ingreso", "horas", "edad", "educacion", "grado", "meses_trab")], 
     use = "complete.obs")
 ```
+
 Educacion tiene la correlacion mas fuerte con el logaritmo del ingreso, algo importante es que la correlacion de educacion y grado es 0.60, hay alerta de multicolinealidad.
 
 ```{r}
@@ -133,5 +140,5 @@ table(df_100$posicion)
 table(df_100$sexo)
 table(df_100$posicion, df_100$sexo)
 ```
-esta tabla de frecuencias nos enseña como las muestras estan balanceadas entre posiciones
 
+esta tabla de frecuencias nos enseña como las muestras estan balanceadas entre posiciones

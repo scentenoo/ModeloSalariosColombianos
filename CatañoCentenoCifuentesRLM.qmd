@@ -1,47 +1,67 @@
 ---
-title: "Proyecto RLM, Análisis de Regresión Entrega 1"
-author: "Samir Alejandro Centeno Torrado 
-         Yuliany Cifuentes Rondon
-         Daniela Cataño Hernández"
+lang: es
+colorlinks: true
+linkcolor: black
+citecolor: black
+urlcolor: black
 format: 
- html:
-    embed-resources: True
-editor: visual
+  pdf:
+    geometry:
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=3cm
+      - right=3cm
+    number-sections: true
+    toc: false
+    include-in-header:
+      text: |
+        \usepackage{scrlayer-scrpage}
+        \pagestyle{scrheadings}
+        \ihead{\bfseries Proyecto RLM -- Entrega 1}
+        \setkomafont{pageheadfoot}{\normalfont\small}
+        \KOMAoptions{headsepline=true}
 ---
+```{=latex}
+\begin{titlepage}
+\centering
+\includegraphics[width=10cm]{bandera-01.jpg}\\[0.2cm]
 
-::: {style="text-align:center; padding-top:80px; padding-bottom:120px;"}
-# MODELADO DE LOS INGRESOS MENSUALES DE EMPLEADOS EN COLOMBIA
+{\Large \textbf{Universidad Nacional de Colombia}}\\[0.15cm]
+{\normalsize Departamento de Estadística -- Facultad de Ciencias}\\[2cm]
 
-## Aplicación de un Modelo de Regresión Lineal Múltiple
+{\normalsize Análisis de Regresión – 3006918}\\[2cm]
 
-<br><br>
+{\bfseries MODELADO DE LOS INGRESOS MENSUALES DE EMPLEADOS EN COLOMBIA}\\[0.15cm]
+{\small Aplicación de un Modelo de Regresión Lineal Múltiple}\\[2cm]
 
-**Universidad Nacional de Colombia**
+{\small Docente: Isabel Cristina Ramírez Guevara}\\[2cm]
 
-**Facultad de Ciencias** <br>
+{\small Yuliany Cifuentes Rondon}\\
+{\small Daniela Cataño Hernández}\\
+{\small Samir Alejandro Centeno Torrado}\\[2cm]
 
-**Asignatura:** Análisis de Regresión
+\vfill
+{\small Medellín, Colombia \quad -- \quad Semestre 2026-1}
 
-**Docente:** Isabel Cristina Ramirez Guevara
-
-<br><br>
-
-**Presentado por:** Samir Alejandro Centeno Torrado, Yuliany Cifuentes Rondon y Daniela Cataño Hernández
-
-<br><br><br>
-
-**Bello, Antioquia - Colombia**
-
-**2026**
-:::
+\end{titlepage}
+\thispagestyle{empty}
 
 \newpage
+\renewcommand*\contentsname{}
+\begin{center}
+{\Large\bfseries Índice}
+\end{center}
+\vspace{0.5cm}
+\tableofcontents
+\newpage
+```
+
+
 
 # Introducción
 
 En el presente proyecto se desarrolla un modelo de regresión lineal múltiple para analizar los factores que influyen en el ingreso mensual de profesionales en Colombia. Se consideran variables relacionadas con características laborales, educativas y demográficas, con el propósito de identificar los determinantes más relevantes del salario y cuantificar su impacto sobre los ingresos.
 
-## 1.
 
 # Contextualización del problema
 
@@ -108,7 +128,7 @@ $$Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\beta_3X_{3i}+\beta_4X_{4i}+\beta_5X_{
 donde:
 
 | Símbolo | Descripción |
-|------------------------|------------------------------------------------|
+|-------------------------|------------------------------------------------|
 | $Y_i$ | Ingreso laboral mensual del trabajador $i$. |
 | $X_{1}$ | Horas de trabajo por semana. |
 | $X_{2}$ | Meses trabajados en los últimos 12 meses. |
@@ -154,10 +174,12 @@ $$H_0:\beta_5=0$$
 El nivel educativo más alto alcanzado tiene un efecto significativo sobre el ingreso laboral.
 
 $$H_1:\beta_5\neq 0$$
+
 ```{r}
 #| include: false
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
+
 ```{r}
 
 #| echo: false

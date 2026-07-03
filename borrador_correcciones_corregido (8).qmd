@@ -1,0 +1,443 @@
+---
+title: "Proyecto de Regresión Lineal Múltiple"
+subtitle: "Determinantes del ingreso laboral mensual en Colombia"
+author: ""
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+editor: visual
+---
+
+# Enunciado del proyecto
+
+El proyecto consiste en buscar una base de datos con datos colombianos que contenga una variable de respuesta continua ($Y$), al menos cinco covariables continuas ($X$) y una variable categórica ($Z$) con al menos tres categorías. Los análisis se realizan con máximo 100 registros. El proyecto tiene tres entregas y una exposición final.
+
+1.  Contextualizar el fenómeno a modelar: explicar el significado de la variable de respuesta y las covariables, la relevancia del estudio y su objetivo. Establecer dos hipótesis que se desean probar con el modelo.
+2.  Realizar un análisis descriptivo exhaustivo y pertinente para el tipo de modelo que se va a aplicar.
+
+# Introducción
+
+El ingreso laboral es uno de los principales determinantes del bienestar de los hogares colombianos y uno de los indicadores más utilizados para analizar la desigualdad económica del país. Explicar por qué unos trabajadores ganan más que otros es una pregunta central de la economía laboral, y la respuesta habitual —propuesta por Mincer (1974)— es que el ingreso depende principalmente de la acumulación de capital humano (educación y experiencia), de la intensidad con que se trabaja (horas) y de las características del empleo (tipo de vinculación y sector económico).
+
+En Colombia, donde la informalidad laboral y la heterogeneidad sectorial son altas, estos factores no siempre se traducen en el mismo nivel de ingreso: dos personas con la misma escolaridad pueden percibir remuneraciones muy distintas según su posición ocupacional o la rama de actividad en la que trabajan. Este proyecto busca cuantificar, a partir de microdatos de la Gran Encuesta Integrada de Hogares (GEIH), qué tanto explican estas variables la variabilidad del ingreso laboral mensual.
+
+## Relevancia
+
+Comprender los determinantes del ingreso laboral es relevante tanto desde la perspectiva académica como de política pública. Desde la teoría del capital humano, permite contrastar empíricamente si la educación y la experiencia se traducen efectivamente en mayores retornos salariales en el mercado colombiano. Desde la política pública, identificar qué variables —además de la educación— están asociadas a mayores o menores ingresos (posición ocupacional, sector económico, antigüedad) aporta evidencia útil para el diseño de políticas de formalización laboral, empleo y reducción de brechas salariales.
+
+## Variables seleccionadas
+
+```{r tabla-variables, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+
+tabla_vars <- data.frame(
+  Nombre = c(
+    "Logaritmo del ingreso laboral mensual",
+    "Horas trabajadas por semana",
+    "Años de escolaridad",
+    "Experiencia potencial",
+    "Experiencia potencial al cuadrado",
+    "Antigüedad en el empleo actual",
+    "Posición ocupacional",
+    "Rama de actividad económica"
+  ),
+  Codigo = c(
+    "INGLABO (transformada)",
+    "P6800",
+    "P3042 / P3042S1 (derivada)",
+    "P6040, P3042, P3042S1 (derivada)",
+    "Derivada de X3",
+    "P6426",
+    "P6430",
+    "RAMA2D_R4"
+  ),
+  Rol = c("Y", "X1", "X2", "X3", "X4", "X6", "X5 (Z1)", "X7 (Z2)"),
+  Tipo = c("Continua", "Continua", "Continua", "Continua", "Continua",
+           "Continua", "Categórica", "Categórica"),
+  Significado = c(
+    "Ingreso laboral mensual transformado a escala logarítmica para reducir la asimetría de la distribución.",
+    "Intensidad del trabajo desarrollado durante la semana de referencia.",
+    "Años de educación formal aprobados; mide la acumulación de capital humano.",
+    "Edad - escolaridad - 6; aproxima los años potenciales de experiencia laboral.",
+    "Captura el efecto no lineal (rendimientos decrecientes) de la experiencia sobre el ingreso.",
+    "Meses en el empleo u ocupación actual; aproxima estabilidad y experiencia específica.",
+    "Forma de vinculación laboral (empleado particular, del gobierno, cuenta propia, etc.).",
+    "Sector económico (CIIU, 2 dígitos) en el que se desempeña el trabajador."
+  )
+)
+
+kable(tabla_vars, caption = "Variables seleccionadas, rol en el modelo y significado en el estudio.")
+```
+
+### Descripción detallada de las variables
+
+**Y: Logaritmo del ingreso laboral mensual.** La variable de respuesta corresponde al ingreso laboral mensual percibido por las personas ocupadas incluidas en la GEIH, expresado en pesos colombianos. Dado que en economía laboral es ampliamente reconocido que la distribución de los ingresos presenta una marcada asimetría positiva, la variable dependiente se transforma mediante el logaritmo natural, lo que reduce la asimetría, disminuye la influencia de valores extremos y permite interpretar los coeficientes del modelo como variaciones porcentuales aproximadas del ingreso (especificación clásica de Mincer, 1974).
+
+**X1: Horas trabajadas por semana.** Número de horas que la persona trabajó habitualmente durante la semana de referencia en su ocupación principal. Se espera una relación positiva con el ingreso.
+
+**X2: Años de escolaridad.** Construida a partir del nivel educativo alcanzado (P3042) y el último grado aprobado dentro de ese nivel (P3042S1), siguiendo la convención estándar de conversión a años acumulados de educación usada en estudios de mercado laboral con la GEIH.
+
+**X3: Experiencia potencial.** Se calcula como $\text{Edad} - \text{Escolaridad} - 6$, asumiendo que las personas ingresan al sistema educativo aproximadamente a los seis años y comienzan su vida laboral al finalizar su formación.
+
+**X4: Experiencia potencial al cuadrado.** Incorpora la relación cóncava entre experiencia e ingreso: los ingresos aumentan con la experiencia, pero a una tasa decreciente.
+
+**X5 (Z1): Posición ocupacional.** Forma de vinculación del trabajador con el mercado laboral (empleado particular, empleado del gobierno, cuenta propia, patrón, empleado doméstico, etc.). Variable categórica incorporada mediante variables dummy.
+
+**X6: Antigüedad en el empleo actual.** Meses que el trabajador lleva en su empleo u ocupación actual; aproxima estabilidad laboral y experiencia específica en la organización.
+
+**X7 (Z2): Rama de actividad económica.** Sector económico en el que se desempeña el trabajador, agrupado según la Clasificación Industrial Internacional Uniforme (CIIU) a 2 dígitos.
+
+### Verificación: independencia entre la variable respuesta y las covariables
+
+Antes de fijar el conjunto de covariables se verificó que ninguna de ellas sea, por construcción, un componente algebraico de la variable de respuesta. El ingreso laboral mensual (`inglabo`) es un campo **reportado directamente por el encuestado** en la GEIH —no una suma ni un producto de otras variables de la encuesta calculado por nosotros—, por lo que $Y=\ln(\text{inglabo})$ no se construye a partir de $X_1,\dots,X_7$. En particular:
+
+- $Y$ **no** es igual a horas × tarifa horaria, ni a la suma de sus componentes; el DANE la recoge como una única pregunta de ingreso total.
+- La escolaridad ($X_2$) y la experiencia potencial ($X_3$) se derivan de variables demográficas y educativas (`p3042`, `p3042s1`, `p6040`), **no del ingreso**, por lo que tampoco intervienen en la construcción de $Y$.
+- El resto de covariables ($X_1$ horas, $X_5$ posición, $X_6$ antigüedad, $X_7$ rama) provienen de preguntas independientes del módulo de ocupados y no participan en el cálculo de `inglabo`.
+
+Esto garantiza que la relación entre $Y$ y cada $X$ que se explora en el análisis descriptivo (y que luego se modelará) es una asociación empírica a estimar, y no una identidad matemática impuesta por la propia definición de las variables.
+
+## Objetivo
+
+Determinar qué características individuales (educación, experiencia), laborales (horas, antigüedad, posición ocupacional) y sectoriales (rama de actividad) explican el logaritmo del ingreso laboral mensual de los trabajadores colombianos, con el fin de aportar evidencia sobre los principales determinantes del ingreso en el mercado laboral del país.
+
+## Hipótesis
+
+Las siguientes hipótesis se desprenden directamente de la contextualización presentada en la Introducción y la Relevancia (teoría del capital humano de Mincer, 1974, y la heterogeneidad del mercado laboral colombiano). Cada una se plantea de forma que pueda traducirse, en la etapa de modelación, en el signo y la significancia esperados de parámetros específicos del modelo $\ln(Y_i)=\beta_0+\beta_1X_{1i}+\dots+\beta_7X_{7i}+\varepsilon_i$.
+
+**Hipótesis 1: la escolaridad y la experiencia potencial explican una parte sustancial de la variabilidad del ingreso laboral.** De acuerdo con la teoría del capital humano, se espera que los trabajadores con mayor escolaridad y mayor experiencia potencial —hasta el punto en que los rendimientos empiezan a decrecer— perciban ingresos más altos. En términos del modelo, esta hipótesis se traduce en $\beta_2>0$ (escolaridad), $\beta_3>0$ (experiencia) y $\beta_4<0$ (experiencia al cuadrado), reflejando el perfil cóncavo típico de la ecuación de Mincer; se espera además que ambos coeficientes sean estadísticamente significativos.
+
+**Hipótesis 2: la posición ocupacional y la rama de actividad económica generan diferencias sistemáticas en el ingreso, incluso después de considerar la escolaridad y la experiencia.** Dada la heterogeneidad e informalidad del mercado laboral colombiano descrita en la Relevancia, se espera que existan brechas de ingreso entre categorías ocupacionales y sectoriales que la educación y la experiencia por sí solas no logran explicar. En el modelo, esto se traduce en que al menos algunos de los coeficientes asociados a las variables dummy de posición ocupacional ($\beta_5$) y de rama de actividad ($\beta_7$) —tomando como referencia "Empleado particular"— sean estadísticamente significativos y distintos de cero.
+
+# Análisis descriptivo
+
+## Información sobre la base de datos
+
+La base de datos utilizada corresponde a la Gran Encuesta Integrada de Hogares (GEIH), operativo de enero de 2024, publicada por el Departamento Administrativo Nacional de Estadística (DANE). Se utilizan dos de sus módulos:
+
+- **Ocupados**: contiene las variables laborales de las personas ocupadas (ingreso, horas trabajadas, posición ocupacional, antigüedad, rama de actividad, entre otras).
+- **Características generales, seguridad social en salud y educación**: contiene las variables demográficas y educativas (edad, nivel educativo, grado aprobado).
+
+Ambos módulos se identifican a nivel de persona mediante las llaves `directorio`, `secuencia_p` y `orden`, por lo que se unen (`left_join`) usando esa combinación.
+
+```{r}
+paquetes <- c("dplyr", "car", "ggplot2", "corrplot", "readr", "tidyr", "stringr", "knitr")
+instalar <- paquetes[!(paquetes %in% installed.packages()[, "Package"])]
+if (length(instalar)) install.packages(instalar)
+```
+
+```{r setup, message=FALSE, warning=FALSE}
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(car)
+library(corrplot)
+library(tidyr)
+library(stringr)
+library(knitr)
+```
+
+Quarto usa como directorio de trabajo la carpeta donde está guardado este archivo `.qmd`. Ajusta `ruta_datos` según dónde tengas los archivos `.CSV` de la GEIH. **Verifica el nombre exacto de la carpeta en tu explorador de archivos** (mayúsculas, guiones y guiones bajos deben coincidir exactamente):
+
+```{r rutas}
+# OJO: el nombre debe coincidir EXACTAMENTE con el de la carpeta en Windows,
+# incluyendo mayúsculas/minúsculas y el guion "-main" (no guion bajo "_main").
+ruta_datos <- "C:/Users/Daniela/Downloads/ModeloSalariosColombianos-main"
+```
+
+```{r lectura, message=FALSE, warning=FALSE}
+ocupados <- read_csv2(
+  file.path(ruta_datos, "Ocupados.CSV"),
+  show_col_types = FALSE
+)
+
+caracteristicas <- read_csv2(
+  file.path(ruta_datos, "Características generales, seguridad social en salud y educación.CSV"),
+  show_col_types = FALSE
+)
+
+names(ocupados) <- tolower(names(ocupados))
+names(caracteristicas) <- tolower(names(caracteristicas))
+
+llaves <- c("directorio", "secuencia_p", "orden")
+stopifnot(all(llaves %in% names(ocupados)))
+stopifnot(all(llaves %in% names(caracteristicas)))
+
+datos <- ocupados %>%
+  left_join(caracteristicas, by = llaves, relationship = "one-to-one")
+```
+
+```{r construccion-variables}
+# --- Escolaridad (años acumulados) ---------------------------------------
+anios_previos <- c(
+  "1" = 0, "2" = 0, "3" = 0, "4" = 5, "5" = 9, "6" = 9, "7" = 11,
+  "8" = 11, "9" = 13, "10" = 16, "11" = 17, "12" = 19, "13" = 21
+)
+niveles_semestres <- c("8", "9", "10", "11", "12", "13")
+
+datos <- datos %>%
+  mutate(
+    nivel_chr = as.character(p3042),
+    escolaridad = anios_previos[nivel_chr] +
+      ifelse(nivel_chr %in% niveles_semestres,
+             coalesce(p3042s1, 0) / 2,
+             coalesce(p3042s1, 0)),
+    escolaridad = ifelse(nivel_chr %in% c("1", "2"), 0, escolaridad)
+  )
+
+# --- Experiencia potencial y su cuadrado ----------------------------------
+datos <- datos %>%
+  mutate(
+    experiencia  = pmax(p6040 - escolaridad - 6, 0),
+    experiencia2 = experiencia^2
+  )
+
+# --- Log del ingreso -------------------------------------------------------
+datos <- datos %>%
+  filter(!is.na(inglabo), inglabo > 0) %>%
+  mutate(ln_ingreso = log(inglabo))
+
+# --- Variables categóricas ---------------------------------------------
+etiquetas_posicion <- c(
+  "1" = "Empleado_particular", "2" = "Empleado_gobierno",
+  "3" = "Empleado_domestico",  "4" = "Cuenta_propia",
+  "5" = "Patron_empleador",    "6" = "Trab_familiar_sin_remun",
+  "7" = "Trab_sin_remun_otros_hogares", "8" = "Jornalero_peon",
+  "9" = "Otro"
+)
+
+datos <- datos %>%
+  mutate(
+    posicion = factor(etiquetas_posicion[as.character(p6430)]),
+    rama     = factor(rama2d_r4)
+  )
+datos$posicion <- relevel(datos$posicion, ref = "Empleado_particular")
+
+# --- Selección y limpieza final -------------------------------------------
+datos_modelo <- datos %>%
+  rename(horas = p6800, antiguedad = p6426, ingreso = inglabo, edad = p6040) %>%
+  select(ingreso, ln_ingreso, horas, edad, escolaridad, experiencia, experiencia2,
+         antiguedad, posicion, rama) %>%
+  filter(complete.cases(.)) %>%
+  filter(horas > 0, horas <= 100,
+         escolaridad >= 0, escolaridad <= 25,
+         antiguedad >= 0)
+
+poblacion_n <- nrow(datos_modelo)
+```
+
+Tras la unión, la construcción de variables y la eliminación de registros incompletos o inconsistentes (horas fuera de rango, escolaridad fuera de rango, etc.), la base analítica de referencia queda con `r poblacion_n` observaciones.
+
+## Selección de la muestra
+
+Siguiendo la restricción del enunciado (máximo 100 registros), se aplicó un muestreo aleatorio simple (MAS) sobre la base analítica de referencia para obtener una muestra de $n=100$ observaciones. Bajo este esquema, cada individuo tuvo la misma probabilidad de selección:
+
+$$\pi_i = \frac{n}{N} = \frac{100}{`r poblacion_n`}$$
+
+```{r muestreo}
+set.seed(123)
+
+n_muestra <- 100
+muestra <- datos_modelo %>% slice_sample(n = n_muestra)
+
+fraccion_muestreo <- round(n_muestra / poblacion_n * 100, 2)
+```
+
+```{r tabla-muestreo, echo=FALSE}
+tabla_muestreo <- data.frame(
+  Parametro = c("Población de referencia (N)", "Tamaño de muestra (n)",
+                "Fracción de muestreo (n/N)", "Semilla aleatoria"),
+  Valor = c(poblacion_n, n_muestra, paste0(fraccion_muestreo, "%"), 123)
+)
+kable(tabla_muestreo, caption = "Parámetros del muestreo aleatorio simple")
+```
+
+## Base consolidada
+
+La base analítica final contiene 100 observaciones y 8 variables: la variable respuesta, cinco covariables continuas (horas, escolaridad, experiencia, experiencia al cuadrado y antigüedad) y dos variables categóricas (posición ocupacional y rama de actividad).
+
+```{r tabla-muestra, echo=FALSE}
+kable(head(muestra %>% select(ln_ingreso, horas, escolaridad, experiencia, experiencia2,
+                               antiguedad, posicion, rama), 10),
+      digits = 2,
+      caption = "Primeras diez observaciones de la base consolidada")
+```
+
+## Variable respuesta: logaritmo del ingreso laboral mensual
+
+```{r stats-y, echo=FALSE}
+skewness <- function(x) {
+  n <- length(x); m <- mean(x); s <- sd(x)
+  (sum((x - m)^3) / n) / s^3
+}
+
+media_y   <- round(mean(muestra$ln_ingreso), 3)
+mediana_y <- round(median(muestra$ln_ingreso), 3)
+sd_y      <- round(sd(muestra$ln_ingreso), 3)
+cv_y      <- round(sd_y / media_y * 100, 1)
+min_y     <- round(min(muestra$ln_ingreso), 3)
+max_y     <- round(max(muestra$ln_ingreso), 3)
+q1_y      <- round(quantile(muestra$ln_ingreso, .25), 3)
+q3_y      <- round(quantile(muestra$ln_ingreso, .75), 3)
+skew_y    <- round(skewness(muestra$ln_ingreso), 3)
+```
+
+```{r tabla-y, echo=FALSE}
+tabla_y <- data.frame(
+  Medida = c("n", "Media", "Mediana", "Desviación estándar", "Coeficiente de variación",
+             "Mínimo", "Primer cuartil (Q1)", "Tercer cuartil (Q3)", "Máximo", "Asimetría"),
+  Valor = c(n_muestra, media_y, mediana_y, sd_y, paste0(cv_y, "%"),
+            min_y, q1_y, q3_y, max_y, skew_y)
+)
+kable(tabla_y, caption = "Estadísticos descriptivos del logaritmo del ingreso laboral mensual")
+```
+
+La Tabla anterior presenta los estadísticos descriptivos de la variable de respuesta ya transformada. En promedio, el log-ingreso de la muestra es de `r media_y`, con una mediana de `r mediana_y`; la cercanía entre ambas medidas y una asimetría de `r skew_y` son consistentes con el efecto esperado de la transformación logarítmica: corrige buena parte del sesgo positivo propio de la distribución original de los ingresos.
+
+```{r hist-y, echo=FALSE, message=FALSE, warning=FALSE, fig.width=9, fig.height=4}
+par(mfrow = c(1, 2))
+hist(muestra$ingreso, main = "Ingreso laboral (escala original)",
+     xlab = "Ingreso ($)", col = "steelblue", breaks = 20)
+hist(muestra$ln_ingreso, main = "Log(Ingreso laboral)",
+     xlab = "log(Ingreso)", col = "steelblue", breaks = 20)
+par(mfrow = c(1, 1))
+```
+
+Se muestra el ingreso en su escala original y ya transformado a logaritmo: el histograma de la izquierda evidencia la asimetría positiva característica de los ingresos laborales (unos pocos valores muy altos alargan la cola derecha), mientras que el de la derecha muestra una distribución considerablemente más simétrica, lo que respalda el uso de $\ln(Y)$ como variable de respuesta del modelo.
+
+## Descripción de las covariables continuas
+
+```{r tabla-covariables, echo=FALSE}
+tabla_cont <- muestra %>%
+  select(horas, escolaridad, experiencia, experiencia2, antiguedad) %>%
+  pivot_longer(everything(), names_to = "Variable", values_to = "valor") %>%
+  group_by(Variable) %>%
+  summarise(
+    Media = round(mean(valor), 2),
+    Mediana = round(median(valor), 2),
+    DE = round(sd(valor), 2),
+    Min = round(min(valor), 2),
+    Max = round(max(valor), 2),
+    Q1 = round(quantile(valor, .25), 2),
+    Q3 = round(quantile(valor, .75), 2)
+  )
+
+kable(tabla_cont, caption = "Estadísticos descriptivos de las covariables continuas (n = 100)")
+```
+
+```{r scatter-covariables, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+graficar_dispersion <- function(var, nombre_var) {
+  r <- round(cor(muestra$ln_ingreso, muestra[[var]], use = "complete.obs"), 3)
+  ggplot(muestra, aes(x = .data[[var]], y = ln_ingreso)) +
+    geom_point(alpha = 0.6, color = "steelblue") +
+    geom_smooth(method = "loess", se = FALSE, color = "darkred") +
+    labs(
+      title = paste0("Log(Ingreso) vs ", nombre_var),
+      subtitle = paste0("Correlación de Pearson r = ", r),
+      x = nombre_var, y = "log(Ingreso)"
+    ) +
+    theme_minimal()
+}
+
+graficar_dispersion("horas", "horas trabajadas")
+graficar_dispersion("escolaridad", "escolaridad (años)")
+graficar_dispersion("experiencia", "experiencia potencial")
+graficar_dispersion("antiguedad", "antigüedad (meses)")
+```
+
+Las figuras anteriores muestran la relación entre el log-ingreso y cada covariable continua, junto con una curva LOESS y el coeficiente de correlación de Pearson. Conforme a la teoría del capital humano, se espera que la escolaridad y las horas trabajadas muestren las asociaciones positivas más claras; la relación con la experiencia potencial debería aproximarse a una forma cóncava, coherente con la inclusión de su término cuadrático en el modelo.
+
+```{r matriz-correlacion, echo=FALSE, fig.width=6, fig.height=6}
+continuas <- muestra %>%
+  select(ln_ingreso, horas, escolaridad, experiencia, antiguedad)
+
+matriz_cor <- cor(continuas, use = "complete.obs")
+kable(round(matriz_cor, 3), caption = "Matriz de correlaciones de Pearson entre las variables continuas")
+corrplot(matriz_cor, method = "number", type = "upper")
+```
+
+La matriz de correlaciones permite evaluar, además de la relación con la variable de respuesta, el grado de asociación entre las covariables entre sí — un primer indicio sobre posibles problemas de multicolinealidad que se evaluarán formalmente (VIF) en etapas posteriores del proyecto.
+
+## Descripción de las variables categóricas
+
+### Posición ocupacional
+
+```{r tabla-posicion, echo=FALSE}
+tabla_posicion <- muestra %>%
+  group_by(posicion) %>%
+  summarise(
+    n = n(),
+    Media_ln_ingreso = round(mean(ln_ingreso), 2),
+    Mediana_ln_ingreso = round(median(ln_ingreso), 2)
+  ) %>%
+  arrange(desc(n))
+
+kable(tabla_posicion, caption = "Distribución de la muestra y log-ingreso medio según posición ocupacional (n = 100)")
+```
+
+```{r boxplot-posicion, echo=FALSE, fig.width=8, fig.height=4.5}
+ggplot(muestra, aes(x = posicion, y = ln_ingreso, fill = posicion)) +
+  geom_boxplot() +
+  labs(title = "Log(Ingreso) según posición ocupacional",
+       x = "Posición ocupacional", y = "log(Ingreso)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1), legend.position = "none")
+```
+
+### Rama de actividad económica
+
+```{r tabla-rama, echo=FALSE}
+tabla_rama <- muestra %>%
+  group_by(rama) %>%
+  summarise(
+    n = n(),
+    Media_ln_ingreso = round(mean(ln_ingreso), 2),
+    Mediana_ln_ingreso = round(median(ln_ingreso), 2)
+  ) %>%
+  arrange(desc(n))
+
+kable(tabla_rama, caption = "Distribución de la muestra y log-ingreso medio según rama de actividad (n = 100)")
+```
+
+```{r boxplot-rama, echo=FALSE, fig.width=9, fig.height=5}
+ggplot(muestra, aes(x = rama, y = ln_ingreso, fill = rama)) +
+  geom_boxplot() +
+  labs(title = "Log(Ingreso) según rama de actividad económica",
+       x = "Rama de actividad (CIIU, 2 dígitos)", y = "log(Ingreso)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
+```
+
+Al tratarse de una muestra de 100 observaciones, es esperable que algunas categorías —tanto de posición ocupacional como de rama de actividad— queden representadas por muy pocas observaciones. Esto deberá tenerse en cuenta al momento de estimar el modelo, evaluando si es necesario agrupar categorías poco frecuentes para evitar coeficientes poco confiables.
+
+# Modelo matemático propuesto
+
+Con fundamento en la teoría del capital humano y en la especificación clásica de la ecuación de ingresos de Mincer, se propone estimar un modelo de regresión lineal múltiple en el que el logaritmo natural del ingreso laboral mensual constituye la variable dependiente:
+
+$$\ln(Y_i)=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}
++\beta_3X_{3i}
++\beta_4X_{4i}
++\beta_5X_{5i}
++\beta_6X_{6i}
++\beta_7X_{7i}
++\varepsilon_i$$
+
+donde $X_1$: horas trabajadas por semana; $X_2$: años de escolaridad; $X_3$: experiencia potencial; $X_4$: experiencia potencial al cuadrado; $X_5$: posición ocupacional (dummy); $X_6$: antigüedad en el empleo actual; $X_7$: rama de actividad económica (dummy); $\beta_0$: intercepto; $\varepsilon_i$: error aleatorio.
+
+Antes de estimar el modelo definitivo se verificará el cumplimiento de los supuestos de la regresión lineal múltiple, evaluando la existencia de multicolinealidad mediante el Factor de Inflación de la Varianza (VIF), la homocedasticidad de los residuos, la normalidad de los errores y la posible presencia de observaciones influyentes.
+
+# Conclusiones
+
+El análisis descriptivo confirma que la transformación logarítmica del ingreso laboral corrige de forma considerable la asimetría propia de esta variable, lo que respalda su uso como variable de respuesta del modelo. Las covariables continuas —en particular escolaridad y horas trabajadas— muestran las asociaciones esperadas con el log-ingreso según la teoría del capital humano, mientras que la posición ocupacional y la rama de actividad evidencian diferencias en el nivel medio de ingreso entre categorías, lo que sugiere que ambas variables aportan información relevante para el modelo más allá de la escolaridad y la experiencia.
+
+Al mismo tiempo, el análisis muestra que ninguna covariable por sí sola explica la totalidad de la variabilidad del ingreso, lo que anticipa que sus efectos deberán evaluarse de forma conjunta en un modelo de regresión múltiple, prestando especial atención a la multicolinealidad entre escolaridad y experiencia (ambas derivadas de la edad y el nivel educativo) y a las categorías con pocas observaciones dentro de posición ocupacional y rama de actividad.
+
+# Referencias
+
+Mincer, J. (1974). *Schooling, Experience, and Earnings*. National Bureau of Economic Research.
+
+Departamento Administrativo Nacional de Estadística – DANE. (2024). *Gran Encuesta Integrada de Hogares (GEIH)*. Microdatos. Recuperado de https://microdatos.dane.gov.co

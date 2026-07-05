@@ -70,7 +70,10 @@ El proyecto consiste en buscar una base de datos con datos colombianos que conte
 
 # Introducción
 
-En el presente proyecto se desarrolla un modelo de regresión lineal múltiple para analizar los factores que influyen en el ingreso mensual de profesionales en Colombia. Se consideran variables relacionadas con características laborales, educativas y demográficas, con el propósito de identificar los determinantes más relevantes del salario y cuantificar su impacto sobre los ingresos.
+El ingreso laboral es uno de los principales determinantes del bienestar de los hogares colombianos y uno de los indicadores más utilizados para analizar la desigualdad económica del país. Explicar por qué unos trabajadores ganan más que otros es una pregunta central de la economía laboral, y la respuesta habitual —propuesta por Mincer (1974)— es que el ingreso depende principalmente de la acumulación de capital humano (educación y experiencia), de la intensidad con que se trabaja (horas) y de las características del empleo (tipo de vinculación y sector económico).
+
+En Colombia, donde la informalidad laboral y la heterogeneidad sectorial son altas, estos factores no siempre se traducen en el mismo nivel de ingreso: dos personas con la misma escolaridad pueden percibir remuneraciones muy distintas según su posición ocupacional o la rama de actividad en la que trabajan. Este proyecto busca cuantificar, a partir de microdatos de la Gran Encuesta Integrada de Hogares (GEIH), qué tanto explican estas variables la variabilidad del ingreso laboral mensual.
+
 
 ```{=latex}
 \section{Contextualización del problema}
@@ -256,7 +259,7 @@ $$\ln(Y_i)=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}
 
 donde $X_1$: horas trabajadas por semana; $X_2$: años de escolaridad; $X_3$: edad; $X_4$: edad al cuadrado; $X_5$: antigüedad en el empleo actual; $X_6$: rama de actividad económica (dummy); $\beta_0$: intercepto; $\varepsilon_i$: error aleatorio.
 
-Antes de estimar el modelo definitivo se verificará el cumplimiento de los supuestos de la regresión lineal múltiple, evaluando la existencia de multicolinealidad mediante el Factor de Inflación de la Varianza (VIF), la homocedasticidad de los residuos, la normalidad de los errores y la posible presencia de observaciones influyentes.
+Antes de estimar el modelo definitivo se verificará el cumplimiento de los supuestos de la regresión lineal múltiple, evaluando la existencia de multicolinealidad mediante el Factor de Inflación de la Varianza (VIF), la homocedasticidad de los residuos, la normalidad de los errores y la posible presencia de observaciones influyentes (Montgomery et al., 2021).
 
 ## Hipótesis
 
@@ -809,5 +812,12 @@ Determinantes de los ingresos laborales de los economistas en Colombia: un
 análisis de modelación microeconométrica (2019). \textit{Panorama Económico},
 Universidad de Cartagena.
 
+\bibitem{Montgomery2021}
+Montgomery, D. C., Peck, E. A., & Vining, G. G. (2021). Introduction to Linear Regression Analysis (6th ed.). John Wiley & Sons.
+
+\bibitem{DANE2024}
+Departamento Administrativo Nacional de Estadística – DANE. (2024). Gran Encuesta Integrada de Hogares (GEIH). Microdatos. Recuperado de https://microdatos.dane.gov.co
+
 \end{thebibliography}
 ```
+ 

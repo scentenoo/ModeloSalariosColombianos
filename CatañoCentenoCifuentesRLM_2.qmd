@@ -587,7 +587,7 @@ r=−0.233), esta última consistente con la expansión histórica del acceso a 
 
 ### Rama de actividad económica
 
-```{r tabla-rama}
+```{r}
 #| label: tabla-rama
 #| echo: false
 tabla_rama <- muestra %>%
@@ -604,7 +604,7 @@ kable(tabla_rama, caption = "Distribución de la muestra y log-ingreso medio seg
 
 La recodificación en cinco sectores agregados produjo una distribución mucho más manejable que la original: el grupo más grande, Comercio, transporte y alojamiento, concentra 33 observaciones, seguido de Servicios sociales y otros (24) e Industria, minería y construcción (20). Agropecuario reúne 12 observaciones y Servicios financieros y profesionales, el grupo más pequeño, queda con 11 — sensiblemente mejor que los 18 grupos con una sola observación que tenía la codificación original, aunque este último grupo sigue siendo el más vulnerable a la inestabilidad muestral y deberá vigilarse en la etapa de estimación (por ejemplo, revisando su apalancamiento e influencia sobre el modelo). En cuanto al log-ingreso medio, Servicios sociales y otros presenta el valor más alto (media 14.19, mediana 14.11), seguido de cerca por Industria, minería y construcción (13.94 y 14.02); en el otro extremo, Agropecuario registra el log-ingreso medio más bajo (13.21, mediana 13.21). Comercio, transporte y alojamiento —pese a ser el sector con más observaciones— y Servicios financieros y profesionales quedan en un nivel intermedio, con medias de 13.78 y 13.61 respectivamente, y medianas prácticamente iguales (13.96 en ambos casos).
 
-```{r boxplot-rama}
+```{r}
 #| label: fig-rama
 #| echo: false
 #| fig-width: 8
@@ -618,6 +618,7 @@ ggplot(muestra, aes(x = rama, y = ln_ingreso, fill = rama)) +
 ```
 
 La Figura 6 confirma la heterogeneidad sectorial sugerida por la Tabla 7 (nótese que el eje horizontal ordena los sectores alfabéticamente y no por tamaño muestral). Servicios sociales y otros presenta la mediana más alta y la caja más compacta de los cinco sectores —es decir, la menor dispersión en el 50% central de sus datos—, aunque exhibe dos valores atípicos: uno muy alto, el mayor de toda la muestra, y otro bajo, que amplían su rango total pese a la estrechez de la caja. Industria, minería y construcción tiene la segunda mediana más alta y, a diferencia del sector anterior, no presenta valores atípicos, si bien sus bigotes cubren un rango amplio. Comercio, transporte y alojamiento y Servicios financieros y profesionales muestran medianas muy similares entre sí y ligeramente por debajo de Industria, consistentes con el empate observado en la Tabla 7 (13.96 en ambos casos); el primero registra dos valores atípicos bajos y el segundo uno solo, más extremo, que corresponde al valor mínimo de toda la muestra. Agropecuario registra la mediana más baja de los cinco sectores y la caja de mayor altura, lo que indica una mayor heterogeneidad interna en su 50% central, sin valores atípicos marcados. En conjunto, la brecha entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21) es de 0.98 puntos en escala logarítmica, una diferencia sustancial que respalda la Hipótesis 2 sobre la existencia de brechas de ingreso asociadas al sector económico, aunque su significancia estadística formal deberá confirmarse en la etapa de estimación del modelo, controlando por escolaridad, edad, horas trabajadas y antigüedad.
+
 
 # Estimación del modelo con covariables continuas
 
@@ -771,6 +772,83 @@ es globalmente significativo ($F_{(3,96)}=22.18$, $p<0.001$) y explica el 40.93 
 
 Este resultado obliga a matizar la Hipótesis 1 planteada en la Sección 6.1. La componente de escolaridad se confirma con solidez: su coeficiente conserva el signo positivo esperado por la teoría del capital humano y es el más significativo de los tres retenidos. Sin embargo, la componente de edad —tanto en su efecto lineal como en el cuadrático que debía capturar el perfil cóncavo de la ecuación de Mincer— no se sostiene: ya en el modelo completo sus coeficientes no eran significativos ($p=0.795$ para edad y $p=0.850$ para edad², Sección "Estimación del modelo"), y los cinco métodos de selección coinciden en descartarla por completo. Esto no implica necesariamente que la relación edad-ingreso sea inexistente en la población de trabajadores colombianos —la curva LOESS de la Figura 3 sí insinuaba visualmente el ascenso y posterior descenso esperado—, sino que, con una muestra de apenas $n=100$ observaciones y una correlación de Pearson entre edad y log-ingreso prácticamente nula ($r=-0.041$), el efecto no resulta estadísticamente detectable una vez controlado por escolaridad, horas trabajadas y antigüedad. La unanimidad de los cinco criterios de selección —que difieren en su lógica (ajuste penalizado, sesgo respecto al modelo completo, y búsqueda secuencial por verosimilitud) pero llegan al mismo resultado— constituye evidencia razonablemente robusta de que el modelo reducido de tres variables es, con los datos disponibles, la especificación más parsimoniosa y defendible, sin que ello descarte que una muestra de mayor tamaño pudiera revelar el efecto no lineal de la edad que la teoría anticipa.
 
+# Diagnóstico de supuestos y elección final del modelo
+
+```{r diagnostico-completo}
+library(car)
+library(lmtest)
+
+modelo_completo_5 <- lm(ln_ingreso ~ horas + escolaridad + edad + edad2 + antiguedad,
+                         data = muestra)
+modelo_continuas_reducido <- lm(ln_ingreso ~ horas + escolaridad + antiguedad,
+                                 data = muestra)
+```
+
+```{r tabla-diagnostico}
+#| echo: false
+diag_row <- function(modelo, nombre){
+  sw  <- shapiro.test(resid(modelo))
+  bp  <- bptest(modelo)
+  dw  <- dwtest(modelo)
+  data.frame(
+    Modelo = nombre,
+    Shapiro_W = round(sw$statistic, 4), Shapiro_p = round(sw$p.value, 4),
+    BreuschPagan_BP = round(bp$statistic, 4), BreuschPagan_p = round(bp$p.value, 4),
+    DurbinWatson_DW = round(dw$statistic, 4), DurbinWatson_p = round(dw$p.value, 4),
+    AIC = round(AIC(modelo), 2), BIC = round(BIC(modelo), 2)
+  )
+}
+
+tabla_diag <- rbind(
+  diag_row(modelo_completo_5, "Completo (5 continuas)"),
+  diag_row(modelo_continuas_reducido, "Reducido (horas+escolaridad+antigüedad)")
+)
+kable(tabla_diag, caption = "Verificación de supuestos: modelo completo vs. modelo seleccionado")
+```
+
+```{r vif-comparacion}
+#| echo: false
+kable(data.frame(Variable = names(vif(modelo_completo_5)),
+                  VIF_completo = round(vif(modelo_completo_5), 3)),
+      caption = "VIF - modelo completo (5 continuas)")
+```
+
+```{r vif-reducido}
+#| echo: false
+kable(data.frame(Variable = names(vif(modelo_continuas_reducido)),
+                  VIF_reducido = round(vif(modelo_continuas_reducido), 3)),
+      caption = "VIF - modelo reducido")
+```
+
+```{r prueba-f-anidada}
+#| echo: false
+kable(anova(modelo_continuas_reducido, modelo_completo_5), digits = 4,
+      caption = "Prueba F parcial: ¿aportan conjuntamente edad y edad² sobre el modelo reducido?")
+```
+
+```{r graficos-diagnostico}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+par(mfrow = c(2,2))
+plot(modelo_continuas_reducido)
+par(mfrow = c(1,1))
+```
+
+## Modelo sugerido
+
+Se sugiere el modelo reducido $\ln(Y_i)=\beta_0+\beta_1\text{horas}_i+\beta_2\text{escolaridad}_i+\beta_3\text{antigüedad}_i+\varepsilon_i$ frente al modelo completo de cinco covariables continuas, por las siguientes razones:
+
+1. **La prueba F parcial confirma que edad y edad² no aportan de forma conjunta** ($F_{(2,94)}=0.101$, $p=0.904$): no hay pérdida real de capacidad explicativa al retirarlas ($R^2$ pasa de 0.4106 a 0.4093).
+
+2. **Multicolinealidad severa en el modelo completo.** $VIF(\text{edad})=39.18$ y $VIF(\text{edad}^2)=39.11$, muy por encima del umbral de alerta (VIF > 10), consecuencia de incluir edad y su cuadrado simultáneamente. Esto infla artificialmente los errores estándar de ambas variables, explicando por qué resultaron no significativas pese al respaldo teórico de la ecuación de Mincer. El modelo reducido tiene VIF cercanos a 1 en las tres variables retenidas: no hay indicio de multicolinealidad.
+
+3. **Menor AIC y BIC en el modelo reducido** (229.94 y 242.97, frente a 233.72 y 251.96 del modelo completo), pese a tener dos parámetros menos.
+
+4. **Coherencia con la etapa de selección de modelos**: los cinco métodos de selección convergieron unánimemente en este modelo reducido.
+
+Sin embargo, ambos modelos **rechazan la normalidad de los residuos** (Shapiro-Wilk, $p=0.0348$ y $p=0.0278$ respectivamente) y **rechazan la homocedasticidad** (Breusch-Pagan, $p=0.0312$ y $p=0.0217$) al 5% de significancia, mientras que el supuesto de independencia se cumple sin problema en ambos (Durbin-Watson, $p\approx0.38$). Esto indica que la elección entre estos dos modelos no resuelve por sí sola todos los problemas de especificación, y que en una etapa posterior convendría explorar correcciones adicionales (errores estándar robustos, mínimos cuadrados ponderados, o revisión de observaciones influyentes) antes de dar el modelo por definitivo.
+
 # Conclusiones
 
 El análisis descriptivo confirma que la transformación logarítmica del ingreso laboral corrige de forma considerable la asimetría propia de esta variable (asimetría de `r skew_y` en el log-ingreso, frente a la marcada cola derecha visible en la escala original), lo que respalda su uso como variable de respuesta del modelo.
@@ -780,6 +858,7 @@ Entre las covariables continuas, la escolaridad es la que muestra la asociación
 En cuanto a la rama de actividad económica, el análisis descriptivo detectó una limitación metodológica relevante en su codificación original (CIIU a 2 dígitos): 36 categorías para apenas 100 observaciones, 18 de ellas representadas por una sola persona, lo cual habría producido coeficientes inestables y grados de libertad desperdiciados de haberse usado directamente en el modelo. Esta limitación se resolvió recodificando la variable en cinco sectores agregados (Agropecuario; Industria, minería y construcción; Comercio, transporte y alojamiento; Servicios financieros y profesionales; y Servicios sociales, comunales y otros), con tamaños muestrales entre 11 y 33 observaciones por categoría. Una vez recodificada, la variable muestra diferencias claras en el nivel medio de ingreso entre sectores: Servicios sociales y otros e Industria, minería y construcción registran los log-ingresos medios más altos, mientras que Agropecuario presenta el más bajo, con una brecha de 0.98 puntos en escala logarítmica entre ambos extremos.
 
 En conjunto, estos resultados son coherentes con las dos hipótesis planteadas para el proyecto: la escolaridad y la edad muestran las asociaciones esperadas con el ingreso según la teoría del capital humano (Hipótesis 1), y la rama de actividad evidencia diferencias sistemáticas de ingreso entre sectores incluso antes de controlar por las demás covariables (Hipótesis 2). Sin embargo, ninguna covariable por sí sola explica la totalidad de la variabilidad del log-ingreso, lo que confirma la necesidad de evaluar sus efectos de forma conjunta en un modelo de regresión múltiple. Las siguientes etapas del proyecto deberán estimar dicho modelo y verificar formalmente sus supuestos —multicolinealidad (VIF), homocedasticidad, normalidad de los residuos y presencia de observaciones influyentes—, prestando particular atención a la relación entre edad y antigüedad, y al reducido tamaño muestral del sector Servicios financieros y profesionales dentro de la variable rama.
+
 
 
 ```{=latex}

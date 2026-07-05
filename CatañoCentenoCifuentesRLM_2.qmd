@@ -587,7 +587,7 @@ r=−0.233), esta última consistente con la expansión histórica del acceso a 
 
 ### Rama de actividad económica
 
-```{r tabla-rama, echo=FALSE}
+```{r tabla-rama}
 #| label: tabla-rama
 #| echo: false
 tabla_rama <- muestra %>%
@@ -604,7 +604,7 @@ kable(tabla_rama, caption = "Distribución de la muestra y log-ingreso medio seg
 
 La recodificación en cinco sectores agregados produjo una distribución mucho más manejable que la original: el grupo más grande, Comercio, transporte y alojamiento, concentra 33 observaciones, seguido de Servicios sociales y otros (24) e Industria, minería y construcción (20). Agropecuario reúne 12 observaciones y Servicios financieros y profesionales, el grupo más pequeño, queda con 11 — sensiblemente mejor que los 18 grupos con una sola observación que tenía la codificación original, aunque este último grupo sigue siendo el más vulnerable a la inestabilidad muestral y deberá vigilarse en la etapa de estimación (por ejemplo, revisando su apalancamiento e influencia sobre el modelo). En cuanto al log-ingreso medio, Servicios sociales y otros presenta el valor más alto (media 14.19, mediana 14.11), seguido de cerca por Industria, minería y construcción (13.94 y 14.02); en el otro extremo, Agropecuario registra el log-ingreso medio más bajo (13.21, mediana 13.21). Comercio, transporte y alojamiento —pese a ser el sector con más observaciones— y Servicios financieros y profesionales quedan en un nivel intermedio, con medias de 13.78 y 13.61 respectivamente, y medianas prácticamente iguales (13.96 en ambos casos).
 
-```{r boxplot-rama, echo=FALSE, fig.width=9, fig.height=5}
+```{r boxplot-rama}
 #| label: fig-rama
 #| echo: false
 #| fig-width: 8
@@ -618,6 +618,158 @@ ggplot(muestra, aes(x = rama, y = ln_ingreso, fill = rama)) +
 ```
 
 La Figura 6 confirma la heterogeneidad sectorial sugerida por la Tabla 7 (nótese que el eje horizontal ordena los sectores alfabéticamente y no por tamaño muestral). Servicios sociales y otros presenta la mediana más alta y la caja más compacta de los cinco sectores —es decir, la menor dispersión en el 50% central de sus datos—, aunque exhibe dos valores atípicos: uno muy alto, el mayor de toda la muestra, y otro bajo, que amplían su rango total pese a la estrechez de la caja. Industria, minería y construcción tiene la segunda mediana más alta y, a diferencia del sector anterior, no presenta valores atípicos, si bien sus bigotes cubren un rango amplio. Comercio, transporte y alojamiento y Servicios financieros y profesionales muestran medianas muy similares entre sí y ligeramente por debajo de Industria, consistentes con el empate observado en la Tabla 7 (13.96 en ambos casos); el primero registra dos valores atípicos bajos y el segundo uno solo, más extremo, que corresponde al valor mínimo de toda la muestra. Agropecuario registra la mediana más baja de los cinco sectores y la caja de mayor altura, lo que indica una mayor heterogeneidad interna en su 50% central, sin valores atípicos marcados. En conjunto, la brecha entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21) es de 0.98 puntos en escala logarítmica, una diferencia sustancial que respalda la Hipótesis 2 sobre la existencia de brechas de ingreso asociadas al sector económico, aunque su significancia estadística formal deberá confirmarse en la etapa de estimación del modelo, controlando por escolaridad, edad, horas trabajadas y antigüedad.
+
+# Estimación del modelo con covariables continuas
+
+## Ajuste del modelo
+
+```{r modelo-continuas}
+modelo_continuas <- lm(ln_ingreso ~ horas + escolaridad + edad + edad2 + antiguedad,
+                        data = muestra)
+summary(modelo_continuas)
+```
+
+```{r tabla-coef-continuas, echo=FALSE}
+coef_tab <- as.data.frame(summary(modelo_continuas)$coefficients)
+coef_tab <- cbind(Parametro = rownames(coef_tab), coef_tab)
+rownames(coef_tab) <- NULL
+names(coef_tab) <- c("Parámetro", "Estimación", "Error estándar", "t", "p-valor")
+
+kable(coef_tab, digits = c(NA, 4, 4, 3, 4),
+      caption = "Parámetros estimados del modelo con covariables continuas")
+```
+
+La ecuación ajustada es:
+
+$$
+\widehat{\ln(Y_i)} = 10.97 + 0.0287\,X_{1i} + 0.1093\,X_{2i} + 0.0096\,X_{3i} - 0.000078\,X_{4i} + 0.00206\,X_{5i}
+$$
+
+donde $X_1$: horas, $X_2$: escolaridad, $X_3$: edad, $X_4$: edad², $X_5$: antigüedad.
+
+## ANOVA del modelo
+
+```{r anova-continuas, echo=FALSE}
+anova_tab <- as.data.frame(anova(modelo_continuas))
+anova_tab <- cbind(Fuente = rownames(anova_tab), anova_tab)
+rownames(anova_tab) <- NULL
+
+kable(anova_tab, digits = 4,
+      caption = "Tabla ANOVA del modelo con covariables continuas")
+```
+
+```{r estadisticos-globales, echo=FALSE}
+r2       <- round(summary(modelo_continuas)$r.squared, 4)
+r2_adj   <- round(summary(modelo_continuas)$adj.r.squared, 4)
+f_stat   <- summary(modelo_continuas)$fstatistic
+p_valor_f <- pf(f_stat[1], f_stat[2], f_stat[3], lower.tail = FALSE)
+```
+
+El estadístico F global es de `r round(f_stat[1],3)` con `r f_stat[2]` y `r f_stat[3]` grados de libertad, con un p-valor de `r format.pval(p_valor_f, digits=3)`. El modelo explica el `r round(r2*100,2)`% de la variabilidad total del log-ingreso ($R^2=$ `r r2`; $R^2$ ajustado $=$ `r r2_adj`).
+
+## Interpretación rigurosa
+
+¿Es significativo el modelo? Sí, de forma inequívoca. La hipótesis nula del ANOVA global (todos los $\beta=0$ excepto el intercepto) se rechaza con un p-valor prácticamente nulo. Al menos una covariable tiene poder explicativo real sobre el log-ingreso.
+
+Pero "significativo globalmente" no es lo mismo que "todas las variables aportan". Mirando los coeficientes individuales: horas, escolaridad y antigüedad son significativas al 5% (antigüedad justo en el límite, $p=0.028$); edad y edad² no lo son en absoluto ($p=0.795$ y $p=0.850$). Esto es coherente con lo que ya se había anticipado en el análisis descriptivo: la correlación de Pearson entre edad y log-ingreso era prácticamente nula ($r=-0.041$), y aunque la curva LOESS insinuaba un perfil cóncavo, aquí —controlando por las demás variables— ese efecto no resulta estadísticamente detectable con $n=100$. Esto es un llamado de atención sobre la Hipótesis 1: la escolaridad sí se confirma ($\beta_2>0$, $p<0.001$), pero el componente de edad de la hipótesis no se sostiene en este modelo reducido.
+
+Sobre el 41.06% de varianza explicada, es importante no sobre-interpretar ni subestimar:
+
+- Para datos de corte transversal en economía laboral con encuestas de hogares, un $R^2$ de ~0.41 no es bajo — es habitual que ecuaciones de Mincer con variables individuales expliquen entre 20% y 40% de la varianza del log-salario, porque el ingreso individual depende de muchísimos factores no observados (habilidad, calidad del empleador, negociación, informalidad, etc.) que ninguna encuesta captura.
+- Sin embargo, queda un 59% sin explicar, y el propio análisis descriptivo del documento (Tabla 7, Figura 6) ya había detectado que la rama de actividad económica genera diferencias sustanciales (brecha de 0.98 puntos log entre sectores) que este modelo reducido no incorpora. Es razonable esperar que al añadir la variable categórica rama (el modelo completo con $X_6$) el $R^2$ aumente y que parte de la varianza residual se explique por heterogeneidad sectorial.
+- Con $n=100$, el $R^2$ ajustado (0.379) es la medida más honesta porque penaliza los 5 grados de libertad consumidos; la caída de 0.41 a 0.38 no es dramática, así que el modelo no está sobreajustado por el número de covariables.
+- Dado que edad y edad² no aportan significancia, valdría la pena —en la etapa de selección de modelo— evaluar si conviene mantenerlas por justificación teórica (Mincer) pese a su no significancia, o si su falta de poder explicativo aquí se debe a la correlación moderada con antigüedad ($r=0.381$) generando cierta redundancia entre esas dos variables.
+
+# Selección de modelos (covariables continuas)
+
+```{r base-seleccion}
+library(leaps)
+modelo_nulo <- lm(ln_ingreso ~ 1, data = muestra)
+# modelo_continuas ya fue definido antes:
+# modelo_continuas <- lm(ln_ingreso ~ horas + escolaridad + edad + edad2 + antiguedad, data = muestra)
+```
+
+## a) Selección por $R^2_{adj}$
+
+```{r seleccion-r2adj}
+best <- regsubsets(ln_ingreso ~ horas + escolaridad + edad + edad2 + antiguedad,
+                    data = muestra, nvmax = 5)
+sm <- summary(best)
+
+kable(data.frame(Num_predictores = 1:5, R2_ajustado = round(sm$adjr2, 4)),
+      caption = "Resumen de selección por R2 ajustado")
+
+modelo_r2adj <- lm(ln_ingreso ~ horas + escolaridad + antiguedad, data = muestra)
+```
+
+```{r anova-r2adj, echo=FALSE}
+kable(anova(modelo_r2adj), digits = 4, caption = "ANOVA - modelo por R2 ajustado")
+kable(summary(modelo_r2adj)$coefficients, digits = 4, caption = "Parámetros - modelo por R2 ajustado")
+```
+
+## b) Selección por $C_p$ de Mallows
+
+```{r seleccion-cp}
+kable(data.frame(Num_predictores = 1:5, Cp = round(sm$cp, 4)),
+      caption = "Resumen de selección por Cp de Mallows")
+
+modelo_cp <- lm(ln_ingreso ~ horas + escolaridad + antiguedad, data = muestra)
+```
+
+```{r anova-cp, echo=FALSE}
+kable(anova(modelo_cp), digits = 4, caption = "ANOVA - modelo por Cp")
+kable(summary(modelo_cp)$coefficients, digits = 4, caption = "Parámetros - modelo por Cp")
+```
+
+## c) Stepwise (ambas direcciones, AIC)
+
+```{r stepwise}
+modelo_stepwise <- step(modelo_continuas, direction = "both", trace = 0)
+formula(modelo_stepwise)
+```
+
+```{r anova-stepwise, echo=FALSE}
+kable(anova(modelo_stepwise), digits = 4, caption = "ANOVA - modelo Stepwise")
+kable(summary(modelo_stepwise)$coefficients, digits = 4, caption = "Parámetros - modelo Stepwise")
+```
+
+## d) Selección hacia adelante (Forward)
+
+```{r forward}
+modelo_forward <- step(modelo_nulo,
+                        scope = list(lower = modelo_nulo, upper = modelo_continuas),
+                        direction = "forward", trace = 0)
+formula(modelo_forward)
+```
+
+```{r anova-forward, echo=FALSE}
+kable(anova(modelo_forward), digits = 4, caption = "ANOVA - modelo Forward")
+kable(summary(modelo_forward)$coefficients, digits = 4, caption = "Parámetros - modelo Forward")
+```
+
+## e) Selección hacia atrás (Backward)
+
+```{r backward}
+modelo_backward <- step(modelo_continuas, direction = "backward", trace = 0)
+formula(modelo_backward)
+```
+
+```{r anova-backward, echo=FALSE}
+kable(anova(modelo_backward), digits = 4, caption = "ANOVA - modelo Backward")
+kable(summary(modelo_backward)$coefficients, digits = 4, caption = "Parámetros - modelo Backward")
+```
+
+## Conclusión sobre la selección de modelos
+
+La aplicación conjunta de los cinco métodos de selección —$R^2_{adj}$, $C_p$ de Mallows, *stepwise*, selección hacia adelante y selección hacia atrás— sobre el conjunto de covariables continuas produjo un resultado inusualmente concluyente: los cinco métodos convergen exactamente en el mismo modelo final, compuesto por horas trabajadas, escolaridad y antigüedad en el empleo actual, con exclusión sistemática de la edad y su término cuadrático. El criterio de $R^2_{adj}$ alcanzó su máximo (0.3909) precisamente en el modelo de tres predictores, tras incrementarse desde 0.2316 (un predictor) y 0.3534 (dos predictores), y decrecer nuevamente al incorporar edad (0.3856) o edad y edad² (0.3793); de forma análoga, el estadístico $C_p$ tocó su mínimo (2.20) en ese mismo modelo de tres variables —valor cercano a $p=4$, lo que indica un sesgo estimado prácticamente nulo respecto al modelo saturado—, frente a valores de 25.31, 7.04, 4.04 y 6.00 para los modelos de una, dos, cuatro y cinco variables, respectivamente. Las búsquedas secuenciales por AIC (*stepwise*, *forward* y *backward*) reprodujeron la misma trayectoria y el mismo punto de convergencia, retirando primero edad² y luego edad en cada una de sus iteraciones.
+
+El modelo resultante,
+
+$$\widehat{\ln(Y_i)} = 11.21 + 0.0289\,\text{horas}_i + 0.1077\,\text{escolaridad}_i + 0.00222\,\text{antigüedad}_i,$$
+
+es globalmente significativo ($F_{(3,96)}=22.18$, $p<0.001$) y explica el 40.93 % de la variabilidad del log-ingreso ($R^2_{adj}=0.3909$), una pérdida marginal de apenas 1.13 puntos porcentuales de $R^2$ respecto al modelo completo de cinco covariables (41.06 %), lo que confirma que edad y edad² aportaban una fracción de varianza prácticamente despreciable. Los tres coeficientes retenidos son individualmente significativos al 5 % —horas ($\hat\beta=0.0289$, $p<0.001$), escolaridad ($\hat\beta=0.1077$, $p<0.001$) y antigüedad ($\hat\beta=0.00222$, $p=0.0097$)—, de modo que ninguna variable sobrevive en el modelo por mero artificio del procedimiento de búsqueda.
+
+Este resultado obliga a matizar la Hipótesis 1 planteada en la Sección 6.1. La componente de escolaridad se confirma con solidez: su coeficiente conserva el signo positivo esperado por la teoría del capital humano y es el más significativo de los tres retenidos. Sin embargo, la componente de edad —tanto en su efecto lineal como en el cuadrático que debía capturar el perfil cóncavo de la ecuación de Mincer— no se sostiene: ya en el modelo completo sus coeficientes no eran significativos ($p=0.795$ para edad y $p=0.850$ para edad², Sección "Estimación del modelo"), y los cinco métodos de selección coinciden en descartarla por completo. Esto no implica necesariamente que la relación edad-ingreso sea inexistente en la población de trabajadores colombianos —la curva LOESS de la Figura 3 sí insinuaba visualmente el ascenso y posterior descenso esperado—, sino que, con una muestra de apenas $n=100$ observaciones y una correlación de Pearson entre edad y log-ingreso prácticamente nula ($r=-0.041$), el efecto no resulta estadísticamente detectable una vez controlado por escolaridad, horas trabajadas y antigüedad. La unanimidad de los cinco criterios de selección —que difieren en su lógica (ajuste penalizado, sesgo respecto al modelo completo, y búsqueda secuencial por verosimilitud) pero llegan al mismo resultado— constituye evidencia razonablemente robusta de que el modelo reducido de tres variables es, con los datos disponibles, la especificación más parsimoniosa y defendible, sin que ello descarte que una muestra de mayor tamaño pudiera revelar el efecto no lineal de la edad que la teoría anticipa.
 
 # Conclusiones
 

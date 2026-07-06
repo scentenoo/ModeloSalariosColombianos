@@ -21,7 +21,7 @@ format:
         \floatplacement{figure}{H}
         \floatplacement{table}{H}
         \pagestyle{scrheadings}
-        \ihead{\bfseries Proyecto RLM -- Entrega 1}
+        \ihead{\bfseries Proyecto RLM -- Entrega 2}
         \setkomafont{pageheadfoot}{\normalfont\small}
         \KOMAoptions{headsepline=true}
 ---
@@ -322,7 +322,7 @@ datos <- ocupados %>%
   left_join(caracteristicas, by = llaves, relationship = "one-to-one")
 ```
 
-```{r construccion-variables}
+```{r construccion-variables, echo=TRUE}
 # --- Escolaridad (años acumulados) ---------------------------------------
 # Recodificación de una sola variable (P3042: nivel educativo alcanzado) a
 # años típicos de escolaridad. Para los niveles hasta educación media, los
@@ -402,7 +402,7 @@ Siguiendo la restricción del enunciado (máximo 100 registros), se aplicó un m
 
 $$\pi_i = \frac{n}{N} = \frac{100}{`r poblacion_n`}$$
 
-```{r muestreo}
+```{r muestreo, echo=FALSE}
 set.seed(123)
 
 n_muestra <- 100
@@ -557,13 +557,13 @@ graficar_dispersion("antiguedad", "antigüedad (meses)")
 ```
 
 
-Las Figuras @fig-scatter-horas a @fig-scatter-antiguedad muestran la relación entre el log-ingreso y cada covariable continua, junto con una curva LOESS y el coeficiente de correlación de Pearson. La escolaridad presenta la asociación lineal más fuerte con el log-ingreso (r=0.489r = 0.489
+Las @fig-scatter-horas a @fig-scatter-antiguedad muestran la relación entre el log-ingreso y cada covariable continua, junto con una curva LOESS y el coeficiente de correlación de Pearson. La escolaridad presenta la asociación lineal más fuerte con el log-ingreso (r=0.489r = 0.489
 r=0.489), con una tendencia creciente y particularmente pronunciada en los niveles más altos de educación, consistente con los rendimientos crecientes a la educación superior documentados en la literatura. Las horas trabajadas muestran una asociación positiva moderada (r=0.350r = 0.350
 r=0.350), aunque la curva LOESS evidencia un aplanamiento a partir de las 40 horas semanales: superado ese umbral, trabajar más horas no se traduce en incrementos proporcionales del ingreso. La antigüedad exhibe una correlación lineal débil (r=0.104r = 0.104
 r=0.104), con la mayoría de las observaciones concentradas en valores bajos y un leve repunte solo en los casos de mayor antigüedad. La edad es el caso más particular: su correlación de Pearson es prácticamente nula (r=−0.041r = -0.041
 r=−0.041), pero la curva LOESS sí insinúa el perfil cóncavo esperado por la teoría del capital humano —un leve ascenso hasta la quinta década de vida seguido de un descenso—, lo que confirma que la relación no es de tipo lineal y respalda la inclusión del término cuadrático (edad²) en el modelo en lugar de depender únicamente del coeficiente de correlación simple.
 
-Se observa que los puntos de la Figura @fig-scatter-escolaridad se agrupan en un número reducido de valores discretos (0, 5, 9, 11, 13, 14, 16, 17, 18 y 21 años) en lugar de distribuirse de forma continua. Esto es consecuencia directa del método de construcción de la variable: al no preguntarse en la GEIH el número exacto de años cursados sino el nivel educativo alcanzado, la escolaridad se aproxima mediante la duración típica asociada a cada nivel (Ley 115 de 1994 y convención de Núñez & Sánchez, 1998). Se trata, por tanto, de una variable discreta con una escala de intervalo bien definida, tratada como continua siguiendo la convención estándar en la literatura de determinantes salariales, en la que "años de escolaridad" se modela habitualmente como covariable continua pese a su naturaleza discreta (Mincer, 1974; Núñez & Sánchez, 1998).
+Se observa que los puntos de la Figura @fig-scatter-escolaridad se agrupan en un número reducido de valores discretos (0, 5, 9, 11, 13, 14, 16, 17, 18 y 21 años) en lugar de distribuirse de forma continua. Esto es consecuencia directa del método de construcción de la variable: al no preguntarse en la GEIH el número exacto de años cursados sino el nivel educativo alcanzado, la escolaridad se aproxima mediante la duración típica asociada a cada nivel (Ley 115 de 1994 y convención de Núñez \& Sánchez, 1998). Se trata, por tanto, de una variable discreta con una escala de intervalo bien definida, tratada como continua siguiendo la convención estándar en la literatura de determinantes salariales, en la que "años de escolaridad" se modela habitualmente como covariable continua pese a su naturaleza discreta (Mincer, 1974; Núñez \& Sánchez, 1998).
 
 ```{r matriz-correlacion, echo=FALSE, fig.width=6, fig.height=6}
 continuas <- muestra %>%
@@ -672,7 +672,7 @@ p_valor_f <- pf(f_stat[1], f_stat[2], f_stat[3], lower.tail = FALSE)
 
 El estadístico F global es de `r round(f_stat[1],3)` con `r f_stat[2]` y `r f_stat[3]` grados de libertad, con un p-valor de `r format.pval(p_valor_f, digits=3)`. El modelo explica el `r round(r2*100,2)`% de la variabilidad total del log-ingreso ($R^2=$ `r r2`; $R^2$ ajustado $=$ `r r2_adj`).
 
-## Interpretación rigurosa
+## Interpretación
 
 ¿Es significativo el modelo? Sí, de forma inequívoca. La hipótesis nula del ANOVA global (todos los $\beta=0$ excepto el intercepto) se rechaza con un p-valor prácticamente nulo. Al menos una covariable tiene poder explicativo real sobre el log-ingreso.
 
@@ -807,21 +807,23 @@ tabla_diag <- rbind(
   diag_row(modelo_completo_5, "Completo (5 continuas)"),
   diag_row(modelo_continuas_reducido, "Reducido (horas+escolaridad+antigüedad)")
 )
-kable(tabla_diag, caption = "Verificación de supuestos: modelo completo vs. modelo seleccionado")
+kable(tabla_diag, caption = "Verificación de supuestos: modelo completo vs. modelo seleccionado",
+      col.names = c("Modelo", "Shapiro W", "p", "BP", "p", "DW", "p", "AIC", "BIC"))
 ```
 
 ```{r vif-comparacion}
 #| echo: false
 kable(data.frame(Variable = names(vif(modelo_completo_5)),
                   VIF_completo = round(vif(modelo_completo_5), 3)),
-      caption = "VIF - modelo completo (5 continuas)")
+      caption = "VIF - modelo completo (5 continuas)",
+      row.names = FALSE)
 ```
 
 ```{r vif-reducido}
 #| echo: false
 kable(data.frame(Variable = names(vif(modelo_continuas_reducido)),
                   VIF_reducido = round(vif(modelo_continuas_reducido), 3)),
-      caption = "VIF - modelo reducido")
+      caption = "VIF - modelo reducido",row.names = FALSE)
 ```
 
 ```{r prueba-f-anidada}
@@ -829,6 +831,48 @@ kable(data.frame(Variable = names(vif(modelo_continuas_reducido)),
 kable(anova(modelo_continuas_reducido, modelo_completo_5), digits = 4,
       caption = "Prueba F parcial: ¿aportan conjuntamente edad y edad² sobre el modelo reducido?")
 ```
+
+## Prueba de suma de cuadrados extra (test lineal general)
+
+Aunque el análisis de la Sección 8.3 y la selección de modelos de la Sección 9 mostraron que `edad` y `edad^2` no son significativas de forma individual, la significancia individual (prueba t) no equivale a significancia conjunta. Dado que ambas covariables representan, en conjunto, la componente cuadrática del perfil edad-ingreso propuesto por la teoría del capital humano (Mincer, 1974), la forma correcta de evaluarlas es probando su aporte **conjunto** mediante una prueba de suma de cuadrados extra (test lineal general), comparando el modelo reducido contra el modelo completo.
+
+**Modelo completo ($\Omega$):**
+
+$$
+\ln(Y_i) = \beta_0 + \beta_1\,\text{horas}_i + \beta_2\,\text{escolaridad}_i + \beta_3\,\text{edad}_i + \beta_4\,\text{edad}^2_i + \beta_5\,\text{antigüedad}_i + \varepsilon_i
+$$
+
+**Modelo reducido ($\omega$):**
+
+$$
+\ln(Y_i) = \beta_0 + \beta_1\,\text{horas}_i + \beta_2\,\text{escolaridad}_i + \beta_3\,\text{antigüedad}_i + \varepsilon_i
+$$
+
+**Hipótesis:**
+
+$$
+H_0: \beta_{\text{edad}} = \beta_{\text{edad}^2} = 0 \qquad \text{vs.} \qquad H_1: \text{al menos uno de } \beta_{\text{edad}}, \beta_{\text{edad}^2} \neq 0
+$$
+
+**Estadístico de prueba:**
+
+$$
+F = \frac{\left[SSE(\omega) - SSE(\Omega)\right] \big/ (gl_\omega - gl_\Omega)}{SSE(\Omega) \big/ gl_\Omega}
+$$
+
+Con $SSE(\omega) = 52.8096$ ($gl_\omega = 96$) y $SSE(\Omega) = 52.6961$ ($gl_\Omega = 94$):
+
+$$
+F = \frac{(52.8096 - 52.6961)/2}{52.6961/94} = \frac{0.0567}{0.5606} = 0.1012
+$$
+
+**Distribución bajo $H_0$:** $F \sim F_{(2,\,94)}$
+
+**Valor P:** $P\left(F_{(2,94)} > 0.1012\right) = 0.9039$
+
+**Decisión:** Dado que $p = 0.9039 \gg \alpha = 0.05$, no se rechaza $H_0$.
+
+**Conclusión:** No hay evidencia estadística suficiente, con esta muestra de $n=100$, para afirmar que edad y edad² contribuyen conjuntamente a explicar el logaritmo del ingreso laboral una vez que horas, escolaridad y antigüedad ya están en el modelo. Este resultado es consistente con la correlación de Pearson prácticamente nula entre edad y log-ingreso ($r=-0.041$) observada en el análisis descriptivo, y respalda formalmente la elección del modelo reducido de tres variables como la especificación más parsimoniosa, sin que ello implique que el efecto edad-ingreso sea inexistente en la población (podría no ser detectable con este tamaño muestral).
 
 ```{r graficos-diagnostico}
 #| echo: false
@@ -852,6 +896,69 @@ Se sugiere el modelo reducido $\ln(Y_i)=\beta_0+\beta_1\text{horas}_i+\beta_2\te
 4. **Coherencia con la etapa de selección de modelos**: los cinco métodos de selección convergieron unánimemente en este modelo reducido.
 
 Sin embargo, ambos modelos **rechazan la normalidad de los residuos** (Shapiro-Wilk, $p=0.0348$ y $p=0.0278$ respectivamente) y **rechazan la homocedasticidad** (Breusch-Pagan, $p=0.0312$ y $p=0.0217$) al 5% de significancia, mientras que el supuesto de independencia se cumple sin problema en ambos (Durbin-Watson, $p\approx0.38$). Esto indica que la elección entre estos dos modelos no resuelve por sí sola todos los problemas de especificación, y que en una etapa posterior convendría explorar correcciones adicionales (errores estándar robustos, mínimos cuadrados ponderados, o revisión de observaciones influyentes) antes de dar el modelo por definitivo.
+
+# Efecto de observaciones atípicas (sensibilidad del modelo)
+```{r}
+#| echo: false
+# Observaciones identificadas como atípicas en el numeral anterior
+# (Residuals vs Fitted, Q-Q, Scale-Location: 31, 52, 100)
+obs_atipicas <- c(31, 52, 100)
+
+muestra_sin_atipicos <- muestra[-obs_atipicas, ]
+
+modelo_sin_atipicos <- lm(ln_ingreso ~ horas + escolaridad + antiguedad,
+                           data = muestra_sin_atipicos)
+
+kable(summary(modelo_sin_atipicos)$coefficients, digits = 4,
+      caption = "Parámetros ajustados sin observaciones atípicas (n = 97)")
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 5.5
+#| out-width: "70%"
+#| fig-cap: "Q-Q residuales estudentizados (sin observaciones atípicas)"
+
+library(car)
+qqPlot(modelo_sin_atipicos, id = FALSE,
+       main = "",
+       cex.lab = 1.1)
+```
+
+**¿Cambian notoriamente las estimaciones de los parámetros?**
+
+No de forma dramática, pero tampoco son idénticas. Los tres coeficientes conservan el signo esperado (positivo) y las tres variables siguen siendo significativas al 5 % — de hecho antiguedad mejora su significancia (p pasa de 0.0097 a 0.0022). El cambio más notable es el de horas, cuyo coeficiente cae de 0.0289 a 0.0218 (una reducción de aproximadamente 25 %): esto sugiere que al menos una de las observaciones eliminadas tenía una combinación atípica de horas trabajadas e ingreso que inflaba ligeramente esa pendiente. escolaridad cambia poco (~7 %).
+
+**¿Cambian los errores estándar?**
+
+Sí, de forma consistente: los errores estándar de los tres coeficientes disminuyen (horas: 0.0056→0.0051; escolaridad: 0.0174→0.0153; antiguedad: 0.0008→0.0007). Esto es coherente con lo esperado: al quitar observaciones que generaban residuales grandes, se reduce la varianza residual del modelo y, por tanto, la precisión de las estimaciones mejora.
+
+**¿Cambia la significancia?**
+
+No se pierde ninguna significancia — al contrario, antiguedad la refuerza notablemente (su t pasa de 2.64 a 3.15). Ninguna variable que era significativa deja de serlo, y ninguna que no lo era pasa a serlo (las tres ya eran significativas antes).
+
+**¿Mejoró la normalidad?**
+
+Sí. En el Q-Q plot de los residuales estudentizados del modelo sin atípicos, prácticamente todos los puntos caen dentro de la banda de confianza de qqPlot(), con solo una leve desviación en el extremo superior derecho. Esto contrasta con el Q-Q del modelo original, donde las observaciones 31, 52 y 100 se salían claramente de la banda en la cola inferior izquierda (residuales muy negativos). La mejora visual es consistente con que esas tres observaciones eran precisamente las responsables del rechazo de normalidad reportado en la Tabla 22 (Shapiro-Wilk, p=0.0278 en el modelo original con esas covariables).
+Conclusión general sobre el efecto de estas observaciones
+Las observaciones 31, 52 y 100 se comportaban como valores atípicos en la variable respuesta (residuales grandes) más que como puntos de alto leverage que distorsionaran la relación estructural del modelo. Su eliminación no cambia la interpretación económica del modelo —los signos, el orden de magnitud y la significancia de horas, escolaridad y antigüedad se mantienen—, pero sí produce dos beneficios claros: (1) reduce los errores estándar y por tanto mejora la precisión de las estimaciones, y (2) corrige el incumplimiento del supuesto de normalidad de los residuales que tenía el modelo original. Esto es consistente con la hipótesis de que se trataba de errores de digitación u observaciones genuinamente anómalas, y no de casos representativos de la población que el modelo debiera seguir capturando.
+
+## Respuesta a las hipótesis planteadas
+
+### Hipótesis 1: la escolaridad y la edad explican una parte sustancial de la variabilidad del ingreso laboral
+
+Esta hipótesis se confirma solo parcialmente. El componente de **escolaridad** se sostiene con solidez en todas las especificaciones: en el modelo completo (**Tabla 8**) su coeficiente es $\hat\beta = 0.1093$ ($p<0.0001$), y se mantiene prácticamente inalterado en el modelo reducido (**Tabla 20/21**, $\hat\beta=0.1077$, $p<0.0001$) y en el modelo sin observaciones atípicas (**Tabla 26**, $\hat\beta=0.0998$, $p<0.0001$). El signo positivo y la significancia son consistentes con la teoría del capital humano y con la asociación lineal moderada-fuerte observada descriptivamente ($r=0.489$, **Figura 2**).
+
+El componente de **edad**, en cambio, no se sostiene estadísticamente. En el modelo completo (**Tabla 8**) ni edad ($p=0.7953$) ni edad² ($p=0.8497$) resultan significativas, y la prueba de suma de cuadrados extra realizada en la **Sección [Prueba de suma de cuadrados extra]** confirma que tampoco aportan de forma conjunta ($F_{(2,94)}=0.1012$, $p=0.9039$). Esto es coherente con la correlación de Pearson prácticamente nula entre edad y log-ingreso reportada en la **Figura 3** ($r=-0.041$), aunque la curva LOESS de esa misma figura sí insinuaba visualmente el perfil cóncavo esperado. Además, la **Tabla 23** muestra que edad y edad² presentaban multicolinealidad severa entre sí ($VIF>39$ en ambas), lo que también contribuye a explicar su falta de significancia individual en el modelo completo.
+
+En conclusión, la Hipótesis 1 se confirma únicamente en su componente de escolaridad; el componente de edad no encuentra respaldo estadístico con los datos de esta muestra ($n=100$), lo cual no descarta que el efecto exista en la población, sino que sugiere que no es detectable con este tamaño muestral una vez controlado por las demás covariables.
+
+### Hipótesis 2: la rama de actividad económica genera diferencias sistemáticas en el ingreso, incluso después de considerar escolaridad y edad
+
+Esta hipótesis encuentra respaldo **descriptivo**, pero su confirmación **estadística formal queda pendiente**. La **Tabla 7** y la **Figura 6** muestran una brecha de 0.98 puntos en escala logarítmica entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21), una diferencia sustancial que es consistente con la heterogeneidad sectorial documentada en la literatura (Banco de la República, 2021).
+
+Sin embargo, el modelo estimado en las **Secciones 8 a 10** de este documento incluye únicamente las cinco covariables continuas; la variable `rama` (categórica) todavía no ha sido incorporada como conjunto de variables dummy al modelo de regresión. Por tanto, no es posible aún pronunciarse sobre si estas diferencias sectoriales se mantienen significativas **una vez controlado por escolaridad y edad**, tal como exige la hipótesis. La evidencia descriptiva es sugestiva y apunta en la dirección esperada, pero su verificación formal (mediante los coeficientes de las dummies de rama y una prueba F sobre su significancia conjunta) queda como paso pendiente para la siguiente etapa del proyecto, cuando se estime el modelo completo con la variable categórica incluida.
 
 # Conclusiones
 
@@ -893,7 +1000,7 @@ análisis de modelación microeconométrica (2019). \textit{Panorama Económico}
 Universidad de Cartagena.
 
 \bibitem{Montgomery2021}
-Montgomery, D. C., Peck, E. A., & Vining, G. G. (2021). Introduction to Linear Regression Analysis (6th ed.). John Wiley & Sons.
+Montgomery, D. C., Peck, E. A., \& Vining, G. G. (2021). Introduction to Linear Regression Analysis (6th ed.). John Wiley \& Sons.
 
 \bibitem{DANE2024}
 Departamento Administrativo Nacional de Estadística – DANE. (2024). Gran Encuesta Integrada de Hogares (GEIH). Microdatos. Recuperado de https://microdatos.dane.gov.co

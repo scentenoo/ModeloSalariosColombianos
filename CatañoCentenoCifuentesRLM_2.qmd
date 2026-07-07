@@ -63,31 +63,31 @@ format:
 
 # Enunciado del proyecto
 
-El proyecto consiste en buscar una base de datos con datos colombianos que contenga una variable de respuesta continua (𝑌), al menos cinco covariables continuas (𝑋) y una variable categórica (𝑍) con al menos tres categorías. Los análisis se realizan con máximo 100 registros. El proyecto tiene tres entregas y una exposición final.
+El proyecto consiste en buscar una base de datos con datos colombianos que contenga una variable de respuesta continua (𝑌), al menos cinco covariables continuas (𝑋) y una variable categórica (𝑍) con al menos tres categorías. Los análisis se realizan con máximo 100 registros. El proyecto tiene tres entregas y una exposicion final.
 
-1.  Contextualizar el fenómeno a modelar: explicar el significado de la variable de respuesta y las covariables, la relevancia del estudio y su objetivo. Establecer dos hipótesis que se desean probar con el modelo.
+1.  Contextualizar el fenomeno a modelar: explicar el significado de la variable de respuesta y las covariables, la relevancia del estudio y su objetivo. Establecer dos hipótesis que se desean probar con el modelo.
 
-2.  Realizar un análisis descriptivo exhaustivo y pertinente para el tipo de modelo que se va a aplicar.
+2.  Realizar un analisis descriptivo exhaustivo y pertinente para el tipo de modelo que se va a aplicar.
 
 # Introducción
 
-El ingreso laboral es uno de los principales determinantes del bienestar de los hogares colombianos y uno de los indicadores más utilizados para analizar la desigualdad económica del país. Explicar por qué unos trabajadores ganan más que otros es una pregunta central de la economía laboral, y la respuesta habitual —propuesta por Mincer (1974)— es que el ingreso depende principalmente de la acumulación de capital humano (educación y experiencia), de la intensidad con que se trabaja (horas) y de las características del empleo (tipo de vinculación y sector económico).
+El ingreso laboral es uno de los principales determinantes del bienestar de los hogares colombianos y uno de los indicadores mas utilizados para analizar la desigualdad económica del país. Explicar por qué unos trabajadores ganan mas que otros es una pregunta central de la economía laboral y la respuesta habitual —propuesta por Mincer (1974)— es que el ingreso depende principalmente de la acumulacion de capital humano (educacion y experiencia), de la intensidad con que se trabaja (horas) y de las caracteristicas del empleo (tipo de vinculación y sector económico).
 
-En Colombia, donde la informalidad laboral y la heterogeneidad sectorial son altas, estos factores no siempre se traducen en el mismo nivel de ingreso: dos personas con la misma escolaridad pueden percibir remuneraciones muy distintas según su posición ocupacional o la rama de actividad en la que trabajan. Este proyecto busca cuantificar, a partir de microdatos de la Gran Encuesta Integrada de Hogares (GEIH), qué tanto explican estas variables la variabilidad del ingreso laboral mensual.
+En Colombia, donde la informalidad laboral y la heterogeneidad sectorial son altas, estos factores no siempre se traducen en el mismo nivel de ingreso: dos personas con la misma escolaridad pueden percibir remuneraciones muy distintas segun su posición ocupacional o la rama de actividad en la que trabajan. Este proyecto busca cuantificar, a partir de microdatos de la Gran Encuesta Integrada de Hogares (GEIH), qué tanto explican estas variables la variabilidad del ingreso laboral mensual.
 
 # Contextualización del problema
 
-El ingreso laboral es una de las variables centrales para el estudio del bienestar economico y del funcionamiento del mercado de trabajo. Desde la teoria del capital humano, propuesta originalmente por Mincer, se plantea que el salario de un individuo puede explicarse en buena medida por su nivel de escolaridad y por su experiencia laboral entendida esta ultima como una proxy del entrenamiento adquirido en el puesto de trabajo \cite{mincer1974}. Este marco teorico dio origen a la conocida _ecuación de Mincer_, que modela el logaritmo del ingreso como funcion lineal de la educación y de la experiencia (y su forma cuadratica) y que constituye hasta hoy el punto de partida estandar para el analisis empirico de los determinantes salariales.
+El ingreso laboral es una de las variables centrales para el estudio del bienestar economico y del funcionamiento del mercado de trabajo. Desde la teoria del capital humano propuesta originalmente por Mincer, se plantea que el salario de un individuo puede explicarse en buena medida por su nivel de escolaridad y por su experiencia laboral entendida esta ultima como una proxy del entrenamiento adquirido en el puesto de trabajo \cite{mincer1974}. Este marco teorico dio origen a la conocida _ecuación de Mincer_, que modela el logaritmo del ingreso como funcion lineal de la educación y de la experiencia (y su forma cuadratica) y que constituye hasta hoy el punto de partida estandar para el analisis empirico de los determinantes salariales.
 
 En el caso colombiano, esta relacion ha sido documentada de manera consistente. Núñez y Sánchez \cite{nunez1998} utilizando informacion de encuestas de hogares del DANE encuentran que la escolaridad ha sido el factor con mayor poder explicativo sobre los diferenciales de ingreso laboral en el pais, y que su efecto se ha mantenido estable a lo largo de distintos periodos. En la misma linea Guataquí et al. \cite{guataqui}, con datos de la Gran Encuesta Integrada de Hogares (GEIH), muestran que ademas de la educacion, variables como la posicion ocupacional y la experiencia potencial explican una parte relevante de la heterogeneidad salarial observada, y advierten sobre la importancia de separar estos efectos entre asalariados y trabajadores por cuenta propia, dado que ambos grupos responden a estructuras de determinacion de ingresos distintas.
 
-Estudios mas recientes del banco de la republica \cite{banrep2021} confirman que estos patrones persisten e incluso se intensifican en contextos de choques economicos: al modelar los determinantes del ingreso laboral para el periodo 2010-2019, encuentran que la brecha salarial asociada al sexo del trabajador y a la posicion ocupacional continua siendo estadisticamente significativa una vez controlado por nivel educativo. A nivel de subgrupos poblacionales especificos, Panorama Económico \cite{panorama2019} aplica una ecuación minceriana a profesionales en economia y encuentra que un año adicional de formacion escolar incrementa significativamente la probabilidad de percibir ingresos mas altos, evidenciando que el efecto de la educacion sobre el salario no es homogeneo entre grupos ocupacionales, sino que varia segun el perfil profesional analizado.
+Estudios mas recientes del banco de la republica \cite{banrep2021} confirman que estos patrones persisten e incluso se intensifican en contextos de choques economicos: al modelar los determinantes del ingreso laboral para el periodo 2010-2019, encuentran que la brecha salarial asociada al sexo del trabajador y a la posicion ocupacional continua siendo estadisticamente significativa una vez controlado por nivel educativo. A nivel de subgrupos poblacionales especificos, Panorama Económico \cite{panorama2019} aplica una ecuacion minceriana a profesionales en economia y encuentra que un año adicional de formacion escolar incrementa significativamente la probabilidad de percibir ingresos mas altos evidenciando que el efecto de la educacion sobre el salario no es homogeneo entre grupos ocupacionales, sino que varia segun el perfil profesional analizado.
 
-En conjunto, esta literatura sugiere que un modelo del ingreso laboral en Colombia debe incorporar, como minimo, variables asociadas a la educacion, la experiencia o antigüedad laboral y la heterogeneidad sectorial del mercado de trabajo, dado que son los determinantes que de manera recurrente resultan significativos en los estudios previos. El presente proyecto retoma este marco para proponer un modelo de regresión lineal multiple sobre una muestra de trabajadores colombianos, incorporando la escolaridad, la edad (y su termino cuadratico), la antigüedad en el empleo actual y la intensidad de trabajo (horas semanales) como covariables continuas, y la rama de actividad económica como variable categorica, con el fin de evaluar el peso relativo de estos factores sobre el ingreso laboral.
+En conjunto, esta literatura sugiere que un modelo del ingreso laboral en Colombia debe incorporar como minimo variables asociadas a la educacion, la experiencia o antigüedad laboral y la heterogeneidad sectorial del mercado de trabajo dado que son los determinantes que de manera recurrente resultan significativos en los estudios previos. El presente proyecto retoma este marco para proponer un modelo de regresion lineal multiple sobre una muestra de trabajadores colombianos, incorporando la escolaridad, la edad (y su termino cuadratico), la antigüedad en el empleo actual y la intensidad de trabajo (horas semanales) como covariables continuas y la rama de actividad económica como variable categorica, con el fin de evaluar el peso relativo de estos factores sobre el ingreso laboral.
 
 # Objetivo general
 
-Desarrollar un modelo de regresión lineal multiple que permita explicar el logaritmo del ingreso laboral mensual de los trabajadores en Colombia a partir de variables asociadas a la teoria del capital humano y a la literatura empirica sobre determinantes salariales en el pais, especificamente las horas de trabajo semanales, la escolaridad, la edad, la antigüedad en el empleo actual y la rama de actividad económica en la que se desempeña el trabajador.
+Desarrollar un modelo de regresión lineal multiple que permita explicar el logaritmo del ingreso laboral mensual de los trabajadores en Colombia a partir de variables asociadas a la teoria del capital humano y a la literatura empirica sobre determinantes salariales en el pais especificamente las horas de trabajo semanales, la escolaridad, la edad, la antigüedad en el empleo actual y la rama de actividad económica en la que se desempeña el trabajador.
 
 # Relevancia del estudio
 
@@ -122,12 +122,12 @@ tabla_vars <- data.frame(
   Tipo = c("Continua", "Continua", "Continua", "Continua", "Continua",
            "Continua", "Categórica"),
   Significado = c(
-    "Ingreso laboral mensual transformado a escala logarítmica para reducir la asimetría de la distribución.",
+    "Ingreso laboral mensual transformado a escala logarítmica para reducir la asimetria de la distribucion.",
     "Intensidad del trabajo desarrollado durante la semana de referencia.",
-    "Años de educación formal aprobados, recodificados a partir del nivel educativo alcanzado; mide la acumulación de capital humano.",
+    "Años de educacion formal aprobados, recodificados a partir del nivel educativo alcanzado; mide la acumulación de capital humano.",
     "Edad de la persona en años cumplidos; aproxima el ciclo de vida laboral.",
     "Captura el efecto no lineal (rendimientos decrecientes) de la edad sobre el ingreso.",
-    "Meses en el empleo u ocupación actual; aproxima estabilidad y experiencia específica.",
+    "Meses en el empleo u ocupacion actual; aproxima estabilidad y experiencia especifica.",
     "Sector económico (CIIU, 2 dígitos) en el que se desempeña el trabajador."
   )
 )
@@ -175,23 +175,23 @@ if (knitr::is_latex_output()) {
 
 ### Descripción detallada de las variables
 
-**Y: Logaritmo del ingreso laboral mensual.** La variable de respuesta corresponde al ingreso laboral mensual percibido por las personas ocupadas incluidas en la GEIH, expresado en pesos colombianos. Dado que en economía laboral es ampliamente reconocido que la distribución de los ingresos presenta una marcada asimetría positiva, la variable dependiente se transforma mediante el logaritmo natural, lo que reduce la asimetría, disminuye la influencia de valores extremos y permite interpretar los coeficientes del modelo como variaciones porcentuales aproximadas del ingreso (especificación clásica de Mincer, 1974).
+**Y: Logaritmo del ingreso laboral mensual.** La variable de respuesta corresponde al ingreso laboral mensual percibido por las personas ocupadas incluidas en la GEIH, expresado en pesos colombianos. Dado que en economia laboral es ampliamente reconocido que la distribución de los ingresos presenta una marcada asimetría positiva la variable dependiente se transforma mediante el logaritmo natural, lo que reduce la asimetría disminuye la influencia de valores extremos y permite interpretar los coeficientes del modelo como variaciones porcentuales aproximadas del ingreso (especificación clásica de Mincer, 1974).
 
-**X1: Horas trabajadas por semana.** Número de horas que la persona trabajó habitualmente durante la semana de referencia en su ocupación principal. Se espera una relación positiva con el ingreso.
+**X1: Horas trabajadas por semana.** Número de horas que la persona trabajo habitualmente durante la semana de referencia en su ocupacion principal. Se espera una relacion positiva con el ingreso.
 
-**X2: Años de escolaridad.** Construida a partir del nivel educativo alcanzado (P3042), recodificando cada uno de los 13 niveles a un número típico de años acumulados de educación formal. Para los niveles hasta la educación media, los años corresponden a la duración legal establecida por la Ley 115 de 1994 (primaria: 5 años; básica secundaria: 4 años adicionales; media: 2 años adicionales). Para los niveles de educación superior (técnica, tecnológica, universitaria y posgrados), se asume la duración típica de cada programa, siguiendo la convención de conversión utilizada en estudios de determinantes salariales con la GEIH \cite{nunez1998}, dado que la encuesta no permite distinguir la duración exacta cursada por cada persona dentro de ese nivel.
+**X2: Años de escolaridad.** Construida a partir del nivel educativo alcanzado (P3042), recodificando cada uno de los 13 niveles a un número típico de años acumulados de educación formal. Para los niveles hasta la educación media los años corresponden a la duracion legal establecida por la Ley 115 de 1994 (primaria: 5 años; básica secundaria: 4 años adicionales; media: 2 años adicionales). Para los niveles de educación superior (técnica, tecnológica, universitaria y posgrados), se asume la duración típica de cada programa, siguiendo la convención de conversión utilizada en estudios de determinantes salariales con la GEIH \cite{nunez1998}, dado que la encuesta no permite distinguir la duracion exacta cursada por cada persona dentro de ese nivel.
 
-**X3: Edad.** Edad de la persona en años cumplidos al momento de la encuesta. Se utiliza como proxy del ciclo de vida laboral en lugar de la experiencia potencial (Edad - Escolaridad - 6), evitando así que esta covariable dependa de la variable de escolaridad ya construida, y reduciendo el número de transformaciones y supuestos encadenados sobre la base de datos.
+**X3: Edad.** Edad de la persona en años cumplidos al momento de la encuesta. Se utiliza como proxy del ciclo de vida laboral en lugar de la experiencia potencial (Edad - Escolaridad - 6), evitando así que esta covariable dependa de la variable de escolaridad ya construida y reduciendo el número de transformaciones y supuestos encadenados sobre la base de datos.
 
-**X4: Edad al cuadrado.** Incorpora la relación cóncava entre edad e ingreso: los ingresos aumentan con la edad, pero a una tasa decreciente, consistente con el perfil edad-ingreso documentado en la literatura de capital humano.
+**X4: Edad al cuadrado.** Incorpora la relacion cóncava entre edad e ingreso: los ingresos aumentan con la edad pero a una tasa decreciente, consistente con el perfil edad-ingreso documentado en la literatura de capital humano.
 
-**X5: Antigüedad en el empleo actual.** Meses que el trabajador lleva en su empleo u ocupación actual; aproxima estabilidad laboral y experiencia específica en la organización.
+**X5: Antigüedad en el empleo actual.** Meses que el trabajador lleva en su empleo u ocupacion actual; aproxima estabilidad laboral y experiencia específica en la organización.
 
-**X6 (Z): Rama de actividad económica.** Sector económico en el que se desempeña el trabajador, agrupado según la Clasificación Industrial Internacional Uniforme (CIIU) a 2 dígitos.
+**X6 (Z): Rama de actividad económica.** Sector económico en el que se desempeña el trabajador agrupado según la Clasificación Industrial Internacional Uniforme (CIIU) a 2 digitos.
 
 # Modelo matemático propuesto
 
-Con fundamento en la teoría del capital humano y en la especificación clásica de la ecuación de ingresos de Mincer, se propone estimar un modelo de regresión lineal múltiple en el que el logaritmo natural del ingreso laboral mensual constituye la variable dependiente:
+Con fundamento en la teoria del capital humano y en la especificación clásica de la ecuación de ingresos de Mincer se propone estimar un modelo de regresión lineal múltiple en el que el logaritmo natural del ingreso laboral mensual constituye la variable dependiente:
 
 $$\ln(Y_i)=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}
 +\beta_3X_{3i}
@@ -202,13 +202,13 @@ $$\ln(Y_i)=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}
 
 donde $X_1$: horas trabajadas por semana; $X_2$: años de escolaridad; $X_3$: edad; $X_4$: edad al cuadrado; $X_5$: antigüedad en el empleo actual; $X_6$: rama de actividad económica (dummy); $\beta_0$: intercepto; $\varepsilon_i$: error aleatorio.
 
-Antes de estimar el modelo definitivo se verificará el cumplimiento de los supuestos de la regresión lineal múltiple, evaluando la existencia de multicolinealidad mediante el Factor de Inflación de la Varianza (VIF), la homocedasticidad de los residuos, la normalidad de los errores y la posible presencia de observaciones influyentes \cite{Montgomery2021}.
+Antes de estimar el modelo definitivo se verificara el cumplimiento de los supuestos de la regresión lineal múltiple, evaluando la existencia de multicolinealidad mediante el Factor de Inflacion de la Varianza (VIF), la homocedasticidad de los residuos, la normalidad de los errores y la posible presencia de observaciones influyentes \cite{Montgomery2021}.
 
 ## Hipótesis
 
-Las siguientes hipótesis se desprenden directamente de la contextualización presentada en la Introducción y la Relevancia (teoría del capital humano de Mincer, 1974, y la heterogeneidad del mercado laboral colombiano). Cada una se plantea de forma que pueda traducirse, en la etapa de modelación, en el signo y la significancia esperados de parámetros específicos del modelo $\ln(Y_i)=\beta_0+\beta_1X_{1i}+\dots+\beta_6X_{6i}+\varepsilon_i$.
+Las siguientes hipótesis se desprenden directamente de la contextualización presentada en la Introducción y la Relevancia (teoría del capital humano de Mincer, 1974, y la heterogeneidad del mercado laboral colombiano). Cada una se plantea de forma que pueda traducirse, en la etapa de modelación, en el signo y la significancia esperados de parametros específicos del modelo $\ln(Y_i)=\beta_0+\beta_1X_{1i}+\dots+\beta_6X_{6i}+\varepsilon_i$.
 
-**Hipótesis 1: la escolaridad y la edad explican una parte sustancial de la variabilidad del ingreso laboral.** De acuerdo con la teoría del capital humano, se espera que los trabajadores con mayor escolaridad perciban ingresos más altos, y que el ingreso siga un perfil cóncavo respecto a la edad —creciente en las primeras etapas de la vida laboral, hasta el punto en que los rendimientos empiezan a decrecer—. En términos del modelo, esta hipótesis se traduce en $\beta_2>0$ (escolaridad), $\beta_3>0$ (edad) y $\beta_4<0$ (edad al cuadrado), reflejando el perfil cóncavo típico de la ecuación de Mincer; se espera además que ambos coeficientes sean estadísticamente significativos.
+**Hipótesis 1: la escolaridad y la edad explican una parte sustancial de la variabilidad del ingreso laboral.** De acuerdo con la teoría del capital humano, se espera que los trabajadores con mayor escolaridad perciban ingresos más altos, y que el ingreso siga un perfil cóncavo respecto a la edad —creciente en las primeras etapas de la vida laboral hasta el punto en que los rendimientos empiezan a decrecer—. En términos del modelo, esta hipótesis se traduce en $\beta_2>0$ (escolaridad), $\beta_3>0$ (edad) y $\beta_4<0$ (edad al cuadrado), reflejando el perfil cóncavo típico de la ecuación de Mincer. Se espera ademas que ambos coeficientes sean estadísticamente significativos.
 
 **Hipótesis 2: la rama de actividad económica genera diferencias sistemáticas en el ingreso, incluso después de considerar la escolaridad y la edad.** Dada la heterogeneidad e informalidad del mercado laboral colombiano descrita en la Relevancia, se espera que existan brechas de ingreso entre sectores económicos que la educación y la edad por sí solas no logran explicar. En el modelo, esto se traduce en que al menos algunos de los coeficientes asociados a las variables dummy de rama de actividad ($\beta_6$) sean estadísticamente significativos y distintos de cero.
 
@@ -217,13 +217,13 @@ Las siguientes hipótesis se desprenden directamente de la contextualización pr
 
 ## Información sobre la base de datos
 
-La base de datos utilizada corresponde a la Gran Encuesta Integrada de Hogares (GEIH), operativo de enero de 2024, publicada por el Departamento Administrativo Nacional de Estadística (DANE). Los microdatos se descargaron en formato .zip desde el archivo nacional de microdatos del DANE (operativo de enero), disponible en el catálogo público:
-<https://microdatos.dane.gov.co/index.php/catalog/819/data-dictionary>. Se utilizan dos de sus módulos:
+La base de datos utilizada corresponde a la Gran Encuesta Integrada de Hogares (GEIH), operativo de enero de 2024, publicada por el Departamento Administrativo Nacional de Estadística (DANE). Los microdatos se descargaron en formato .zip desde el archivo nacional de microdatos del DANE (operativo de enero):
+<https://microdatos.dane.gov.co/index.php/catalog/819/data-dictionary>. Se utilizan dos de sus modulos:
 
 - **Ocupados**: contiene las variables laborales de las personas ocupadas (ingreso, horas trabajadas, antigüedad, rama de actividad, entre otras).
-- **Características generales, seguridad social en salud y educación**: contiene las variables demográficas y educativas (edad, nivel educativo, grado aprobado).
+- **Caracteristicas generales, seguridad social en salud y educacion**: contiene las variables demográficas y educativas (edad, nivel educativo, grado aprobado).
 
-Ambos módulos se identifican a nivel de persona mediante las llaves `directorio`, `secuencia_p` y `orden`, por lo que se unen (`left_join`) usando esa combinación.
+Ambos modulos se identifican a nivel de persona mediante las llaves `directorio`, `secuencia_p` y `orden`, por lo que se unen (`left_join`) usando esa combinacion.
 
 ```{r}
 paquetes <- c("dplyr", "car", "ggplot2", "corrplot", "readr", "tidyr", "stringr", "knitr")
@@ -265,14 +265,8 @@ datos <- ocupados %>%
 ```
 
 ```{r construccion-variables, echo=TRUE}
-# --- Escolaridad (años acumulados) ---------------------------------------
-# Recodificación de una sola variable (P3042: nivel educativo alcanzado) a
-# años típicos de escolaridad. Para los niveles hasta educación media, los
-# años corresponden a la duración legal (Ley 115 de 1994). Para los niveles
-# de educación superior se asume la duración típica de cada programa,
-# siguiendo la convención usada en estudios de ingresos con la GEIH
-# (Núñez & Sánchez, 1998). No se combina con P3042S1 (grado/semestre
-# aprobado dentro del nivel), evitando el supuesto sobre su codificación.
+# --- escolaridad (años acumulados) ---------------------------------------
+# Recodificacion de una sola variable (P3042: nivel educativo alcanzado) a años tipicos de escolaridad para los niveles hasta educacion media los años corresponden a la duración legal (Ley 115 de 1994) y para los niveles de educacion superior se asume la duracion tipica de cada programa siguiendo la convencion usada en estudios de ingresos con la GEIH (Núñez & Sánchez, 1998). No se combina con P3042S1 (grado/semestre aprobado dentro del nivel), evitando el supuesto sobre su codificacion
 anios_tipicos <- c(
   "1" = 0,  "2" = 0,  "3" = 5,  "4" = 9,  "5" = 11, "6" = 11,
   "7" = 13, "8" = 13, "9" = 14, "10" = 16, "11" = 17, "12" = 18, "13" = 21
@@ -284,28 +278,23 @@ datos <- datos %>%
     escolaridad = anios_tipicos[p3042_chr]
   )
 
-# --- Edad y edad al cuadrado -----------------------------------------------
-# Se usa la edad directamente (sin transformar) como proxy del ciclo de vida
-# laboral, en lugar de la experiencia potencial (edad - escolaridad - 6),
-# para no encadenar esta covariable a la variable de escolaridad ya
-# construida y reducir el número de supuestos sobre la base de datos.
+# --- edad y edad al cuadrado -----------------------------------------------
+# Se usa la edad directamente (sin transformar) como proxy del ciclo de vida laboral en lugar de la experiencia potencial (edad - escolaridad - 6) para no encadenar esta covariable a la variable de escolaridad ya construida y reducir el numero de supuestos sobre la base de datos
+
 datos <- datos %>%
   mutate(
     edad2 = p6040^2
   )
 
-# --- Log del ingreso -------------------------------------------------------
+# --- log del ingreso -------------------------------------------------------
 datos <- datos %>%
   filter(!is.na(inglabo), inglabo > 0) %>%
   mutate(ln_ingreso = log(inglabo))
 
-# --- Variable categórica ---------------------------------------------
+# --- variable categorica ---------------------------------------------
 
-# --- Rama de actividad económica (recodificada a sectores agregados) ------
-# Se clasifica por rango de código CIIU (2 dígitos) en vez de una tabla de
-# búsqueda exhaustiva, para garantizar que TODO código posible (01-99) quede
-# clasificado y ninguna observación se pierda por códigos no anticipados en
-# la muestra previa.
+# --- rama de actividad economica (recodificada a sectores agregados) ------
+# Se clasifica por rango de codigo CIIU (2 dígitos) en vez de una tabla de busqueda exhaustiva, para garantizar que TODO codigo posible (01-99) quede clasificado y ninguna observacion se pierda por codigos no anticipados en la muestra
 datos <- datos %>%
   mutate(
     rama2d_num = as.numeric(as.character(rama2d_r4)),
@@ -320,7 +309,7 @@ datos <- datos %>%
     rama = factor(rama)
   )
 
-# --- Selección y limpieza final -------------------------------------------
+# --- Seleccion y limpieza final -------------------------------------------
 datos_modelo <- datos %>%
   rename(horas = p6800, antiguedad = p6426, ingreso = inglabo, edad = p6040) %>%
   select(ingreso, ln_ingreso, horas, edad, edad2, escolaridad,
@@ -334,13 +323,13 @@ datos_modelo <- datos %>%
 poblacion_n <- nrow(datos_modelo)
 ```
 
-Tras la unión, la construcción de variables y la eliminación de registros incompletos o inconsistentes (horas fuera de rango, escolaridad fuera de rango, etc.), la base analítica de referencia queda con `r poblacion_n` observaciones.
+Tras la union, la construcción de variables y la eliminacion de registros incompletos o inconsistentes (horas fuera de rango, escolaridad fuera de rango, etc.) la base analitica de referencia queda con `r poblacion_n` observaciones
 
-La variable rama de actividad económica se construyó originalmente a partir de la clasificación CIIU a 2 dígitos (rama2d_r4), la cual presenta 36 categorías distintas en la muestra de 100 observaciones, 18 de ellas representadas por un único individuo. Dado que esta granularidad hace inviable estimar coeficientes confiables para cada categoría, se recodificó la variable en cinco sectores agregados —Agropecuario; Industria, minería y construcción; Comercio, transporte y alojamiento; Servicios financieros y profesionales; y Servicios sociales, comunales y otros— siguiendo la agrupación estándar de secciones de la Clasificación Industrial Internacional Uniforme (CIIU Rev. 4, adaptada por el DANE). Esta recodificación conserva la interpretación económica de la variable como proxy de heterogeneidad sectorial, a la vez que garantiza un tamaño muestral mínimo razonable por categoría (entre 11 y 33 observaciones) para la etapa de estimación del modelo.
+La variable rama de actividad económica se construyo originalmente a partir de la clasificación CIIU a 2 digitos (rama2d_r4), la cual presenta 36 categorias distintas en la muestra de 100 observaciones, 18 de ellas representadas por un unico individuo. Dado que esta granularidad hace inviable estimar coeficientes confiables para cada categoria, se recodifico la variable en cinco sectores agregados —Agropecuario; Industria, mineria y construccion; Comercio, transporte y alojamiento; Servicios financieros y profesionales; y Servicios sociales, comunales y otros— siguiendo la agrupación estandar de secciones de la Clasificacion Industrial Internacional Uniforme (CIIU Rev. 4, adaptada por el DANE). Esta recodificación conserva la interpretación económica de la variable como proxy de heterogeneidad sectorial, a la vez que garantiza un tamaño muestral minimo razonable por categoria (entre 11 y 33 observaciones) para la etapa de estimacion del modelo.
 
 ## Selección de la muestra
 
-Siguiendo la restricción del enunciado (máximo 100 registros), se aplicó un muestreo aleatorio simple (MAS) sobre la base analítica de referencia para obtener una muestra de $n=100$ observaciones, fijando la semilla aleatoria en 123 para garantizar la reproducibilidad del muestreo. Bajo este esquema, cada individuo tuvo la misma probabilidad de selección:
+Siguiendo la restriccion del enunciado (maximo 100 registros), se aplico un muestreo aleatorio simple (MAS) sobre la base analitica de referencia para obtener una muestra de $n=100$ observaciones, fijando la semilla aleatoria en 123 para garantizar la reproducibilidad del muestreo. Bajo este esquema, cada individuo tuvo la misma probabilidad de selección:
 
 $$\pi_i = \frac{n}{N} = \frac{100}{`r poblacion_n`}$$
 
@@ -355,16 +344,16 @@ fraccion_muestreo <- round(n_muestra / poblacion_n * 100, 2)
 
 ```{r tabla-muestreo, echo=FALSE}
 tabla_muestreo <- data.frame(
-  Parametro = c("Población de referencia (N)", "Tamaño de muestra (n)",
-                "Fracción de muestreo (n/N)", "Semilla aleatoria"),
+  Parametro = c("población de referencia (N)", "Tamaño de muestra (n)",
+                "fracción de muestreo (n/N)", "semilla aleatoria"),
   Valor = c(poblacion_n, n_muestra, paste0(fraccion_muestreo, "%"), 123)
 )
-kable(tabla_muestreo, caption = "Parámetros del muestreo aleatorio simple")
+kable(tabla_muestreo, caption = "parametros del muestreo aleatorio simple")
 ```
 
 ## Base consolidada
 
-La base analítica final contiene 100 observaciones y 7 variables: la variable respuesta, cinco covariables continuas (horas, escolaridad, edad, edad al cuadrado y antigüedad) y una variable categórica (rama de actividad económica).
+La base analitica final contiene 100 observaciones y 7 variables: la variable respuesta, cinco covariables continuas (horas, escolaridad, edad, edad al cuadrado y antigüedad) y una variable categorica (rama de actividad económica).
 
 ```{r tabla-muestra, echo=FALSE}
 kable(head(muestra %>% select(ln_ingreso, horas, escolaridad, edad, edad2,
@@ -402,7 +391,7 @@ tabla_y <- data.frame(
 kable(tabla_y, caption = "Estadísticos descriptivos del logaritmo del ingreso laboral mensual")
 ```
 
-La Tabla anterior presenta los estadísticos descriptivos de la variable de respuesta ya transformada. En promedio, el log-ingreso de la muestra es de `r media_y`, con una mediana de `r mediana_y`; la cercanía entre ambas medidas y una asimetría de `r skew_y` son consistentes con el efecto esperado de la transformación logarítmica: corrige buena parte del sesgo positivo propio de la distribución original de los ingresos.
+La Tabla anterior presenta los estadísticos descriptivos de la variable de respuesta ya transformada. En promedio el log-ingreso de la muestra es de `r media_y`, con una mediana de `r mediana_y`. la cercania entre ambas medidas y una asimetria de `r skew_y` son consistentes con el efecto esperado de la transformacion logaritmica: corrige buena parte del sesgo positivo propio de la distribucion original de los ingresos.
 
 ```{r hist-y, echo=FALSE, message=FALSE, warning=FALSE, fig.width=9, fig.height=4}
 par(mfrow = c(1, 2))
@@ -413,7 +402,7 @@ hist(muestra$ln_ingreso, main = "Log(Ingreso laboral)",
 par(mfrow = c(1, 1))
 ```
 
-Se muestra el ingreso en su escala original y ya transformado a logaritmo: el histograma de la izquierda evidencia la asimetría positiva característica de los ingresos laborales (unos pocos valores muy altos alargan la cola derecha), mientras que el de la derecha muestra una distribución considerablemente más simétrica, lo que respalda el uso de $\ln(Y)$ como variable de respuesta del modelo.
+se muestra el ingreso en su escala original y ya transformado a logaritmo: el histograma de la izquierda evidencia la asimetria positiva caracteristica de los ingresos laborales (unos pocos valores muy altos alargan la cola derecha) mientras que el de la derecha muestra una distribución considerablemente mas simetrica, lo que respalda el uso de $\ln(Y)$ como variable de respuesta del modelo.
 
 ## Descripción de las covariables continuas
 
@@ -435,7 +424,7 @@ tabla_cont <- muestra %>%
 kable(tabla_cont, caption = "Estadísticos descriptivos de las covariables continuas (n = 100)")
 ```
 
-La Tabla 5 muestra asimetrías marcadas entre las covariables continuas. La antigüedad es la más sesgada: su media (78.19 meses) casi duplica su mediana (36 meses), y su desviación estándar (93.26) supera a la propia media, lo que indica una fuerte cola derecha — la mayoría de los trabajadores lleva poco tiempo en su empleo actual (Q1 = 12 meses, Q3 = 120 meses), pero un grupo reducido con antigüedades de hasta 480 meses (40 años) arrastra el promedio hacia arriba. La edad, en cambio, presenta media y mediana cercanas (41.38 y 39 años) y una dispersión moderada (DE = 12.81), consistente con una distribución razonablemente simétrica en el rango de vida laboral activa (19-71 años). La escolaridad también es prácticamente simétrica (media 11.18, mediana 11 años), con la mitad central de la muestra (Q1-Q3) situada entre 9 y 14 años, es decir, entre bachillerato incompleto y estudios técnicos o tecnológicos. Las horas trabajadas muestran una mediana (47.5) superior a la media (42.78), lo que sugiere una cola hacia valores bajos: la mayoría trabaja entre 40 y 48 horas semanales (Q1-Q3), pero algunos casos de jornadas muy reducidas (mínimo de 3 horas) bajan el promedio general.
+La Tabla 5 muestra asimetrias marcadas entre las covariables continuas. La antigüedad es la más sesgada: su media (78.19 meses) casi duplica su mediana (36 meses) y su desviación estándar (93.26) supera a la propia media lo que indica una fuerte cola derecha — la mayoria de los trabajadores lleva poco tiempo en su empleo actual (Q1 = 12 meses, Q3 = 120 meses) pero un grupo reducido con antigüedades de hasta 480 meses (40 años) arrastra el promedio hacia arriba. La edad en cambio presenta media y mediana cercanas (41.38 y 39 años) y una dispersión moderada (DE = 12.81) consistente con una distribucion razonablemente simétrica en el rango de vida laboral activa (19-71 años). La escolaridad tambien es practicamente simétrica (media 11.18, mediana 11 años), con la mitad central de la muestra (Q1-Q3) situada entre 9 y 14 años, es decir, entre bachillerato incompleto y estudios técnicos o tecnológicos. Las horas trabajadas muestran una mediana (47.5) superior a la media (42.78), lo que sugiere una cola hacia valores bajos: la mayoria trabaja entre 40 y 48 horas semanales (Q1-Q3), pero algunos casos de jornadas muy reducidas (minimo de 3 horas) bajan el promedio general.
 ```{r}
 #| label: fn-dispersion
 #| echo: false
@@ -499,13 +488,13 @@ graficar_dispersion("antiguedad", "antigüedad (meses)")
 ```
 
 
-Las @fig-scatter-horas a @fig-scatter-antiguedad muestran la relación entre el log-ingreso y cada covariable continua, junto con una curva LOESS y el coeficiente de correlación de Pearson. La escolaridad presenta la asociación lineal más fuerte con el log-ingreso (r=0.489r = 0.489
-r=0.489), con una tendencia creciente y particularmente pronunciada en los niveles más altos de educación, consistente con los rendimientos crecientes a la educación superior documentados en la literatura. Las horas trabajadas muestran una asociación positiva moderada (r=0.350r = 0.350
-r=0.350), aunque la curva LOESS evidencia un aplanamiento a partir de las 40 horas semanales: superado ese umbral, trabajar más horas no se traduce en incrementos proporcionales del ingreso. La antigüedad exhibe una correlación lineal débil (r=0.104r = 0.104
-r=0.104), con la mayoría de las observaciones concentradas en valores bajos y un leve repunte solo en los casos de mayor antigüedad. La edad es el caso más particular: su correlación de Pearson es prácticamente nula (r=−0.041r = -0.041
-r=−0.041), pero la curva LOESS sí insinúa el perfil cóncavo esperado por la teoría del capital humano —un leve ascenso hasta la quinta década de vida seguido de un descenso—, lo que confirma que la relación no es de tipo lineal y respalda la inclusión del término cuadrático (edad²) en el modelo en lugar de depender únicamente del coeficiente de correlación simple.
+Las @fig-scatter-horas a @fig-scatter-antiguedad muestran la relación entre el log-ingreso y cada covariable continua junto con una curva LOESS y el coeficiente de correlacion de Pearson. La escolaridad presenta la asociación lineal más fuerte con el log-ingreso (r=0.489r = 0.489
+r=0.489) con una tendencia creciente y particularmente pronunciada en los niveles mas altos de educación, consistente con los rendimientos crecientes a la educación superior documentados en la literatura. Las horas trabajadas muestran una asociacion positiva moderada (r=0.350r = 0.350
+r=0.350), aunque la curva LOESS evidencia un aplanamiento a partir de las 40 horas semanales: superado ese umbral trabajar mas horas no se traduce en incrementos proporcionales del ingreso. La antigüedad exhibe una correlación lineal debil (r=0.104r = 0.104
+r=0.104), con la mayoria de las observaciones concentradas en valores bajos y un leve repunte solo en los casos de mayor antigüedad. La edad es el caso mas particular: su correlación de Pearson es praticamente nula (r=−0.041r = -0.041
+r=−0.041), pero la curva LOESS si insinua el perfil cóncavo esperado por la teoría del capital humano —un leve ascenso hasta la quinta decada de vida seguido de un descenso—, lo que confirma que la relacion no es de tipo lineal y respalda la inclusion del término cuadratico (edad²) en el modelo en lugar de depender unicamente del coeficiente de correlación simple.
 
-Se observa que los puntos de la @fig-scatter-escolaridad se agrupan en un número reducido de valores discretos (0, 5, 9, 11, 13, 14, 16, 17, 18 y 21 años) en lugar de distribuirse de forma continua. Esto es consecuencia directa del método de construcción de la variable: al no preguntarse en la GEIH el número exacto de años cursados sino el nivel educativo alcanzado, la escolaridad se aproxima mediante la duración típica asociada a cada nivel (Ley 115 de 1994 y convención de Núñez y Sánchez \cite{nunez1998}). Se trata, por tanto, de una variable discreta con una escala de intervalo bien definida, tratada como continua siguiendo la convención estándar en la literatura de determinantes salariales, en la que "años de escolaridad" se modela habitualmente como covariable continua pese a su naturaleza discreta \cite{mincer1974, nunez1998}.
+Se observa que los puntos de la @fig-scatter-escolaridad se agrupan en un número reducido de valores discretos (0, 5, 9, 11, 13, 14, 16, 17, 18 y 21 años) en lugar de distribuirse de forma continua. Esto es consecuencia directa del metodo de construccion de la variable: al no preguntarse en la GEIH el numero exacto de años cursados sino el nivel educativo alcanzado, la escolaridad se aproxima mediante la duración tipica asociada a cada nivel (Ley 115 de 1994 y convención de Núñez y Sánchez \cite{nunez1998}). Se trata, por tanto de una variable discreta con una escala de intervalo bien definida tratada como continua siguiendo la convención estándar en la literatura de determinantes salariales, en la que "años de escolaridad" se modela habitualmente como covariable continua pese a su naturaleza discreta \cite{mincer1974, nunez1998}.
 
 ```{r matriz-correlacion, echo=FALSE, fig.width=6, fig.height=6}
 continuas <- muestra %>%
@@ -524,10 +513,10 @@ kable(round(matriz_cor, 3), caption = "Matriz de correlaciones de Pearson entre 
 corrplot(matriz_cor, method = "number", type = "upper")
 ```
 
-La Tabla 6 y la @fig-corrplot confirman la jerarquía observada en los diagramas de dispersión: la escolaridad (0.489) y las horas trabajadas (0.350) son las covariables más asociadas linealmente con el log-ingreso, seguidas de la antigüedad (0.104) y la edad (-0.041). En cuanto a la asociación entre covariables, la mayor correlación se presenta entre edad y antigüedad (r=0.381r = 0.381
-r=0.381), lo cual es esperable dado que ambas están ligadas al ciclo de vida laboral; también destaca una correlación negativa moderada entre horas trabajadas y antigüedad (r=−0.313r = -0.313
-r=−0.313), y entre escolaridad y edad (r=−0.233r = -0.233
-r=−0.233), esta última consistente con la expansión histórica del acceso a la educación en Colombia, que ha elevado la escolaridad promedio de las cohortes más jóvenes frente a las de mayor edad. Ninguna de estas correlaciones supera el umbral de 0.5 usualmente considerado como señal de alerta temprana de multicolinealidad severa, aunque la asociación entre edad y antigüedad es la que ameritará mayor atención al calcular los VIF en la etapa de estimación del modelo.
+La Tabla 6 y la @fig-corrplot confirman la jerarquia observada en los diagramas de dispersión: la escolaridad (0.489) y las horas trabajadas (0.350) son las covariables más asociadas linealmente con el log-ingreso seguidas de la antigüedad (0.104) y la edad (-0.041). En cuanto a la asociacion entre covariables la mayor correlación se presenta entre edad y antigüedad (r=0.381r = 0.381
+r=0.381) lo cual es esperable dado que ambas estan ligadas al ciclo de vida laboral también destaca una correlación negativa moderada entre horas trabajadas y antigüedad (r=−0.313r = -0.313
+r=−0.313) y entre escolaridad y edad (r=−0.233r = -0.233
+r=−0.233) esta última consistente con la expansión histórica del acceso a la educación en Colombia que ha elevado la escolaridad promedio de las cohortes mas jóvenes frente a las de mayor edad. Ninguna de estas correlaciones supera el umbral de 0.5 usualmente considerado como señal de alerta temprana de multicolinealidad severa aunque la asociación entre edad y antigüedad es la que ameritara mayor atención al calcular los VIF en la etapa de estimacion del modelo.
 
 ## Descripción de la variable categórica
 
@@ -548,7 +537,7 @@ tabla_rama <- muestra %>%
 kable(tabla_rama, caption = "Distribución de la muestra y log-ingreso medio según sector económico agregado (n = 100)")
 ```
 
-La recodificación en cinco sectores agregados produjo una distribución mucho más manejable que la original: el grupo más grande, Comercio, transporte y alojamiento, concentra 33 observaciones, seguido de Servicios sociales y otros (24) e Industria, minería y construcción (20). Agropecuario reúne 12 observaciones y Servicios financieros y profesionales, el grupo más pequeño, queda con 11 — sensiblemente mejor que los 18 grupos con una sola observación que tenía la codificación original, aunque este último grupo sigue siendo el más vulnerable a la inestabilidad muestral y deberá vigilarse en la etapa de estimación (por ejemplo, revisando su apalancamiento e influencia sobre el modelo). En cuanto al log-ingreso medio, Servicios sociales y otros presenta el valor más alto (media 14.19, mediana 14.11), seguido de cerca por Industria, minería y construcción (13.94 y 14.02); en el otro extremo, Agropecuario registra el log-ingreso medio más bajo (13.21, mediana 13.21). Comercio, transporte y alojamiento —pese a ser el sector con más observaciones— y Servicios financieros y profesionales quedan en un nivel intermedio, con medias de 13.78 y 13.61 respectivamente, y medianas prácticamente iguales (13.96 en ambos casos).
+La recodificacion en cinco sectores agregados produjo una distribucion mucho mas manejable que la original: el grupo mas grande, comercio, transporte y alojamiento, concentra 33 observaciones seguido de servicios sociales y otros (24) e industria, minería y construcción (20) agropecuario reune 12 observaciones y servicios financieros y profesionales, el grupo mas pequeño queda con 11 — sensiblemente mejor que los 18 grupos con una sola observación que tenía la codificacion original, aunque este último grupo sigue siendo el mas vulnerable a la inestabilidad muestral y debera vigilarse en la etapa de estimación (por ejemplo, revisando su apalancamiento e influencia sobre el modelo). En cuanto al log-ingreso medio, Servicios sociales y otros presenta el valor más alto (media 14.19, mediana 14.11), seguido de cerca por Industria, minería y construcción (13.94 y 14.02); en el otro extremo Agropecuario registra el log-ingreso medio más bajo (13.21, mediana 13.21). Comercio, transporte y alojamiento —pese a ser el sector con mas observaciones— y Servicios financieros y profesionales quedan en un nivel intermedio, con medias de 13.78 y 13.61 respectivamente, y medianas practicamente iguales (13.96 en ambos casos).
 
 ```{r}
 #| label: fig-rama
@@ -563,7 +552,7 @@ ggplot(muestra, aes(x = rama, y = ln_ingreso, fill = rama)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1), legend.position = "none")
 ```
 
-La Figura 6 confirma la heterogeneidad sectorial sugerida por la Tabla 7 (nótese que el eje horizontal ordena los sectores alfabéticamente y no por tamaño muestral). Servicios sociales y otros presenta la mediana más alta y la caja más compacta de los cinco sectores —es decir, la menor dispersión en el 50% central de sus datos—, aunque exhibe dos valores atípicos: uno muy alto, el mayor de toda la muestra, y otro bajo, que amplían su rango total pese a la estrechez de la caja. Industria, minería y construcción tiene la segunda mediana más alta y, a diferencia del sector anterior, no presenta valores atípicos, si bien sus bigotes cubren un rango amplio. Comercio, transporte y alojamiento y Servicios financieros y profesionales muestran medianas muy similares entre sí y ligeramente por debajo de Industria, consistentes con el empate observado en la Tabla 7 (13.96 en ambos casos); el primero registra dos valores atípicos bajos y el segundo uno solo, más extremo, que corresponde al valor mínimo de toda la muestra. Agropecuario registra la mediana más baja de los cinco sectores y la caja de mayor altura, lo que indica una mayor heterogeneidad interna en su 50% central, sin valores atípicos marcados. En conjunto, la brecha entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21) es de 0.98 puntos en escala logarítmica, una diferencia sustancial que respalda la Hipótesis 2 sobre la existencia de brechas de ingreso asociadas al sector económico, aunque su significancia estadística formal deberá confirmarse en la etapa de estimación del modelo, controlando por escolaridad, edad, horas trabajadas y antigüedad.
+La Figura 6 confirma la heterogeneidad sectorial sugerida por la Tabla 7 (note que el eje horizontal ordena los sectores alfabeticamente y no por tamaño muestral). Servicios sociales y otros presenta la mediana mas alta y la caja mas compacta de los cinco sectores —es decir la menor dispersión en el 50% central de sus datos— aunque exhibe dos valores atipicos: uno muy alto el mayor de toda la muestra, y otro bajo que amplian su rango total pese a la estrechez de la caja. Industria, minería y construcción tiene la segunda mediana mas alta y a diferencia del sector anterior no presenta valores atipicos, si bien sus bigotes cubren un rango amplio. Comercio, transporte y alojamiento y Servicios financieros y profesionales muestran medianas muy similares entre si y ligeramente por debajo de Industria, consistentes con el empate observado en la Tabla 7 (13.96 en ambos casos); el primero registra dos valores atipicos bajos y el segundo uno solo más extremo, que corresponde al valor minimo de toda la muestra. Agropecuario registra la mediana mas baja de los cinco sectores y la caja de mayor altura, lo que indica una mayor heterogeneidad interna en su 50% central, sin valores atipicos marcados. En conjunto la brecha entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21) es de 0.98 puntos en escala logarítmica, una diferencia sustancial que respalda la Hipótesis 2 sobre la existencia de brechas de ingreso asociadas al sector económico aunque su significancia estadística formal debera confirmarse en la etapa de estimación del modelo controlando por escolaridad, edad, horas trabajadas y antigüedad.
 
 
 # Estimación del modelo con covariables continuas
@@ -616,16 +605,28 @@ El estadístico F global es de `r round(f_stat[1],3)` con `r f_stat[2]` y `r f_s
 
 ## Interpretación
 
-¿Es significativo el modelo? Sí, de forma inequívoca. La hipótesis nula del ANOVA global (todos los $\beta=0$ excepto el intercepto) se rechaza con un p-valor prácticamente nulo. Al menos una covariable tiene poder explicativo real sobre el log-ingreso.
-
-Pero "significativo globalmente" no es lo mismo que "todas las variables aportan". Mirando los coeficientes individuales: horas, escolaridad y antigüedad son significativas al 5% (antigüedad justo en el límite, $p=0.028$); edad y edad² no lo son en absoluto ($p=0.795$ y $p=0.850$). Esto es coherente con lo que ya se había anticipado en el análisis descriptivo: la correlación de Pearson entre edad y log-ingreso era prácticamente nula ($r=-0.041$), y aunque la curva LOESS insinuaba un perfil cóncavo, aquí —controlando por las demás variables— ese efecto no resulta estadísticamente detectable con $n=100$. Esto es un llamado de atención sobre la Hipótesis 1: la escolaridad sí se confirma ($\beta_2>0$, $p<0.001$), pero el componente de edad de la hipótesis no se sostiene en este modelo reducido.
-
-Sobre el 41.06% de varianza explicada, es importante no sobre-interpretar ni subestimar:
-
-- Para datos de corte transversal en economía laboral con encuestas de hogares, un $R^2$ de ~0.41 no es bajo — es habitual que ecuaciones de Mincer con variables individuales expliquen entre 20% y 40% de la varianza del log-salario, porque el ingreso individual depende de muchísimos factores no observados (habilidad, calidad del empleador, negociación, informalidad, etc.) que ninguna encuesta captura.
-- Sin embargo, queda un 59% sin explicar, y el propio análisis descriptivo del documento (Tabla 7, Figura 6) ya había detectado que la rama de actividad económica genera diferencias sustanciales (brecha de 0.98 puntos log entre sectores) que este modelo reducido no incorpora. Es razonable esperar que al añadir la variable categórica rama (el modelo completo con $X_6$) el $R^2$ aumente y que parte de la varianza residual se explique por heterogeneidad sectorial.
-- Con $n=100$, el $R^2$ ajustado (0.379) es la medida más honesta porque penaliza los 5 grados de libertad consumidos; la caída de 0.41 a 0.38 no es dramática, así que el modelo no está sobreajustado por el número de covariables.
-- Dado que edad y edad² no aportan significancia, valdría la pena —en la etapa de selección de modelo— evaluar si conviene mantenerlas por justificación teórica (Mincer) pese a su no significancia, o si su falta de poder explicativo aquí se debe a la correlación moderada con antigüedad ($r=0.381$) generando cierta redundancia entre esas dos variables.
+El modelo resulta globalmente significativo: la prueba F rechaza la hipótesis nula de que todos los coeficientes de pendiente son simultaneamente iguales a cero, con un p-valor practicamente nulo. Esto indica que al menos una de las covariables incluidas tiene poder explicativo real sobre el log-ingreso laboral.
+Sin embargo la significancia global no implica que todas las variables individuales aporten de manera equivalente. El analisis de los coeficientes muestra que horas trabajadas, escolaridad y antigüedad son significativas al 5%, esta ultima en el limite (p=0.028p=0.028
+p=0.028) mientras que edad y edad² no resultan significativas (p=0.795p=0.795
+p=0.795 y p=0.850p=0.850
+p=0.850, respectivamente). Este resultado es consistente con lo observado en el analisis descriptivo (Tabla 7) donde la correlación de Pearson entre edad y log-ingreso era practicamente nula (r=−0.041r=-0.041
+r=−0.041) si bien la curva LOESS sugeria un perfil cóncavo dicho efecto no logra sostenerse estadísticamente una vez controlado por las demás variables posiblemente por el tamaño muestral (n=100n=100
+n=100). Este hallazgo matiza la Hipótesis 1: el componente de escolaridad se confirma (β2>0\beta_2>0
+β2​>0, p<0.001p<0.001
+p<0.001), pero el componente de edad no encuentra soporte en este modelo reducido.
+En cuanto al 41.06%41.06\%
+41.06% de varianza explicada (R2R^2
+R2), su interpretación requiere contexto. En estudios de corte transversal sobre ingresos laborales con datos de encuestas de hogares, valores de R2R^2
+R2 entre 0.20 y 0.40 son habituales en ecuaciones de tipo Mincer basadas en características individuales dado que el ingreso depende de factores no observados (habilidad, calidad del empleador, informalidad, poder de negociación) que ninguna encuesta captura plenamente. El R2R^2
+R2 obtenido se ubica por tanto dentro de un rango esperado para este tipo de especificacion.
+No obstante cerca del 59% de la variabilidad permanece sin explicar. El analisis descriptivo (Tabla 7, Figura 6) ya habia identificado diferencias sustanciales entre ramas de actividad economica (brecha de 0.98 puntos log entre sectores) variable no incluida en este modelo reducido. Es esperable que la incorporacion de la variable categórica rama en el modelo completo (X6X_6
+X6​) incremente el R2R^2
+R2 y capture parte de esta heterogeneidad sectorial.
+Con n=100n=100
+n=100, el R2R^2
+R2 ajustado (0.3793) constituye la medida mas apropiada para evaluar el ajuste al penalizar los cinco grados de libertad consumidos por las covariables. La reduccion de 0.4106 a 0.3793 es moderada, lo que sugiere que el modelo no está sobreajustado en relacion con el numero de predictores incluidos.
+Finalmente, la falta de significancia de edad y edad² plantea una consideración relevante para la etapa de selección de modelo: su permanencia podría justificarse teóricamente por la especificacion Mincer estándar aunque su bajo poder explicativo en este ajuste podria estar asociado a la correlacion moderada con antigüedad (r=0.381r=0.381
+r=0.381) lo que introduciria cierto grado de redundancia entre ambas variables.
 
 # Selección de modelos (covariables continuas)
 
@@ -708,15 +709,15 @@ kable(summary(modelo_backward)$coefficients, digits = 4, caption = "Parámetros 
 
 ## Conclusión sobre la selección de modelos
 
-La aplicación conjunta de los cinco métodos de selección —$R^2_{adj}$, $C_p$ de Mallows, *stepwise*, selección hacia adelante y selección hacia atrás— sobre el conjunto de covariables continuas produjo un resultado inusualmente concluyente: los cinco métodos convergen exactamente en el mismo modelo final, compuesto por horas trabajadas, escolaridad y antigüedad en el empleo actual, con exclusión sistemática de la edad y su término cuadrático. El criterio de $R^2_{adj}$ alcanzó su máximo (0.3909) precisamente en el modelo de tres predictores, tras incrementarse desde 0.2316 (un predictor) y 0.3534 (dos predictores), y decrecer nuevamente al incorporar edad (0.3856) o edad y edad² (0.3793); de forma análoga, el estadístico $C_p$ tocó su mínimo (2.20) en ese mismo modelo de tres variables —valor cercano a $p=4$, lo que indica un sesgo estimado prácticamente nulo respecto al modelo saturado—, frente a valores de 25.31, 7.04, 4.04 y 6.00 para los modelos de una, dos, cuatro y cinco variables, respectivamente. Las búsquedas secuenciales por AIC (*stepwise*, *forward* y *backward*) reprodujeron la misma trayectoria y el mismo punto de convergencia, retirando primero edad² y luego edad en cada una de sus iteraciones.
+La aplicación conjunta de los cinco metodos de seleccion —$R^2_{adj}$, $C_p$ de Mallows, *stepwise*, seleccion hacia adelante y selección hacia atrás— sobre el conjunto de covariables continuas produjo un resultado inusualmente concluyente: los cinco métodos convergen exactamente en el mismo modelo final, compuesto por horas trabajadas, escolaridad y antigüedad en el empleo actual con exclusión sistemática de la edad y su término cuadrático. El criterio de $R^2_{adj}$ alcanzo su maximo (0.3909) precisamente en el modelo de tres predictores tras incrementarse desde 0.2316 (un predictor) y 0.3534 (dos predictores), y decrecer nuevamente al incorporar edad (0.3856) o edad y edad² (0.3793) de forma analoga el estadístico $C_p$ tocó su minimo (2.20) en ese mismo modelo de tres variables —valor cercano a $p=4$, lo que indica un sesgo estimado practicamente nulo respecto al modelo saturado— frente a valores de 25.31, 7.04, 4.04 y 6.00 para los modelos de una, dos, cuatro y cinco variables respectivamente. Las busquedas secuenciales por AIC (*stepwise*, *forward* y *backward*) reprodujeron la misma trayectoria y el mismo punto de convergencia, retirando primero edad² y luego edad en cada una de sus iteraciones.
 
 El modelo resultante,
 
 $$\widehat{\ln(Y_i)} = 11.21 + 0.0289\,\text{horas}_i + 0.1077\,\text{escolaridad}_i + 0.00222\,\text{antigüedad}_i,$$
 
-es globalmente significativo ($F_{(3,96)}=22.18$, $p<0.001$) y explica el 40.93 % de la variabilidad del log-ingreso ($R^2_{adj}=0.3909$), una pérdida marginal de apenas 1.13 puntos porcentuales de $R^2$ respecto al modelo completo de cinco covariables (41.06 %), lo que confirma que edad y edad² aportaban una fracción de varianza prácticamente despreciable. Los tres coeficientes retenidos son individualmente significativos al 5 % —horas ($\hat\beta=0.0289$, $p<0.001$), escolaridad ($\hat\beta=0.1077$, $p<0.001$) y antigüedad ($\hat\beta=0.00222$, $p=0.0097$)—, de modo que ninguna variable sobrevive en el modelo por mero artificio del procedimiento de búsqueda.
+es globalmente significativo ($F_{(3,96)}=22.18$, $p<0.001$) y explica el 40.93 % de la variabilidad del log-ingreso ($R^2_{adj}=0.3909$), una perdida marginal de apenas 1.13 puntos porcentuales de $R^2$ respecto al modelo completo de cinco covariables (41.06 %) lo que confirma que edad y edad² aportaban una fraccion de varianza practicamente despreciable. Los tres coeficientes retenidos son individualmente significativos al 5 % —horas ($\hat\beta=0.0289$, $p<0.001$), escolaridad ($\hat\beta=0.1077$, $p<0.001$) y antigüedad ($\hat\beta=0.00222$, $p=0.0097$)— de modo que ninguna variable sobrevive en el modelo por mero artificio del procedimiento de busqueda.
 
-Este resultado obliga a matizar la Hipótesis 1 planteada en la Sección 6.1. La componente de escolaridad se confirma con solidez: su coeficiente conserva el signo positivo esperado por la teoría del capital humano y es el más significativo de los tres retenidos. Sin embargo, la componente de edad —tanto en su efecto lineal como en el cuadrático que debía capturar el perfil cóncavo de la ecuación de Mincer— no se sostiene: ya en el modelo completo sus coeficientes no eran significativos ($p=0.795$ para edad y $p=0.850$ para edad², Sección "Estimación del modelo"), y los cinco métodos de selección coinciden en descartarla por completo. Esto no implica necesariamente que la relación edad-ingreso sea inexistente en la población de trabajadores colombianos —la curva LOESS de la Figura 3 sí insinuaba visualmente el ascenso y posterior descenso esperado—, sino que, con una muestra de apenas $n=100$ observaciones y una correlación de Pearson entre edad y log-ingreso prácticamente nula ($r=-0.041$), el efecto no resulta estadísticamente detectable una vez controlado por escolaridad, horas trabajadas y antigüedad. La unanimidad de los cinco criterios de selección —que difieren en su lógica (ajuste penalizado, sesgo respecto al modelo completo, y búsqueda secuencial por verosimilitud) pero llegan al mismo resultado— constituye evidencia razonablemente robusta de que el modelo reducido de tres variables es, con los datos disponibles, la especificación más parsimoniosa y defendible, sin que ello descarte que una muestra de mayor tamaño pudiera revelar el efecto no lineal de la edad que la teoría anticipa.
+Este resultado obliga a matizar la Hipótesis 1 planteada en la Sección 6.1. La componente de escolaridad se confirma con solidez: su coeficiente conserva el signo positivo esperado por la teoría del capital humano y es el más significativo de los tres retenidos. sin embargo la componente de edad —tanto en su efecto lineal como en el cuadratico que debia capturar el perfil cóncavo de la ecuación de Mincer— no se sostiene: ya en el modelo completo sus coeficientes no eran significativos ($p=0.795$ para edad y $p=0.850$ para edad², Seccion "Estimación del modelo"), y los cinco metodos de selección coinciden en descartarla por completo. Esto no implica necesariamente que la relación edad-ingreso sea inexistente en la población de trabajadores colombianos —la curva LOESS de la Figura 3 sí insinuaba visualmente el ascenso y posterior descenso esperado— sino que, con una muestra de apenas $n=100$ observaciones y una correlación de Pearson entre edad y log-ingreso practicamente nula ($r=-0.041$) el efecto no resulta estadísticamente detectable una vez controlado por escolaridad, horas trabajadas y antigüedad. La unanimidad de los cinco criterios de selección —que difieren en su lógica (ajuste penalizado, sesgo respecto al modelo completo, y búsqueda secuencial por verosimilitud) pero llegan al mismo resultado— constituye evidencia razonablemente robusta de que el modelo reducido de tres variables es con los datos disponibles, la especificación más parsimoniosa y defendible sin que ello descarte que una muestra de mayor tamaño pudiera revelar el efecto no lineal de la edad que la teoria anticipa.
 
 # Diagnóstico de supuestos y elección final del modelo
 
@@ -776,7 +777,7 @@ kable(anova(modelo_continuas_reducido, modelo_completo_5), digits = 4,
 
 ## Prueba de suma de cuadrados extra (test lineal general)
 
-Aunque el análisis de la Sección 8.3 y la selección de modelos de la Sección 9 mostraron que `edad` y `edad^2` no son significativas de forma individual, la significancia individual (prueba t) no equivale a significancia conjunta. Dado que ambas covariables representan, en conjunto, la componente cuadrática del perfil edad-ingreso propuesto por la teoría del capital humano (Mincer, 1974), la forma correcta de evaluarlas es probando su aporte **conjunto** mediante una prueba de suma de cuadrados extra (test lineal general), comparando el modelo reducido contra el modelo completo.
+Aunque el analisis de la Sección 8.3 y la seleccion de modelos de la Sección 9 mostraron que `edad` y `edad^2` no son significativas de forma individual, la significancia individual (prueba t) no equivale a significancia conjunta. Dado que ambas covariables representan en conjunto la componente cuadaática del perfil edad-ingreso propuesto por la teoría del capital humano (Mincer, 1974), la forma correcta de evaluarlas es probando su aporte **conjunto** mediante una prueba de suma de cuadrados extra (test lineal general), comparando el modelo reducido contra el modelo completo.
 
 **Modelo completo ($\Omega$):**
 
@@ -814,7 +815,7 @@ $$
 
 **Decisión:** Dado que $p = 0.9039 \gg \alpha = 0.05$, no se rechaza $H_0$.
 
-**Conclusión:** No hay evidencia estadística suficiente, con esta muestra de $n=100$, para afirmar que edad y edad² contribuyen conjuntamente a explicar el logaritmo del ingreso laboral una vez que horas, escolaridad y antigüedad ya están en el modelo. Este resultado es consistente con la correlación de Pearson prácticamente nula entre edad y log-ingreso ($r=-0.041$) observada en el análisis descriptivo, y respalda formalmente la elección del modelo reducido de tres variables como la especificación más parsimoniosa, sin que ello implique que el efecto edad-ingreso sea inexistente en la población (podría no ser detectable con este tamaño muestral).
+**Conclusión:** No hay evidencia estadística suficiente con esta muestra de $n=100$, para afirmar que edad y edad² contribuyen conjuntamente a explicar el logaritmo del ingreso laboral una vez que horas, escolaridad y antigüedad ya están en el modelo. Este resultado es consistente con la correlación de Pearson prácticamente nula entre edad y log-ingreso ($r=-0.041$) observada en el analisis descriptivo y respalda formalmente la eleccion del modelo reducido de tres variables como la especificacion mas parsimoniosa, sin que ello implique que el efecto edad-ingreso sea inexistente en la población (podría no ser detectable con este tamaño muestral).
 
 ```{r graficos-diagnostico}
 #| echo: false
@@ -825,19 +826,56 @@ plot(modelo_continuas_reducido)
 par(mfrow = c(1,1))
 ```
 
+# Observaciones atípicas, de balanceo e influyentes
+```{r diagnostico-influencia}
+#| label: diagnostico-influencia
+n <- nrow(muestra)
+p <- length(coef(modelo_continuas_reducido))
+
+res_stud <- rstudent(modelo_continuas_reducido)
+atipicos <- which(abs(res_stud) > 2)
+
+hat_vals <- hatvalues(modelo_continuas_reducido)
+umbral_hat <- 2 * p / n
+balanceo <- which(hat_vals > umbral_hat)
+
+cooks <- cooks.distance(modelo_continuas_reducido)
+umbral_cook <- 4 / n
+influyentes_cook <- which(cooks > umbral_cook)
+
+dffits_vals <- dffits(modelo_continuas_reducido)
+umbral_dffits <- 2 * sqrt(p / n)
+influyentes_dffits <- which(abs(dffits_vals) > umbral_dffits)
+
+resumen_diagnostico <- data.frame(
+  obs = 1:n,
+  residual_estudentizado = round(res_stud, 3),
+  leverage = round(hat_vals, 3),
+  cook_d = round(cooks, 4),
+  dffits = round(dffits_vals, 3)
+)
+
+obs_problema <- sort(unique(c(atipicos, balanceo, influyentes_cook, influyentes_dffits)))
+kable(resumen_diagnostico[obs_problema, ], row.names = FALSE,
+      caption = "Observaciones marcadas como atípicas, de balanceo y/o influyentes")
+```
+ El diagnostico sobre el modelo final identifico 17 observaciones señaladas por al menos un criterio de detección. Cinco observaciones (filas 3, 31, 52, 74 y 100) presentaron residuales estudentizados fuera del rango ∣t∣>2|t|>2
+∣t∣>2, lo que indica un ingreso observado notablemente distinto al predicho por el modelo. Doce observaciones superaron el umbral de leverage (2p/n=0.082p/n=0.08
+2p/n=0.08), señalando combinaciones poco usuales de horas, escolaridad y antigüedad frente al resto de la muestra. Ocho observaciones superaron los umbrales de influencia global (distancia de Cook > 0.04 y/o DFFITS > 0.40). La observación 31 es la unica que aparece simultáneamente en las tres categorías, con una distancia de Cook (0.476) y un DFFITS (-1.48) sustancialmente más altos que los de cualquier otra observación de la muestra lo que la convierte en la candidata más fuerte a examinar como posible error de digitación.
+
 ## Modelo sugerido
 
 Se sugiere el modelo reducido $\ln(Y_i)=\beta_0+\beta_1\text{horas}_i+\beta_2\text{escolaridad}_i+\beta_3\text{antigüedad}_i+\varepsilon_i$ frente al modelo completo de cinco covariables continuas, por las siguientes razones:
 
-1. **La prueba F parcial confirma que edad y edad² no aportan de forma conjunta** ($F_{(2,94)}=0.101$, $p=0.904$): no hay pérdida real de capacidad explicativa al retirarlas ($R^2$ pasa de 0.4106 a 0.4093).
+1. **La prueba F parcial confirma que edad y edad² no aportan de forma conjunta** ($F_{(2,94)}=0.101$, $p=0.904$): no hay perdida real de capacidad explicativa al retirarlas ($R^2$ pasa de 0.4106 a 0.4093).
 
-2. **Multicolinealidad severa en el modelo completo.** $VIF(\text{edad})=39.18$ y $VIF(\text{edad}^2)=39.11$, muy por encima del umbral de alerta (VIF > 10), consecuencia de incluir edad y su cuadrado simultáneamente. Esto infla artificialmente los errores estándar de ambas variables, explicando por qué resultaron no significativas pese al respaldo teórico de la ecuación de Mincer. El modelo reducido tiene VIF cercanos a 1 en las tres variables retenidas: no hay indicio de multicolinealidad.
+2. **Multicolinealidad severa en el modelo completo.** $VIF(\text{edad})=39.18$ y $VIF(\text{edad}^2)=39.11$, muy por encima del umbral de alerta (VIF > 10), consecuencia de incluir edad y su cuadrado simultáneamente. Esto infla artificialmente los errores estandar de ambas variables, explicando por qué resultaron no significativas pese al respaldo teorico de la ecuacion de Mincer. El modelo reducido tiene VIF cercanos a 1 en las tres variables retenidas: no hay indicio de multicolinealidad.
 
 3. **Menor AIC y BIC en el modelo reducido** (229.94 y 242.97, frente a 233.72 y 251.96 del modelo completo), pese a tener dos parámetros menos.
 
-4. **Coherencia con la etapa de selección de modelos**: los cinco métodos de selección convergieron unánimemente en este modelo reducido.
+4. **Coherencia con la etapa de selección de modelos**: los cinco metodos de selección convergieron unánimemente en este modelo reducido.
 
-Sin embargo, ambos modelos **rechazan la normalidad de los residuos** (Shapiro-Wilk, $p=0.0348$ y $p=0.0278$ respectivamente) y **rechazan la homocedasticidad** (Breusch-Pagan, $p=0.0312$ y $p=0.0217$) al 5% de significancia, mientras que el supuesto de independencia se cumple sin problema en ambos (Durbin-Watson, $p\approx0.38$). Esto indica que la elección entre estos dos modelos no resuelve por sí sola todos los problemas de especificación, y que en una etapa posterior convendría explorar correcciones adicionales (errores estándar robustos, mínimos cuadrados ponderados, o revisión de observaciones influyentes) antes de dar el modelo por definitivo.
+Sin embargo, ambos modelos **rechazan la normalidad de los residuos** (Shapiro-Wilk, $p=0.0348$ y $p=0.0278$ respectivamente) y **rechazan la homocedasticidad** (Breusch-Pagan, $p=0.0312$ y $p=0.0217$) al 5% de significancia, mientras que el supuesto de independencia se cumple sin problema en ambos (Durbin-Watson, $p\approx0.38$). Esto indica que la elección entre estos dos modelos no resuelve por sí sola todos los problemas de especificación y que en una etapa posterior convendría explorar correcciones adicionales (errores estándar robustos, mínimos cuadrados ponderados, o revisión de observaciones influyentes) antes de dar el modelo por definitivo.
 
 # Efecto de observaciones atípicas (sensibilidad del modelo)
 ```{r}
@@ -870,49 +908,77 @@ qqPlot(modelo_sin_atipicos, id = FALSE,
 
 **¿Cambian notoriamente las estimaciones de los parámetros?**
 
-No de forma dramática, pero tampoco son idénticas. Los tres coeficientes conservan el signo esperado (positivo) y las tres variables siguen siendo significativas al 5 % — de hecho antiguedad mejora su significancia (p pasa de 0.0097 a 0.0022). El cambio más notable es el de horas, cuyo coeficiente cae de 0.0289 a 0.0218 (una reducción de aproximadamente 25 %): esto sugiere que al menos una de las observaciones eliminadas tenía una combinación atípica de horas trabajadas e ingreso que inflaba ligeramente esa pendiente. escolaridad cambia poco (~7 %).
+No de forma dramatica, pero tampoco son idénticas. Los tres coeficientes conservan el signo esperado (positivo) y las tres variables siguen siendo significativas al 5 % — de hecho antiguedad mejora su significancia (p pasa de 0.0097 a 0.0022). El cambio mas notable es el de horas cuyo coeficiente cae de 0.0289 a 0.0218 (una reducción de aproximadamente 25 %): esto sugiere que al menos una de las observaciones eliminadas tenía una combinación atípica de horas trabajadas e ingreso que inflaba ligeramente esa pendiente. escolaridad cambia poco (~7 %).
 
 **¿Cambian los errores estándar?**
 
-Sí, de forma consistente: los errores estándar de los tres coeficientes disminuyen (horas: 0.0056→0.0051; escolaridad: 0.0174→0.0153; antiguedad: 0.0008→0.0007). Esto es coherente con lo esperado: al quitar observaciones que generaban residuales grandes, se reduce la varianza residual del modelo y, por tanto, la precisión de las estimaciones mejora.
+Sí, de forma consistente: los errores estándar de los tres coeficientes disminuyen (horas: 0.0056→0.0051; escolaridad: 0.0174→0.0153; antiguedad: 0.0008→0.0007). Esto es coherente con lo esperado: al quitar observaciones que generaban residuales grandes se reduce la varianza residual del modelo y por tanto la precisión de las estimaciones mejora.
 
 **¿Cambia la significancia?**
 
-No se pierde ninguna significancia — al contrario, antiguedad la refuerza notablemente (su t pasa de 2.64 a 3.15). Ninguna variable que era significativa deja de serlo, y ninguna que no lo era pasa a serlo (las tres ya eran significativas antes).
+No se pierde ninguna significancia — al contrario, antiguedad la refuerza notablemente (su t pasa de 2.64 a 3.15). Ninguna variable que era significativa deja de serlo y ninguna que no lo era pasa a serlo (las tres ya eran significativas antes).
 
 **¿Mejoró la normalidad?**
 
-Sí. En el Q-Q plot de los residuales estudentizados del modelo sin atípicos, prácticamente todos los puntos caen dentro de la banda de confianza de qqPlot(), con solo una leve desviación en el extremo superior derecho. Esto contrasta con el Q-Q del modelo original, donde las observaciones 31, 52 y 100 se salían claramente de la banda en la cola inferior izquierda (residuales muy negativos). La mejora visual es consistente con que esas tres observaciones eran precisamente las responsables del rechazo de normalidad reportado en la Tabla 22 (Shapiro-Wilk, p=0.0278 en el modelo original con esas covariables).
-Conclusión general sobre el efecto de estas observaciones
-Las observaciones 31, 52 y 100 se comportaban como valores atípicos en la variable respuesta (residuales grandes) más que como puntos de alto leverage que distorsionaran la relación estructural del modelo. Su eliminación no cambia la interpretación económica del modelo —los signos, el orden de magnitud y la significancia de horas, escolaridad y antigüedad se mantienen—, pero sí produce dos beneficios claros: (1) reduce los errores estándar y por tanto mejora la precisión de las estimaciones, y (2) corrige el incumplimiento del supuesto de normalidad de los residuales que tenía el modelo original. Esto es consistente con la hipótesis de que se trataba de errores de digitación u observaciones genuinamente anómalas, y no de casos representativos de la población que el modelo debiera seguir capturando.
+Sí. En el Q-Q plot de los residuales estudentizados del modelo sin atípicos prácticamente todos los puntos caen dentro de la banda de confianza de qqPlot(), con solo una leve desviación en el extremo superior derecho. Esto contrasta con el Q-Q del modelo original, donde las observaciones 31, 52 y 100 se salían claramente de la banda en la cola inferior izquierda (residuales muy negativos). La mejora visual es consistente con que esas tres observaciones eran precisamente las responsables del rechazo de normalidad reportado en la Tabla 22 (Shapiro-Wilk, p=0.0278 en el modelo original con esas covariables).
+Conclusion general sobre el efecto de estas observaciones
+Las observaciones 31, 52 y 100 se comportaban como valores atípicos en la variable respuesta (residuales grandes) mas que como puntos de alto leverage que distorsionaran la relación estructural del modelo. Su eliminación no cambia la interpretación económica del modelo —los signos, el orden de magnitud y la significancia de horas, escolaridad y antigüedad se mantienen—, pero sí produce dos beneficios claros: (1) reduce los errores estándar y por tanto mejora la precisión de las estimaciones y (2) corrige el incumplimiento del supuesto de normalidad de los residuales que tenia el modelo original. Esto es consistente con la hipótesis de que se trataba de errores de digitación u observaciones genuinamente anomalas y no de casos representativos de la población que el modelo debiera seguir capturando.
 
-La observación 47, aunque presenta el mayor leverage de la muestra (Figura del diagnóstico, panel Residuals vs Leverage), no se excluyó porque su distancia de Cook permanece muy por debajo del umbral de 0.5, indicando que su influencia sobre las estimaciones es limitada
+La observación 47 aunque presenta el mayor leverage de la muestra (Figura del diagnóstico, panel Residuals vs Leverage), no se excluyó porque su distancia de Cook permanece muy por debajo del umbral de 0.5 indicando que su influencia sobre las estimaciones es limitada
+
+# Intervalos de confianza y predicción
+```{r Intervalos de confianza y predicción}
+#| label: intervalos-respuesta
+nuevo_dato <- data.frame(
+  horas = mean(muestra$horas),
+  escolaridad = mean(muestra$escolaridad),
+  antiguedad = mean(muestra$antiguedad)
+)
+
+kable(nuevo_dato, caption = "Perfil de covariables usado (promedios muestrales)")
+
+IC_media <- predict(modelo_continuas_reducido, newdata = nuevo_dato,
+                     interval = "confidence", level = 0.90)
+IC_prediccion <- predict(modelo_continuas_reducido, newdata = nuevo_dato,
+                          interval = "prediction", level = 0.90)
+
+kable(rbind(IC_media, IC_prediccion),
+      caption = "Intervalos al 90% en escala log-ingreso (fila 1: respuesta media, fila 2: predicción)")
+
+kable(rbind(exp(IC_media), exp(IC_prediccion)),
+      caption = "Intervalos al 90% en escala original de ingreso ($)")
+```
+## Interpretación
+
+-Para un trabajador con el perfil promedio de tu muestra (horas, escolaridad y antigüedad promedio) el modelo predice un ingreso mensual esperado de $1.010.429.
+-Intervalo de confianza al 90% ($893.320 – $1.142.891): esto significa que estamos 90% seguros de que el ingreso promedio de todos los trabajadores con ese perfil está dentro de ese rango relativamente angosto.
+-Intervalo de predicción al 90% ($292.988 – $3.484.670): este es mucho más ancho porque no está prediciendo un promedio, sino el ingreso de una persona específica con ese perfil. Hay mucha más incertidumbre al predecir un individuo que un promedio por eso el rango es tan amplio (casi $3.2 millones de diferencia entre el límite inferior y superior).
 
 # Respuesta a las hipótesis planteadas
 
 ## Hipótesis 1: la escolaridad y la edad explican una parte sustancial de la variabilidad del ingreso laboral
 
-Esta hipótesis se confirma solo parcialmente. El componente de **escolaridad** se sostiene con solidez en todas las especificaciones: en el modelo completo (**Tabla 8**) su coeficiente es $\hat\beta = 0.1093$ ($p<0.0001$), y se mantiene prácticamente inalterado en el modelo reducido (**Tabla 20/21**, $\hat\beta=0.1077$, $p<0.0001$) y en el modelo sin observaciones atípicas (**Tabla 26**, $\hat\beta=0.0998$, $p<0.0001$). El signo positivo y la significancia son consistentes con la teoría del capital humano y con la asociación lineal moderada-fuerte observada descriptivamente ($r=0.489$, **Figura 2**).
+Esta hipótesis se confirma solo parcialmente. El componente de **escolaridad** se sostiene con solidez en todas las especificaciones: en el modelo completo (**Tabla 8**) su coeficiente es $\hat\beta = 0.1093$ ($p<0.0001$) y se mantiene practicamente inalterado en el modelo reducido (**Tabla 20/21**, $\hat\beta=0.1077$, $p<0.0001$) y en el modelo sin observaciones atipicas (**Tabla 26**, $\hat\beta=0.0998$, $p<0.0001$). El signo positivo y la significancia son consistentes con la teoría del capital humano y con la asociacion lineal moderada-fuerte observada descriptivamente ($r=0.489$, **Figura 2**).
 
-El componente de **edad**, en cambio, no se sostiene estadísticamente. En el modelo completo (**Tabla 8**) ni edad ($p=0.7953$) ni edad² ($p=0.8497$) resultan significativas, y la prueba de suma de cuadrados extra realizada en la **Sección [Prueba de suma de cuadrados extra]** confirma que tampoco aportan de forma conjunta ($F_{(2,94)}=0.1012$, $p=0.9039$). Esto es coherente con la correlación de Pearson prácticamente nula entre edad y log-ingreso reportada en la **Figura 3** ($r=-0.041$), aunque la curva LOESS de esa misma figura sí insinuaba visualmente el perfil cóncavo esperado. Además, la **Tabla 23** muestra que edad y edad² presentaban multicolinealidad severa entre sí ($VIF>39$ en ambas), lo que también contribuye a explicar su falta de significancia individual en el modelo completo.
+El componente de **edad** en cambio no se sostiene estadísticamente. En el modelo completo (**Tabla 8**) ni edad ($p=0.7953$) ni edad² ($p=0.8497$) resultan significativas y la prueba de suma de cuadrados extra realizada en la **Sección [Prueba de suma de cuadrados extra]** confirma que tampoco aportan de forma conjunta ($F_{(2,94)}=0.1012$, $p=0.9039$). Esto es coherente con la correlación de Pearson prácticamente nula entre edad y log-ingreso reportada en la **Figura 3** ($r=-0.041$), aunque la curva LOESS de esa misma figura sí insinuaba visualmente el perfil cóncavo esperado. Ademas la **Tabla 23** muestra que edad y edad² presentaban multicolinealidad severa entre sí ($VIF>39$ en ambas) lo que también contribuye a explicar su falta de significancia individual en el modelo completo.
 
-En conclusión, la Hipótesis 1 se confirma únicamente en su componente de escolaridad; el componente de edad no encuentra respaldo estadístico con los datos de esta muestra ($n=100$), lo cual no descarta que el efecto exista en la población, sino que sugiere que no es detectable con este tamaño muestral una vez controlado por las demás covariables.
+En conclusión la Hipótesis 1 se confirma unicamente en su componente de escolaridad; el componente de edad no encuentra respaldo estadístico con los datos de esta muestra ($n=100$), lo cual no descarta que el efecto exista en la población, sino que sugiere que no es detectable con este tamaño muestral una vez controlado por las demás covariables.
 
 ## Hipótesis 2: la rama de actividad económica genera diferencias sistemáticas en el ingreso, incluso después de considerar escolaridad y edad
 
-Esta hipótesis encuentra respaldo **descriptivo**, pero su confirmación **estadística formal queda pendiente**. La **Tabla 7** y la **Figura 6** muestran una brecha de 0.98 puntos en escala logarítmica entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21), una diferencia sustancial que es consistente con la heterogeneidad sectorial documentada en la literatura (Banco de la República, 2021).
+Esta hipótesis encuentra respaldo **descriptivo** pero su confirmacion **estadística formal queda pendiente**. La **Tabla 7** y la **Figura 6** muestran una brecha de 0.98 puntos en escala logarítmica entre el sector con mayor log-ingreso medio (Servicios sociales y otros, 14.19) y el de menor log-ingreso medio (Agropecuario, 13.21) una diferencia sustancial que es consistente con la heterogeneidad sectorial documentada en la literatura (Banco de la República, 2021).
 
-Sin embargo, el modelo estimado en las **Secciones 8 a 10** de este documento incluye únicamente las cinco covariables continuas; la variable `rama` (categórica) todavía no ha sido incorporada como conjunto de variables dummy al modelo de regresión. Por tanto, no es posible aún pronunciarse sobre si estas diferencias sectoriales se mantienen significativas **una vez controlado por escolaridad y edad**, tal como exige la hipótesis. La evidencia descriptiva es sugestiva y apunta en la dirección esperada, pero su verificación formal (mediante los coeficientes de las dummies de rama y una prueba F sobre su significancia conjunta) queda como paso pendiente para la siguiente etapa del proyecto, cuando se estime el modelo completo con la variable categórica incluida.
+Sin embargo el modelo estimado en las **Secciones 8 a 10** de este documento incluye únicamente las cinco covariables continuas; la variable `rama` (categórica) todavía no ha sido incorporada como conjunto de variables dummy al modelo de regresión. Por tanto, no es posible aún pronunciarse sobre si estas diferencias sectoriales se mantienen significativas **una vez controlado por escolaridad y edad** tal como exige la hipótesis. La evidencia descriptiva es sugestiva y apunta en la dirección esperada, pero su verificación formal (mediante los coeficientes de las dummies de rama y una prueba F sobre su significancia conjunta) queda como paso pendiente para la siguiente etapa del proyecto cuando se estime el modelo completo con la variable categórica incluida.
 
 # Conclusiones
 
-El análisis descriptivo confirma que la transformación logarítmica del ingreso laboral corrige de forma considerable la asimetría propia de esta variable (asimetría de `r skew_y` en el log-ingreso, frente a la marcada cola derecha visible en la escala original), lo que respalda su uso como variable de respuesta del modelo.
+El análisis descriptivo confirma que la transformación logaritmica del ingreso laboral corrige de forma considerable la asimetria propia de esta variable (asimetría de `r skew_y` en el log-ingreso, frente a la marcada cola derecha visible en la escala original), lo que respalda su uso como variable de respuesta del modelo.
 
-Entre las covariables continuas, la escolaridad es la que muestra la asociación lineal más fuerte con el log-ingreso ($r = 0.489$), seguida por las horas trabajadas ($r = 0.350$), aunque esta última se aplana a partir de las 40 horas semanales, indicando rendimientos decrecientes de la intensidad laboral sobre el ingreso. La antigüedad presenta una correlación lineal débil ($r = 0.104$) y una distribución fuertemente asimétrica (media de 78.19 meses frente a una mediana de 36), mientras que la edad exhibe una correlación de Pearson prácticamente nula ($r = -0.041$), pese a que la curva LOESS insinúa el perfil cóncavo esperado por la teoría del capital humano —lo que confirma que su relación con el ingreso no es de tipo lineal y justifica la inclusión de su término cuadrático en el modelo en lugar de depender del coeficiente de correlación simple—. La matriz de correlaciones evidencia además que ninguna asociación entre covariables supera el umbral de 0.5 considerado como alerta temprana de multicolinealidad severa, si bien la relación entre edad y antigüedad ($r = 0.381$) —ambas ligadas al ciclo de vida laboral— es la más alta del conjunto y ameritará una revisión formal mediante el Factor de Inflación de la Varianza (VIF) en la etapa de estimación.
+Entre las covariables continuas la escolaridad es la que muestra la asociación lineal más fuerte con el log-ingreso ($r = 0.489$) seguida por las horas trabajadas ($r = 0.350$), aunque esta ultima se aplana a partir de las 40 horas semanales indicando rendimientos decrecientes de la intensidad laboral sobre el ingreso. La antigüedad presenta una correlación lineal débil ($r = 0.104$) y una distribución fuertemente asimétrica (media de 78.19 meses frente a una mediana de 36), mientras que la edad exhibe una correlación de Pearson prácticamente nula ($r = -0.041$) pese a que la curva LOESS insinúa el perfil cóncavo esperado por la teoría del capital humano —lo que confirma que su relación con el ingreso no es de tipo lineal y justifica la inclusión de su término cuadrático en el modelo en lugar de depender del coeficiente de correlación simple—. La matriz de correlaciones evidencia además que ninguna asociación entre covariables supera el umbral de 0.5 considerado como alerta temprana de multicolinealidad severa si bien la relación entre edad y antigüedad ($r = 0.381$) —ambas ligadas al ciclo de vida laboral— es la más alta del conjunto y ameritara una revision formal mediante el Factor de Inflacion de la Varianza (VIF) en la etapa de estimacion.
 
-En cuanto a la rama de actividad económica, el análisis descriptivo detectó una limitación metodológica relevante en su codificación original (CIIU a 2 dígitos): 36 categorías para apenas 100 observaciones, 18 de ellas representadas por una sola persona, lo cual habría producido coeficientes inestables y grados de libertad desperdiciados de haberse usado directamente en el modelo. Esta limitación se resolvió recodificando la variable en cinco sectores agregados (Agropecuario; Industria, minería y construcción; Comercio, transporte y alojamiento; Servicios financieros y profesionales; y Servicios sociales, comunales y otros), con tamaños muestrales entre 11 y 33 observaciones por categoría. Una vez recodificada, la variable muestra diferencias claras en el nivel medio de ingreso entre sectores: Servicios sociales y otros e Industria, minería y construcción registran los log-ingresos medios más altos, mientras que Agropecuario presenta el más bajo, con una brecha de 0.98 puntos en escala logarítmica entre ambos extremos.
+En cuanto a la rama de actividad económica, el analisis descriptivo detecto una limitación metodológica relevante en su codificación original (CIIU a 2 dígitos): 36 categorias para apenas 100 observaciones, 18 de ellas representadas por una sola persona, lo cual habría producido coeficientes inestables y grados de libertad desperdiciados de haberse usado directamente en el modelo. Esta limitación se resolvió recodificando la variable en cinco sectores agregados (Agropecuario; Industria, minería y construcción; Comercio, transporte y alojamiento; Servicios financieros y profesionales; y Servicios sociales, comunales y otros) con tamaños muestrales entre 11 y 33 observaciones por categoría. Una vez recodificada la variable muestra diferencias claras en el nivel medio de ingreso entre sectores: Servicios sociales y otros e Industria, minería y construcción registran los log-ingresos medios más altos mientras que Agropecuario presenta el más bajo con una brecha de 0.98 puntos en escala logarítmica entre ambos extremos.
 
-En conjunto, estos resultados son coherentes con las dos hipótesis planteadas para el proyecto: la escolaridad y la edad muestran las asociaciones esperadas con el ingreso según la teoría del capital humano (Hipótesis 1), y la rama de actividad evidencia diferencias sistemáticas de ingreso entre sectores incluso antes de controlar por las demás covariables (Hipótesis 2). Sin embargo, ninguna covariable por sí sola explica la totalidad de la variabilidad del log-ingreso, lo que confirma la necesidad de evaluar sus efectos de forma conjunta en un modelo de regresión múltiple. Las siguientes etapas del proyecto deberán estimar dicho modelo y verificar formalmente sus supuestos —multicolinealidad (VIF), homocedasticidad, normalidad de los residuos y presencia de observaciones influyentes—, prestando particular atención a la relación entre edad y antigüedad, y al reducido tamaño muestral del sector Servicios financieros y profesionales dentro de la variable rama.
+En conjunto estos resultados son coherentes con las dos hipótesis planteadas para el proyecto: la escolaridad y la edad muestran las asociaciones esperadas con el ingreso según la teoría del capital humano (Hipótesis 1), y la rama de actividad evidencia diferencias sistemáticas de ingreso entre sectores incluso antes de controlar por las demás covariables (Hipótesis 2). Sin embargo ninguna covariable por sí sola explica la totalidad de la variabilidad del log-ingreso lo que confirma la necesidad de evaluar sus efectos de forma conjunta en un modelo de regresión múltiple. Las siguientes etapas del proyecto deberan estimar dicho modelo y verificar formalmente sus supuestos —multicolinealidad (VIF), homocedasticidad, normalidad de los residuos y presencia de observaciones influyentes— prestando particular atencion a la relacion entre edad y antigüedad y al reducido tamaño muestral del sector Servicios financieros y profesionales dentro de la variable rama.
 
 
 
